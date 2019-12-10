@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/10 17:02:57 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/10 18:01:09 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,10 @@ typedef struct		s_map
 ** Input functions & serialization
 */
 t_map				*serialize(char *filename);
+
+/*
+** Debug functions
+*/
+void				print_map(t_map *map);
 
 #endif
