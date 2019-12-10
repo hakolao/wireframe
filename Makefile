@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/10 15:26:44 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/10 17:03:17 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
 FLAGS = -Wall -Wextra -Werror
-SOURCES = main.c 
+SOURCES = main.c \
+			input.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
 
