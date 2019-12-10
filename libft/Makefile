@@ -6,12 +6,15 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/10 13:30:23 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/10 14:19:23 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+C = clang
 NAME = libft.a
-FILES = ft_atoi.c \
+DIR_SRC = ./
+DIR_OBJ = temp
+SOURCES = ft_atoi.c \
 		ft_isascii.c \
 		ft_isprint.c \
 		ft_memdel.c \
@@ -81,96 +84,28 @@ FILES = ft_atoi.c \
 		ft_strfill.c \
 		ft_lstlen.c \
 		ft_bzero.c
-
-OBJECTS = 	ft_atoi.o \
-			ft_isascii.o \
-			ft_isprint.o \
-			ft_memdel.o \
-			ft_putstr.o \
-			ft_strlen.o \
-			ft_strstr.o \
-			ft_isalnum.o \
-			ft_isdigit.o \
-			ft_isupper.o \
-			ft_putchar.o \
-			ft_putstr_fd.o \
-			ft_strncmp.o \
-			ft_tolower.o \
-			ft_isalpha.o \
-			ft_islower.o \
-			ft_memalloc.o \
-			ft_putchar_fd.o \
-			ft_strcmp.o \
-			ft_strnstr.o \
-			ft_toupper.o \
-			ft_memcpy.o \
-			ft_memccpy.o \
-			ft_memset.o \
-			ft_memmove.o \
-			ft_memchr.o \
-			ft_memcmp.o \
-			ft_strdup.o \
-			ft_strcpy.o \
-			ft_strncpy.o \
-			ft_strcat.o \
-			ft_strncat.o \
-			ft_strlcat.o \
-			ft_strchr.o \
-			ft_strrchr.o \
-			ft_putnbr.o \
-			ft_putnbr_fd.o \
-			ft_itoa_base.o \
-			ft_itoa.o \
-			ft_putendl.o \
-			ft_putendl_fd.o \
-			ft_strnew.o \
-			ft_strdel.o \
-			ft_strclr.o \
-			ft_striter.o \
-			ft_striteri.o \
-			ft_strmap.o \
-			ft_strmapi.o \
-			ft_strequ.o \
-			ft_strnequ.o \
-			ft_strsub.o \
-			ft_strjoin.o \
-			ft_strtrim.o \
-			ft_strsplit.o \
-			ft_lstnew.o \
-			ft_lstdelone.o \
-			ft_lstdel.o \
-			ft_lstadd.o \
-			ft_lstiter.o \
-			ft_lstmap.o \
-			ft_strsplit_lst.o \
-			ft_lstfold.o \
-			ft_lstappend.o \
-			ft_realloc.o \
-			get_next_line.o \
-			ft_isqrt.o \
-			ft_sqrt.o \
-			ft_strfill.o \
-			ft_lstlen.o \
-			ft_bzero.o
-
-INCLUDES = ./
+SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
+OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
+HEADERS = ./
 FLAGS = -Wall -Wextra -Werror
 
-all: $(NAME)
+all: $(DIR_OBJ) $(NAME)
 
-$(NAME):
-	gcc $(FLAGS) -c $(FILES) -I $(INCLUDES)
-	ar rc $(NAME) $(OBJECTS)
+$(NAME): $(OBJS)
+	ar rc $(NAME) $(OBJS)
 
-test: 
-	gcc $(FLAGS) -o run_tests $(FILES) tests/test.c -I $(INCLUDES)
-	./run_tests
-	@/bin/rm -f run_tests
+$(DIR_OBJ):
+	@mkdir -p temp
+
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/libft.h
+	@$(CC) $(FLAGS) -I $(HEADERS) -c -o $@ $<
 
 clean:
-	/bin/rm -f $(OBJECTS)
+	/bin/rm -f $(OBJS)
 
 fclean: clean
 	/bin/rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all, $(DIR_OBJ), clean, fclean, re
