@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/10 14:19:23 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/10 14:23:10 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/libft.h
 
 clean:
 	/bin/rm -f $(OBJS)
+	@/bin/rm -rf $(DIR_OBJ)
 
 fclean: clean
 	/bin/rm -f $(NAME)
