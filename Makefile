@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/10 14:20:51 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/10 15:26:44 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,8 @@ all: $(DIR_OBJ) $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C ./libft
-	$(CC) $(FLAGS) -L $(LIBFT) -lft -o $@ $^
-
+	$(CC) $(FLAGS) -L $(LIBFT) -lft -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+	
 $(DIR_OBJ):
 	@mkdir -p temp
 
