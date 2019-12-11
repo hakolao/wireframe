@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 12:26:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 12:54:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@
 # define ERR_SERIALIZATION "Input serialization failed."
 # define ERRNO_INVALID_INPUT 5
 
+# define KEY_ESC 53
+
 # include <mlx.h>
 # include <stdio.h>
+# include <math.h>
 # include "../libft/libft.h"
 
 typedef struct		s_vertex
