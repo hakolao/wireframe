@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/10 18:01:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 12:27:23 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 	{
 		if ((map = serialize(argv[1])) == NULL)
+		{
+			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT));
 			return (0);
-		print_map(map);
+		}
+		log_map(map);
 	}
 
 	// mlx_loop(mlx_ptr);

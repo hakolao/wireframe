@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/10 18:01:09 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 12:26:38 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 1024
 
+# define ERR_INVALID_INPUT "Lines must "\
+						"consist of spaces & numbers."
+# define ERR_SERIALIZATION "Input serialization failed."
+# define ERRNO_INVALID_INPUT 5
+
 # include <mlx.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 
 typedef struct		s_vertex
@@ -43,8 +49,9 @@ typedef struct		s_map
 t_map				*serialize(char *filename);
 
 /*
-** Debug functions
+** Logging functions
 */
-void				print_map(t_map *map);
+void				log_map(t_map *map);
+void				log_error(char *str, char *strerror);
 
 #endif

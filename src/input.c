@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/10 17:51:41 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 12:34:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	x = 0;
 	while (*line)
 	{
+		if (!(*line == ' ' || *line == '-' || ft_isdigit(*line)))
+		{
+			ft_putchar(*line);
+			log_error(ERR_INVALID_INPUT, strerror(ERRNO_INVALID_INPUT));
+			return (NULL);
+		}
 		if (ft_isdigit(*line))
 		{
 			z = ft_atoi(line);
@@ -97,7 +103,10 @@ static t_map		*file_to_map(int fd)
 	if (ret == 0)
 		map->y_max = y - 1;
 	if (ret == -1)
+	{
+		perror("");
 		return (NULL);
+	}
 	return (map);
 }
 
@@ -108,7 +117,10 @@ t_map				*serialize(char *filename)
 
 	map = NULL;
 	if ((fd = open(filename, O_RDONLY)) == -1)
+	{
+		perror("");
 		return (NULL);
+	}
 	if ((map = file_to_map(fd)) == NULL)
 		return (NULL);
 	close(fd);
