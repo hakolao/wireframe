@@ -6,49 +6,75 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 15:45:09 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 20:33:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-static int		*point_to_screen(t_point *point, t_scene *scene)
+t_matrix4	rot_around_x(double angle)
 {
-	int		*xy;
-	int		x_in_minmax[2];
-	int		x_out_minmax[2];
-	int		y_in_minmax[2];
-	int		y_out_minmax[2];
+	t_matrix4	mat;
+	
+	mat = identity_matrix();
+	mat.vecs[1].vec[1] = cos(angle); 
+	mat.vecs[2].vec[1] = -sin(angle); 
+	mat.vecs[1].vec[2] = sin(angle); 
+	mat.vecs[2].vec[2] = cos(angle);
+	return (mat);
+}
 
-	x_in_minmax[0] = 0;
-	x_in_minmax[1] = (int)(scene->map->x_max);
-	x_out_minmax[0] = 0;
-	x_out_minmax[1] = WINDOW_WIDTH;
-	y_in_minmax[0] = 0;
-	y_in_minmax[1] = (int)(scene->map->y_max);
-	y_out_minmax[0] = 0;
-	y_out_minmax[1] = WINDOW_HEIGHT;
-	if ((xy = (int*)malloc(sizeof(*xy) * 2)) == NULL)
-		return (NULL);
-	xy[0] = ft_lmap_int(point->x, x_in_minmax,  x_out_minmax);
-	xy[1] = ft_lmap_int(point->y, y_in_minmax,  y_out_minmax);
-	return (xy);
+t_matrix4	rot_around_y(double angle)
+{
+	t_matrix4	mat;
+	
+	mat = identity_matrix();
+	mat.vecs[0].vec[0] = cos(angle); 
+	mat.vecs[2].vec[0] = sin(angle); 
+	mat.vecs[0].vec[2] = -sin(angle); 
+	mat.vecs[2].vec[2] = cos(angle);
+	return (mat);
+}
+
+t_matrix4	rot_around_z(double angle)
+{
+	t_matrix4	mat;
+	
+	mat = identity_matrix();
+	mat.vecs[0].vec[0] = cos(angle); 
+	mat.vecs[1].vec[0] = -sin(angle); 
+	mat.vecs[0].vec[1] = sin(angle); 
+	mat.vecs[1].vec[1] = cos(angle);
+	return (mat);
+}
+
+t_vec4		point_to_screen(t_point *point, t_scene *scene)
+{
+	t_vec4		vec;
+	t_matrix4	rot;
+
+	vec.vec[0] = point->x;
+	vec.vec[1] = point->y;
+	vec.vec[2] = point->z;
+	vec.vec[3] = 1;
+	rot = rot_around_y(0.4);
+	return (vec_mult_by_matrix(vec, matrix_mul(scene->camera->view_matrix, rot)));
 }
 
 static void		draw_pixel(void *mlx, void *mlx_wdw, t_point *point, t_scene *scene)
 {
-	int		*xy;
-	int		color;
+	t_vec4		s;
+	int			color;
 
-	if ((xy = point_to_screen(point, scene)) == NULL)
-	{
-		log_error("Unknown", "Error:");
-		return ;
-	};
+	s = point_to_screen(point, scene);
+	printf("screen x: %d, screen y: %d, screen z: %d\n", (int)s.vec[0], (int)s.vec[1], (int)s.vec[2]);
 	color = ft_rgbtoi(scene->camera->color->r,
 						scene->camera->color->g,
 						scene->camera->color->b);
-	mlx_pixel_put(mlx, mlx_wdw, xy[0], xy[1], color);
+	mlx_pixel_put(mlx, mlx_wdw, 
+				WINDOW_WIDTH / 2 + s.vec[0] - scene->map->x_max / 2 * scene->camera->zoom, 
+				WINDOW_HEIGHT / 2 + s.vec[1] - scene->map->y_max / 2 * scene->camera->zoom,
+				color);
 }
 
 void	draw(void *mlx, void *mlx_wdw, t_scene *scene)

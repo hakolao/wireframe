@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 14:40:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 20:02:17 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static t_camera		*new_camera(t_point *position)
 	camera->position = position;
 	camera->canvas = canvas;
 	camera->color = color;
+	camera->zoom = ZOOM;
+	camera->view_matrix = scale_matrix(identity_matrix(), camera->zoom);
 	return (camera);
 }
 
@@ -90,7 +92,7 @@ int	main(int argc, char **argv)
 		return (0);
 	if ((scene = new_scene(map, camera)) == NULL)
 		return (0);
-	mlx_key_hook(mlx_wdw, handle_key_events, map);
+	mlx_key_hook(mlx_wdw, handle_key_events, scene);
 	draw(mlx, mlx_wdw, scene);
 	mlx_loop(mlx);
 	return (0);
