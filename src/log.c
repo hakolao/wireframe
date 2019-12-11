@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 12:34:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 12:57:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void		log_vertex(t_list *vertex)
 {
-	ft_putstr("(x: ");
+	ft_putstr("(");
 	ft_putnbr(((t_vertex*)(vertex->content))->x);
-	ft_putstr(", y: ");
+	ft_putstr(", ");
 	ft_putnbr(((t_vertex*)(vertex->content))->y);
-	ft_putstr(", z: ");
+	ft_putstr(", ");
 	ft_putnbr(((t_vertex*)(vertex->content))->z);
 	ft_putstr(")\n");
 }

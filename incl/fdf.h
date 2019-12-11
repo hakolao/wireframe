@@ -6,15 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 12:54:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 13:00:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define WINDOW_WIDTH 1024
-# define WINDOW_HEIGHT 1024
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
@@ -56,5 +56,10 @@ t_map				*serialize(char *filename);
 */
 void				log_map(t_map *map);
 void				log_error(char *str, char *strerror);
+
+/*
+** Event handling
+*/
+int					handle_key_events(int key, void *param);
 
 #endif
