@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 13:15:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 15:33:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,8 @@ float			ft_sqrt(const float x);
 size_t			ft_lstlen(t_list *lst);
 t_rgb			*ft_itorgb(int rgb_val);
 int				ft_rgbtoi(int red, int green, int blue);
+int				ft_lmap_int(int nb, int *in_minmax, int *out_minmax);
+double			ft_lmap_double(double nb, double *in_minmax,
+				double *out_minmax);
 
 #endif
