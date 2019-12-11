@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 13:00:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 14:40:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+# define FPS 30
 
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
@@ -28,23 +29,44 @@
 # include <math.h>
 # include "../libft/libft.h"
 
+# define MAP_COLOR ft_rgbtoi(0, 255, 0)
+
 typedef struct		s_vertex
 {
-	int				x;
-	int				y;
-	int				z;
+	double			x;
+	double			y;
+	double			z;
 }					t_vertex;
+
+typedef t_vertex	t_point;
 
 typedef struct		s_map
 {
 	t_list			*vertices;
 	int				vertex_count;
-	int				x_max;
-	int				y_max;
-	int				z_max;
+	double			x_max;
+	double			y_max;
+	double			z_max;
 }					t_map;
 
+typedef struct		s_canvas
+{
+	double			width;
+	double			height;
+}					t_canvas;
 
+typedef struct 		s_camera
+{
+	t_point			*position;
+	t_canvas		*canvas;
+	t_rgb			*color;
+}					t_camera;
+
+typedef struct		s_scene
+{
+	t_camera		*camera;
+	t_map			*map;
+}					t_scene;
 
 /*
 ** Input functions & serialization
@@ -61,5 +83,10 @@ void				log_error(char *str, char *strerror);
 ** Event handling
 */
 int					handle_key_events(int key, void *param);
+
+/*
+** Draw graphics
+*/
+void				draw(void *mlx, void *mlx_wdw, t_scene *scene);
 
 #endif

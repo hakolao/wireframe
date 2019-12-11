@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/10 14:23:10 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/11 13:15:47 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,8 @@ SOURCES = ft_atoi.c \
 		ft_sqrt.c \
 		ft_strfill.c \
 		ft_lstlen.c \
+		ft_rgbtoi.c \
+		ft_itorgb.c \
 		ft_bzero.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))

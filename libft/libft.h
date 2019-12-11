@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2019/11/26 16:09:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/11 13:15:29 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef struct	s_list
 	struct s_list	*prev;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct	s_rgb
+{
+	int			r;
+	int			g;
+	int			b;
+}				t_rgb;
 
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
@@ -102,5 +109,7 @@ int				ft_isqrt(int num);
 void			ft_strfill(char **str, char c, size_t len);
 float			ft_sqrt(const float x);
 size_t			ft_lstlen(t_list *lst);
+t_rgb			*ft_itorgb(int rgb_val);
+int				ft_rgbtoi(int red, int green, int blue);
 
 #endif
