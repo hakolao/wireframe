@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 14:11:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 14:45:57 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,9 @@ void		ft_vector_free(t_vector *vec);
 void		ft_putvector(t_vector *vec);
 double		ft_vector_mag(t_vector *vec);
 t_vector	*ft_vector_normalize(t_vector *vec);
+t_vector	*ft_vector_sub(t_vector *v1, t_vector *v2);
+t_vector	*ft_vector_add(t_vector *v1, t_vector *v2);
+double		ft_vector_dot(t_vector *v1, t_vector *v2);
+t_vector	*ft_vector_cross(t_vector *v1, t_vector *v2);
 
 #endif

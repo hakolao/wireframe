@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 13:09:18 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/18 14:09:43 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/18 14:46:01 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,10 @@ SOURCES = ft_matrix_new.c \
 			ft_vector_to_matrix.c \
 			ft_putvector.c \
 			ft_vector_mag.c \
+			ft_vector_sub.c \
+			ft_vector_add.c \
+			ft_vector_dot.c \
+			ft_vector_cross.c \
 			ft_vector_normalize.c \
 			ft_putmatrix.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
