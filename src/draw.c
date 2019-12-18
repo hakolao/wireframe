@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 17:05:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:15:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_vector		*point_to_screen(t_vector *point, t_scene *scene)
 {
 	t_matrix		*projection;
 	t_matrix		*res_mat;
-	t_vector		*result;
 
 	if ((projection = ft_orthographic_matrix(scene->camera->canvas)) == NULL)
 		return (NULL);

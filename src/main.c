@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 16:27:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:08:17 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		log_map(map);
 	}
 	if ((camera = new_camera(ft_vector4_new(0.0, 0.0, -10.0),
-					ft_vector4_new(map->x_max / 2, map->y_max / 2, 0),
+					ft_vector4_new(0, 0, 0),
 					ft_vector4_new(0, 1, 0))) == NULL)
 		return (0);
 	if ((scene = new_scene(map, camera)) == NULL)

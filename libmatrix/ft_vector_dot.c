@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 14:27:39 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 14:29:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:15:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ double		ft_vector_dot(t_vector *v1, t_vector *v2)
 		return (0);
 	}
 	i = 0;
+	res = 0;
 	while (i < v1->size)
 	{
 		res += v1->v[i] * v2->v[i];
