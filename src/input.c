@@ -6,11 +6,30 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 13:10:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 16:42:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
+
+static void			anchor_model_to_pos(t_list *vertices, t_vector *pos)
+{
+	t_list		*temp_v;
+	t_vector	*vertex;
+	t_vector	*offset;
+	t_vector	*new;
+
+	offset = ft_vector_sub(pos, ft_vector4_new(0, 0, 0));
+	temp_v = vertices;
+	while (temp_v)
+	{
+		vertex = (t_vector*)(vertices->content);
+		new = ft_vector_add(offset, vertex);
+		temp_v->content = new;
+		free(vertex);
+		temp_v = temp_v->next;
+	}
+}
 
 static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 {
@@ -64,6 +83,7 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 		else
 			line++;
 	}
+	anchor_model_to_pos(vertices, ft_vector4_new(map->x_max / 2, map->y_max / 2, 0));
 	return (vertices);
 }
 

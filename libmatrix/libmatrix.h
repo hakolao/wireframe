@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 14:45:57 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:02:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ typedef struct 	s_vector
 	double	*v;
 }				t_vector;
 
+typedef struct		s_canvas
+{
+	double			width;
+	double			height;
+	double			near;
+	double			far;
+	double			angle;
+}					t_canvas;
+
 # define VALUE_AT(mat, r, c) (mat)->m[c * (mat)->rows + r]
 
 t_matrix	*ft_matrix_new(size_t cols, size_t rows);
@@ -41,9 +50,9 @@ t_matrix	*ft_matrix_sub(const t_matrix *m1, const t_matrix *m2);
 t_matrix	*ft_matrix_mul(const t_matrix *m1, const t_matrix *m2);
 t_matrix	*ft_matrix_mul_double(const t_matrix *m1, const double d);
 t_vector	*ft_vector_new(size_t size);
-t_vector	*ft_vector4_new(double x, double z, double y);
+t_vector	*ft_vector4_new(double x, double y, double z);
 t_matrix	*ft_vector_to_matrix(const t_vector *vec);
-t_matrix	*ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v);
+t_vector	*ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v);
 void		ft_matrix_scale(t_matrix *mat, double scale);
 void		ft_vector_scale(t_vector *vec, double scale);
 void		ft_vector_set_all(t_vector *vec, double d);
@@ -68,5 +77,9 @@ t_vector	*ft_vector_sub(t_vector *v1, t_vector *v2);
 t_vector	*ft_vector_add(t_vector *v1, t_vector *v2);
 double		ft_vector_dot(t_vector *v1, t_vector *v2);
 t_vector	*ft_vector_cross(t_vector *v1, t_vector *v2);
+t_matrix	*ft_view_matrix(t_vector *position, t_vector *target,
+			t_vector *up);
+t_matrix	*ft_perspective_matrix(t_canvas *c);
+t_matrix	*ft_orthographic_matrix(t_canvas *c);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "libmatrix.h"
 
-t_vector	*ft_vector4_new(double x, double z, double y)
+t_vector	*ft_vector4_new(double x, double y, double z)
 {
 	t_vector *new;
 

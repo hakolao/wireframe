@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 13:40:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 16:03:41 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define VIEW_WIDTH WINDOW_WIDTH - UI_VERTICAL_WIDTH
 # define VIEW_HEIGHT WINDOW_HEIGHT - UI_HORIZONTAL_HEIGHT
 
-# define ZOOM 50
+# define ZOOM 1
 
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
@@ -45,12 +45,6 @@ typedef struct		s_map
 	double			y_max;
 	double			z_max;
 }					t_map;
-
-typedef struct		s_canvas
-{
-	double			width;
-	double			height;
-}					t_canvas;
 
 typedef struct 		s_camera
 {
@@ -93,7 +87,6 @@ void				draw(void *mlx, void *mlx_wdw, t_scene *scene);
 /*
 ** Scene related functions
 */
-t_canvas			*new_canvas(int width, int height);
 t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up);
 t_scene				*new_scene(t_map *map, t_camera *camera);
 
