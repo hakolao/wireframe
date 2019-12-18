@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/18 13:15:49 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/18 17:17:24 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,13 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/$(NAME).h
 clean:
 	/bin/rm -f $(OBJS)
 	@make -C $(LIBFT) clean
+	@make -C $(LIBMATRIX) clean
 	@/bin/rm -rf $(DIR_OBJ)
 	
 fclean: clean
 	/bin/rm -f $(NAME)
 	@make -C ./libft/ fclean
+	@make -C ./libmatrix/ fclean
 
 re: fclean all
 
