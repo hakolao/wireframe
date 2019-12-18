@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 13:15:27 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 13:40:29 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ typedef struct		s_canvas
 typedef struct 		s_camera
 {
 	t_vector		*position;
-	t_matrix		view_matrix;
+	t_vector		*target;
+	t_vector		*up;
+	t_matrix		*view_matrix;
 	t_canvas		*canvas;
 	t_rgb			*color;
 	double			zoom;
@@ -92,7 +94,7 @@ void				draw(void *mlx, void *mlx_wdw, t_scene *scene);
 ** Scene related functions
 */
 t_canvas			*new_canvas(int width, int height);
-t_camera			*new_camera(t_vector *position);
+t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up);
 t_scene				*new_scene(t_map *map, t_camera *camera);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 13:07:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 14:11:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ void		ft_matrix_set_all(t_matrix *mat, double nb);
 void		ft_matrix_free(t_matrix *mat);
 void		ft_vector_free(t_vector *vec);
 void		ft_putvector(t_vector *vec);
+double		ft_vector_mag(t_vector *vec);
+t_vector	*ft_vector_normalize(t_vector *vec);
 
 #endif
