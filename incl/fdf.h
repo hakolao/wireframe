@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 20:02:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 13:15:27 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <stdio.h>
 # include <math.h>
 # include "../libft/libft.h"
+# include "../libmatrix/libmatrix.h"
 
 # define MAP_COLOR ft_rgbtoi(0, 255, 0)
 
@@ -53,8 +54,8 @@ typedef struct		s_canvas
 
 typedef struct 		s_camera
 {
-	t_point			*position;
-	t_matrix4		view_matrix;
+	t_vector		*position;
+	t_matrix		view_matrix;
 	t_canvas		*canvas;
 	t_rgb			*color;
 	double			zoom;
@@ -88,13 +89,10 @@ int					handle_key_events(int key, void *param);
 void				draw(void *mlx, void *mlx_wdw, t_scene *scene);
 
 /*
-** Matrix
+** Scene related functions
 */
-t_matrix4			new_matrix();
-t_matrix4			matrix_add(t_matrix4 mat1, t_matrix4 mat2);
-t_matrix4			matrix_mul(t_matrix4 mat1, t_matrix4 mat2);
-t_vec4				vec_mult_by_matrix(t_vec4 vec, t_matrix4 mat);
-t_matrix4			identity_matrix();
-t_matrix4			scale_matrix(t_matrix4 mat, double scale);
+t_canvas			*new_canvas(int width, int height);
+t_camera			*new_camera(t_vector *position);
+t_scene				*new_scene(t_map *map, t_camera *camera);
 
 #endif

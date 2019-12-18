@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/11 17:59:25 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/18 13:15:49 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 C = clang
 NAME = fdf
 LIBFT = ./libft
+LIBMATRIX = ./libmatrix
 DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
@@ -22,7 +23,7 @@ SOURCES = main.c \
 			input.c \
 			log.c \
 			events.c \
-			matrix.c \
+			scene.c \
 			draw.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
@@ -31,7 +32,8 @@ all: $(DIR_OBJ) $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C ./libft
-	$(CC) $(FLAGS) -L $(LIBFT) -lft -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+	@make -C ./libmatrix
+	$(CC) $(FLAGS) -L $(LIBFT) -lft -L $(LIBMATRIX) -lmatrix -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
 	
 $(DIR_OBJ):
 	@mkdir -p temp

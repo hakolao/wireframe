@@ -6,36 +6,27 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 19:41:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 13:10:31 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-static t_vertex		*new_vertex(int x, int y, int z)
-{
-	t_vertex	*vertex;
-
-	if ((vertex = (t_vertex*)malloc(sizeof(*vertex))) == NULL)
-		return (NULL);
-	vertex->x = x;
-	vertex->y = y;
-	vertex->z = z;
-	return (vertex);
-}
-
 static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 {
-	t_list	*node;
+	t_list		*node;
+	t_vector	*vertex;
 
+	if ((vertex = ft_vector4_new(x, y, z)) == NULL)
+			return (NULL);
 	if (vertices == NULL)
 	{
-		if ((vertices = ft_lstnew(new_vertex(x, y, z), sizeof(t_vertex))) == NULL)
+		if ((vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
 			return (NULL);
 	}
 	else
 	{
-		if ((node = ft_lstnew(new_vertex(x, y, z), sizeof(t_vertex))) == NULL)
+		if ((node = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
 			return (NULL);
 		ft_lstappend(&vertices, node);
 	}

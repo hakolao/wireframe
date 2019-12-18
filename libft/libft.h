@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 18:27:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 13:13:16 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ typedef struct	s_rgb
 	int			g;
 	int			b;
 }				t_rgb;
-
-typedef struct	s_vertex
-{
-	double			x;
-	double			y;
-	double			z;
-}				t_vertex;
-
-typedef struct	s_point
-{
-	double			x;
-	double			y;
-	double			z;
-}				t_point;
- 
-typedef struct	s_vec4
-{
-	double			vec[4];
-}				t_vec4;
-
-typedef struct	s_matrix4
-{
-	t_vec4			vecs[4];
-}				t_matrix4;
 
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
