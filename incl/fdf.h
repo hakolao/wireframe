@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 16:03:41 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:24:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct 		s_camera
 	t_vector		*target;
 	t_vector		*up;
 	t_matrix		*view_matrix;
+	t_matrix		*projection;
 	t_canvas		*canvas;
 	t_rgb			*color;
 	double			zoom;

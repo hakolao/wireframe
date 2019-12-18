@@ -3,22 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrix_scale.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:28:17 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 18:28:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:26:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-void	ft_matrix_scale(t_matrix *mat, double scale)
+t_matrix	*ft_matrix_scale(size_t cols, size_t rows, double scale)
 {
-	int len;
-	int i;
+	t_matrix	*m;
+	size_t		r;
+	size_t		c;
 
-	len = mat->cols * mat->rows;
-	i = 0;
-	while (i < len)
-		mat->m[i++] *= scale;
+	if (cols != rows || (m = ft_matrix_new(cols, rows)) == NULL)
+		return (NULL);
+	r = 0;
+	while (r < rows)
+	{
+		c = 0;
+		while (c < cols)
+		{
+			VALUE_AT(m, r, c) = scale;
+			r++;
+			c++;
+		}
+		r++;
+	}
+	return (m);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 17:02:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:25:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_vector	*ft_vector_new(size_t size);
 t_vector	*ft_vector4_new(double x, double y, double z);
 t_matrix	*ft_vector_to_matrix(const t_vector *vec);
 t_vector	*ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v);
-void		ft_matrix_scale(t_matrix *mat, double scale);
+t_matrix	*ft_matrix_scale(size_t cols, size_t rows, double scale);
 void		ft_vector_scale(t_vector *vec, double scale);
 void		ft_vector_set_all(t_vector *vec, double d);
 void		ft_vector_set_vals(t_vector *vec, double *arr, size_t arr_size);

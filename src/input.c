@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 16:42:49 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:20:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void			anchor_model_to_pos(t_list *vertices, t_vector *pos)
 	t_vector	*offset;
 	t_vector	*new;
 
-	offset = ft_vector_sub(pos, ft_vector4_new(0, 0, 0));
+	offset = ft_vector_sub(ft_vector4_new(0, 0, 0), pos);
 	temp_v = vertices;
 	while (temp_v)
 	{
-		vertex = (t_vector*)(vertices->content);
-		new = ft_vector_add(offset, vertex);
+		vertex = (t_vector*)(temp_v->content);
+		new = ft_vector_add(vertex, offset);
+		new->v[3] = 1;
 		temp_v->content = new;
-		free(vertex);
 		temp_v = temp_v->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putdouble.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:53:20 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 15:09:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:42:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ft_putdouble(double num)
 
 	i = 0;
 	size = 1;
-	tmp = (int)(num * 100);
-	if (num == .0)
+	tmp = (int)round(num * 100);
+	if (num == .0 || tmp == 0)
 	{
 		ft_putstr("0.00");
 		return ;

@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/18 17:17:24 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/18 19:05:04 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBMATRIX = ./libmatrix
 DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -v
 SOURCES = main.c \
 			input.c \
 			log.c \

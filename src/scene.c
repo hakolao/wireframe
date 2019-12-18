@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 16:56:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:27:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_camera		*new_camera(t_vector *position, t_vector *target, t_vector *up)
 	t_canvas	*canvas;
 	t_rgb		*color;
 	t_matrix	*view;
+	t_matrix	*projection;
 
 	if ((camera = (t_camera*)malloc(sizeof(*camera))) == NULL || position == NULL)
 		return (NULL);
@@ -41,11 +42,16 @@ t_camera		*new_camera(t_vector *position, t_vector *target, t_vector *up)
 		return (NULL);
 	if ((view = ft_view_matrix(position, target, up)) == NULL)
 		return (NULL);
+	if ((projection = ft_orthographic_matrix(canvas)) == NULL)
+		return (NULL);
+	ft_putmatrix(projection);
+	ft_putmatrix(view);
 	camera->position = position;
 	camera->canvas = canvas;
 	camera->color = color;
 	camera->zoom = ZOOM;
 	camera->view_matrix = view;
+	camera->projection = projection;
 	return (camera);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 13:17:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:59:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,8 @@
 
 static void		log_vertex(t_list *vertex)
 {
-	ft_putstr("(");
-	ft_putnbr(((t_vector*)(vertex->content))->v[0]);
-	ft_putstr(", ");
-	ft_putnbr(((t_vector*)(vertex->content))->v[1]);
-	ft_putstr(", ");
-	ft_putnbr(((t_vector*)(vertex->content))->v[2]);
-	ft_putstr(")\n");
+	ft_putstr("Vertex: ");
+	ft_putvector((t_vector*)(vertex->content));
 }
 
 void			log_map(t_map *map)

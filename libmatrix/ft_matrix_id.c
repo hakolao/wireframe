@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrix_id.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:13:05 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 16:56:36 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:23:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_matrix *ft_matrix_id(size_t cols, size_t rows)
+t_matrix	*ft_matrix_id(size_t cols, size_t rows)
 {
 	t_matrix 	*m;
 	size_t		r;

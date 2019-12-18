@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:09:34 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 18:33:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:54:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		main(void)
 	ft_putmatrix(res56);
 
 	t_matrix *m7;
-	t_matrix *res71;
+	t_vector *res71;
 	double data7[] = {1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12};
 	m7 = ft_matrix_new(3, 4);
 	ft_matrix_set_vals(m7, data7, 12);
@@ -81,7 +81,7 @@ int		main(void)
 	ft_putstr("v1: ");
 	ft_putvector(v1);
 	ft_putstr("\nres71: ");
-	ft_putmatrix(res71);
+	ft_putvector(res71);
 
 	ft_matrix_free(m1);
 	ft_matrix_free(m2);
@@ -93,6 +93,6 @@ int		main(void)
 	ft_matrix_free(res56);
 	ft_matrix_free(m7);
 	ft_vector_free(v1);
-	ft_matrix_free(res71);
+	ft_vector_free(res71);
 	return (0);
 }
