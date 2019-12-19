@@ -6,11 +6,11 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 13:09:18 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/18 16:10:59 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/19 16:11:53 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-C = clang
+CC = clang
 NAME = libmatrix.a
 DIR_SRC = ./
 DIR_OBJ = temp
@@ -50,7 +50,7 @@ SOURCES = ft_matrix_new.c \
 			ft_vector_cross.c \
 			ft_vector_normalize.c \
 			ft_view_matrix.c \
-			ft_perspective_matrix.c \
+			ft_projection_matrix.c \
 			ft_putmatrix.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:06:36 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/11 13:07:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 15:56:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 ** value to single integer form.
 */
 
-int		ft_rgbtoi(int red, int green, int blue)
+#include "libft.h"
+
+int		ft_rgbtoi(t_rgb rgb)
 {
-	return ((red & 255) << 16) | ((green & 255) << 8 | (blue & 255));
+	return ((rgb.r & 255) << 16) | ((rgb.g & 255) << 8 | (rgb.b & 255));
 }

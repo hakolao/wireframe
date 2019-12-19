@@ -6,12 +6,12 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/19 14:09:52 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/19 16:12:16 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-C = clang
+CC = clang
 NAME = fdf
 LIBFT = ./libft
 LIBMATRIX = ./libmatrix
@@ -42,13 +42,13 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/$(NAME).h
 	@$(CC) $(FLAGS) -I $(HEADERS) -c -o $@ $<
 
 clean:
-	/bin/rm -f $(OBJS)
+	@/bin/rm -f $(OBJS)
 	@make -C $(LIBFT) clean
 	@make -C $(LIBMATRIX) clean
 	@/bin/rm -rf $(DIR_OBJ)
 	
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 	@make -C ./libft/ fclean
 	@make -C ./libmatrix/ fclean
 

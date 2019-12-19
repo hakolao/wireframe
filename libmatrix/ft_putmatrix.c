@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putmatrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:41:16 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 16:48:49 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 14:39:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,18 @@ void	ft_putmatrix(t_matrix *mat)
 	r = 0;
 	if (!mat)
 		return ;
-	ft_putstr("Matrix, cols: ");
-	ft_putint((int)(mat->cols));
-	ft_putstr(" rows: ");
-	ft_putint((int)(mat->rows));
-	ft_putstr("\n");
+	printf("Matrix, cols: %d rows: %d\n", (int)(mat->cols), (int)(mat->rows));
 	while (r < mat->rows)
 	{
 		c = 0;
 		while (c < mat->cols)
 		{
-			ft_putdouble(VALUE_AT(mat, r, c));
+			printf("%2f", (float)VALUE_AT(mat, r, c));
 			if (c < mat->cols - 1)
-				ft_putstr(" ");
+				printf(" ");
 			c++;
 		}
-		ft_putstr("\n");
+		printf("\n");
 		r++;
 	}
 }

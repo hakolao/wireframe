@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 18:24:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:01:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-# define MAP_COLOR ft_rgbtoi(0, 255, 0)
+# define MAP_RED 0
+# define MAP_GREEN 255
+# define MAP_BLUE 0
+# define MAP_COLOR ((MAP_RED & 255) << 16) | ((MAP_GREEN & 255) << 8 | (MAP_BLUE & 255))
 
 typedef struct		s_map
 {
@@ -51,8 +54,9 @@ typedef struct 		s_camera
 	t_vector		*position;
 	t_vector		*target;
 	t_vector		*up;
-	t_matrix		*view_matrix;
+	t_matrix		*view;
 	t_matrix		*projection;
+	t_matrix		*transform;
 	t_canvas		*canvas;
 	t_rgb			*color;
 	double			zoom;

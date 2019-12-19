@@ -6,11 +6,11 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/11 15:33:02 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/19 16:11:39 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-C = clang
+CC = clang
 NAME = libft.a
 DIR_SRC = ./
 DIR_OBJ = temp
@@ -96,7 +96,7 @@ FLAGS = -Wall -Wextra -Werror
 all: $(DIR_OBJ) $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
+	@ar rc $(NAME) $(OBJS)
 
 $(DIR_OBJ):
 	@mkdir -p temp
@@ -105,11 +105,11 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/libft.h
 	@$(CC) $(FLAGS) -I $(HEADERS) -c -o $@ $<
 
 clean:
-	/bin/rm -f $(OBJS)
+	@/bin/rm -f $(OBJS)
 	@/bin/rm -rf $(DIR_OBJ)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 

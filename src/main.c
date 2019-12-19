@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 18:21:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:10:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int	main(int argc, char **argv)
 			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT));
 			return (0);
 		}
-		log_map(map);
+		// log_map(map);
 	}
-	if ((camera = new_camera(ft_vector4_new(0.0, 0.0, -10.0),
+	if ((camera = new_camera(
+					ft_vector4_new(0.0, 0.0, -10.0),
 					ft_vector4_new(0, 0, 0),
 					ft_vector4_new(0, 1, 0))) == NULL)
 		return (0);
