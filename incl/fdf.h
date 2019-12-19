@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 18:01:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 19:30:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,23 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-#define MOVE_SPEED 0.1
+#define MOVE_SPEED 1.0001
 
 # define MAP_RED 0
 # define MAP_GREEN 255
 # define MAP_BLUE 0
 # define MAP_COLOR ((MAP_RED & 255) << 16) | ((MAP_GREEN & 255) << 8 | (MAP_BLUE & 255))
+
+# define X_MIN_LIMIT -100
+# define X_MAX_LIMIT 100
+# define Y_MIN_LIMIT -100
+# define Y_MAX_LIMIT 100
+# define Z_MIN_LIMIT -100
+# define Z_MAX_LIMIT -1
+
+# define X_POS_INIT 0
+# define Y_POS_INIT 0
+# define Z_POS_INIT -10
 
 typedef struct		s_map
 {

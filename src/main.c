@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 18:01:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:44:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 		return (0);
 	draw(scene);
 	mlx_key_hook(mlx_wdw, handle_key_events, scene);
-	mlx_do_key_autorepeaton(mlx_wdw);
+	mlx_do_key_autorepeaton(mlx);
 	mlx_loop(mlx);
 	return (0);
 }
