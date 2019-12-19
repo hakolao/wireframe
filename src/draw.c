@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 16:09:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:44:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_vector		*point_to_screen(t_vector *point, t_scene *scene)
 	return (ft_matrix_mul_vector(scene->camera->transform, point));
 }
 
-static void		draw_pixel(void *mlx, void *mlx_wdw, t_vector *point, t_scene *scene)
+static void		draw_pixel(t_vector *point, t_scene *scene)
 {
 	t_vector	*on_screen;
 	int			color;
@@ -29,13 +29,13 @@ static void		draw_pixel(void *mlx, void *mlx_wdw, t_vector *point, t_scene *scen
 	}
 	// ft_putvector(on_screen);
 	color = ft_rgbtoi(*(scene->camera->color));
-	mlx_pixel_put(mlx, mlx_wdw,
+	mlx_pixel_put(scene->mlx, scene->mlx_wdw,
 				on_screen->v[0] + WINDOW_WIDTH / 2, 
 				on_screen->v[1] + WINDOW_HEIGHT / 2,
 				color);
 }
 
-void	draw(void *mlx, void *mlx_wdw, t_scene *scene)
+void	draw(t_scene *scene)
 {
 	t_list		*vertex;
 	t_matrix	*transform;
@@ -49,9 +49,10 @@ void	draw(void *mlx, void *mlx_wdw, t_scene *scene)
 	ft_putmatrix(scene->camera->view);
 	ft_putmatrix(scene->camera->transform);
 	vertex = scene->map->vertices;
+	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	while (vertex)
 	{
-		draw_pixel(mlx, mlx_wdw, (t_vector*)vertex->content, scene);
+		draw_pixel((t_vector*)vertex->content, scene);
 		vertex = vertex->next;
 	}
 }

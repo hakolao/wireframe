@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 16:10:07 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:45:11 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	main(int argc, char **argv)
 					ft_vector4_new(0, 0, 0),
 					ft_vector4_new(0, 1, 0))) == NULL)
 		return (0);
-	if ((scene = new_scene(map, camera)) == NULL)
+	if ((scene = new_scene(mlx, mlx_wdw, map, camera)) == NULL)
 		return (0);
+	draw(scene);
 	mlx_key_hook(mlx_wdw, handle_key_events, scene);
-	draw(mlx, mlx_wdw, scene);
 	mlx_loop(mlx);
 	return (0);
 }

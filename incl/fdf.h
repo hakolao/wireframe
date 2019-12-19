@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 16:01:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:42:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define ERRNO_INVALID_INPUT 5
 
 # define KEY_ESC 53
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_DOWN 125
+# define KEY_UP 126
 
 # include <mlx.h>
 # include <stdio.h>
@@ -66,6 +70,8 @@ typedef struct		s_scene
 {
 	t_camera		*camera;
 	t_map			*map;
+	void			*mlx;
+	void			*mlx_wdw;
 }					t_scene;
 
 /*
@@ -87,12 +93,12 @@ int					handle_key_events(int key, void *param);
 /*
 ** Draw graphics
 */
-void				draw(void *mlx, void *mlx_wdw, t_scene *scene);
+void				draw(t_scene *scene);
 
 /*
 ** Scene related functions
 */
 t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up);
-t_scene				*new_scene(t_map *map, t_camera *camera);
+t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map, t_camera *camera);
 
 #endif
