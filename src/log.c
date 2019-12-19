@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 17:59:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 21:15:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void			log_map(t_map *map)
 	ft_putstr(", z_max: ");
 	ft_putnbr(map->z_max);
 	ft_putstr("\n");
+	ft_putstr("Center:\n");
+	ft_putvector(map->center);
 }
 
 void			log_error(char *str, char *strerror)

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 20:13:56 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 21:12:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_canvas		*new_canvas()
 		return (NULL);
 	c->width = WINDOW_WIDTH;
 	c->height = WINDOW_HEIGHT;
-	c->near = 1;
-	c->far	= 400;
-	c->angle = M_PI / 2;
+	c->near = 0.1;
+	c->far	= 100;
+	c->angle = 70;
 	return (c);
 }
 
@@ -47,7 +47,6 @@ t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up)
 	camera->position = position;
 	camera->canvas = canvas;
 	camera->color = color;
-	camera->zoom = ZOOM;
 	camera->view = view;
 	camera->projection = projection;
 	camera->transform = NULL;
@@ -62,8 +61,8 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	t_camera	*camera;
 
 	if ((camera = new_camera(
-					ft_vector4_new(X_POS_INIT, Y_POS_INIT, Z_POS_INIT),
-					ft_vector4_new(0, 0, 20000),
+					ft_vector4_new(map->center->v[0], map->center->v[1], Z_POS_INIT),
+					map->center,
 					ft_vector4_new(0, 1, 0))) == NULL)
 		return (NULL);
 	if ((scene = (t_scene*)malloc(sizeof(*scene))) == NULL)

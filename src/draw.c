@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 18:57:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 21:26:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,23 @@ void	draw(t_scene *scene)
 {
 	t_list		*vertex;
 	t_matrix	*transform;
+	t_matrix	*model;
 
+	if ((model = ft_matrix_id(4, 4)) == NULL)
+		return ;
+	VALUE_AT(model, 0, 0) = scene->map->scale;
+	VALUE_AT(model, 1, 1) = scene->map->scale;
+	VALUE_AT(model, 2, 2) = scene->map->scale;
 	if ((transform = ft_matrix_mul(scene->camera->projection, scene->camera->view)) == NULL)
 		return ;
+	if ((transform = ft_matrix_mul(transform, model)) == NULL)
+		return ;
 	if (scene->camera->transform)
+	{
+		ft_matrix_free(model);
 		ft_matrix_free(scene->camera->transform);
+	}
 	scene->camera->transform = transform;
-	ft_putmatrix(scene->camera->projection);
-	ft_putmatrix(scene->camera->view);
-	ft_putmatrix(scene->camera->transform);
 	vertex = scene->map->vertices;
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	while (vertex)

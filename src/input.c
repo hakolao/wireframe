@@ -6,30 +6,11 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 19:21:10 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 21:23:37 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
-
-static void			anchor_model_to_pos(t_list *vertices, t_vector *pos)
-{
-	t_list		*temp_v;
-	t_vector	*vertex;
-	t_vector	*offset;
-	t_vector	*new;
-
-	offset = ft_vector_sub(ft_vector4_new(0, 0, 0), pos);
-	temp_v = vertices;
-	while (temp_v)
-	{
-		vertex = (t_vector*)(temp_v->content);
-		new = ft_vector_add(vertex, offset);
-		new->v[3] = 1;
-		temp_v->content = new;
-		temp_v = temp_v->next;
-	}
-}
 
 static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 {
@@ -83,8 +64,34 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 		else
 			line++;
 	}
-	anchor_model_to_pos(vertices, ft_vector4_new(map->x_max / 2, map->y_max / 2, 0));
 	return (vertices);
+}
+
+t_vector		*map_center(t_list *vertices)
+{
+	t_list 		*tmp;
+	t_vector	*vertex;
+	t_vector	*center;
+	double		res[3];
+	double		i;
+
+	tmp = vertices;
+	i = 0;
+	while (tmp)
+	{
+		vertex = (t_vector*)(tmp->content);
+		res[0] += vertex->v[0];
+		res[1] += vertex->v[1];
+		res[2] += vertex->v[2];
+		i += 1;
+ 		tmp = tmp->next;
+	}
+	res[0] = res[0] / i;
+	res[1] = res[1] / i;
+	res[2] = res[2] / i;
+	if ((center = ft_vector4_new(res[0], res[1], res[2])) == NULL)
+		return (NULL);
+	return (center);
 }
 
 static t_map		*file_to_map(int fd)
@@ -123,8 +130,9 @@ static t_map		*file_to_map(int fd)
 
 t_map				*serialize(char *filename)
 {
-	t_map	*map;
-	int		fd;
+	t_map		*map;
+	t_vector	*center;
+	int			fd;
 
 	map = NULL;
 	if ((fd = open(filename, O_RDONLY)) == -1)
@@ -134,6 +142,10 @@ t_map				*serialize(char *filename)
 	}
 	if ((map = file_to_map(fd)) == NULL)
 		return (NULL);
+	if ((center = map_center(map->vertices)) == NULL)
+		return (NULL);
+	map->center = center;
+	map->scale = SCALE_INIT;
 	close(fd);
 	return (map);
 }
