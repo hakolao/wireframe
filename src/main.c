@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 18:44:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 19:49:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT));
 			return (0);
 		}
-		// log_map(map);
+		log_map(map);
 	}
 
 	mlx = mlx_init();
