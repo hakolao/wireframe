@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 14:37:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 17:21:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ t_matrix	*ft_view_matrix(t_vector *position, t_vector *target,
 			t_vector *up);
 t_matrix	*ft_perspective_matrix(t_canvas *c);
 t_matrix	*ft_orthographic_matrix(t_canvas *c);
+t_vector	*ft_vector_forward(t_vector *position, t_vector *target);
 
 #endif

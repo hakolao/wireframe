@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_add.c                                    :+:      :+:    :+:   */
+/*   ft_vector_forward.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 14:21:09 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 18:06:05 by ohakola          ###   ########.fr       */
+/*   Created: 2019/12/19 17:20:30 by ohakola           #+#    #+#             */
+/*   Updated: 2019/12/19 17:56:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_vector	*ft_vector_add(t_vector *v1, t_vector *v2)
+t_vector	*ft_vector_forward(t_vector *position, t_vector *target)
 {
-	size_t		i;
-	t_vector	*res;
+	t_vector	*forward;
+	t_vector	*forward_unnormalized;
 
-	if (!v1 || !v2 ||
-		!(v1->size == v2->size) ||
-		(res = ft_vector_new(v1->size)) == NULL)
+	if ((forward_unnormalized =
+		ft_vector_sub(position, target)) == NULL)
 		return (NULL);
-	i = 0;
-	while (i < v1->size)
-	{
-		res->v[i] = v1->v[i] + v2->v[i];
-		i++;
-	}
-	return (res);
+	forward_unnormalized->v[3] = 1;
+	if ((forward =
+		ft_vector_normalize(forward_unnormalized)) == NULL)
+		return (NULL);
+	forward->v[3] = 1;
+	return (forward);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 16:36:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:11:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static t_canvas		*new_canvas()
 	c->width = WINDOW_WIDTH;
 	c->height = WINDOW_HEIGHT;
 	c->near = 1;
-	c->far	= 400;
+	c->far	= 40000;
 	c->angle = M_PI / 2;
 	return (c);
 }
 
-t_camera		*new_camera(t_vector *position, t_vector *target, t_vector *up)
+t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up)
 {
 	t_camera	*camera;
 	t_canvas	*canvas;
@@ -51,13 +51,21 @@ t_camera		*new_camera(t_vector *position, t_vector *target, t_vector *up)
 	camera->view = view;
 	camera->projection = projection;
 	camera->transform = NULL;
+	camera->target = target;
+	camera->up = up;
 	return (camera);
 }
 
-t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map, t_camera *camera)
+t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 {
-	t_scene	*scene;
+	t_scene		*scene;
+	t_camera	*camera;
 
+	if ((camera = new_camera(
+					ft_vector4_new(0.0, 0.0, -10.0),
+					ft_vector4_new(0, 0, 0),
+					ft_vector4_new(0, 1, 0))) == NULL)
+		return (NULL);
 	if ((scene = (t_scene*)malloc(sizeof(*scene))) == NULL)
 		return (NULL);
 	scene->camera = camera;

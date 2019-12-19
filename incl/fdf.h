@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 16:42:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:01:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,18 @@
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
 # define KEY_UP 126
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
 
 # include <mlx.h>
 # include <stdio.h>
 # include <math.h>
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
+
+#define MOVE_SPEED 0.1
 
 # define MAP_RED 0
 # define MAP_GREEN 255
@@ -99,6 +105,6 @@ void				draw(t_scene *scene);
 ** Scene related functions
 */
 t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up);
-t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map, t_camera *camera);
+t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
 
 #endif

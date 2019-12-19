@@ -6,12 +6,12 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/19 16:12:16 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/19 17:52:00 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-CC = clang
+CC = gcc
 NAME = fdf
 LIBFT = ./libft
 LIBMATRIX = ./libmatrix

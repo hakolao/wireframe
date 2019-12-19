@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 13:09:18 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/19 16:11:53 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/19 17:21:42 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SOURCES = ft_matrix_new.c \
 			ft_vector_normalize.c \
 			ft_view_matrix.c \
 			ft_projection_matrix.c \
+			ft_vector_forward.c \
 			ft_putmatrix.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))

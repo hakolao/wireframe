@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:56:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 16:21:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:12:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,21 @@ t_matrix			*ft_view_matrix(t_vector *position, t_vector *target,
 					t_vector *up)
 {
 	t_vector	*forward;
-	t_vector	*forward_unnormalized;
 	t_vector	*sideways;
 	t_vector	*v;
 	t_matrix	*view;
 
-	if ((forward_unnormalized = ft_vector_sub(position, target)) == NULL)
-		return (NULL);
-	forward_unnormalized->v[3] = 1;
-	if ((forward =
-		ft_vector_normalize(forward_unnormalized)) == NULL)
+	if ((forward = ft_vector_forward(position, target)) == NULL)
 		return (NULL);
 	if ((sideways = ft_vector_normalize(ft_vector_cross(forward, up))) == NULL)
 		return (NULL);
+	sideways->v[3] = 1;
 	if ((v = ft_vector_cross(sideways, forward)) == NULL)
 		return (NULL);
+	v->v[3] = 1;
 	if ((view = view_matrix(sideways, v, forward, position)) == NULL)
 		return (NULL);
 	ft_vector_free(forward);
-	ft_vector_free(forward_unnormalized);
 	ft_vector_free(sideways);
 	ft_vector_free(v);
 	return (view);
