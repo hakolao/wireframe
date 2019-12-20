@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 21:23:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/20 15:37:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@
 
 typedef struct		s_map
 {
-	t_list			*vertices;
-	int				vertex_count;
+	t_vector		**vertices;
+	size_t			vertex_count;
 	double			x_max;
 	double			y_max;
 	double			z_max;

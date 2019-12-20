@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 21:23:37 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/20 15:49:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 
 static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 {
-	int		x;
-	int		z;
+	int			x;
+	int			z;
 
 	x = 0;
 	while (*line)
@@ -67,31 +67,44 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	return (vertices);
 }
 
-t_vector		*map_center(t_list *vertices)
+t_vector		*map_center(t_map *map)
 {
-	t_list 		*tmp;
-	t_vector	*vertex;
 	t_vector	*center;
 	double		res[3];
-	double		i;
+	size_t		i;
 
-	tmp = vertices;
 	i = 0;
-	while (tmp)
+	while (i < map->vertex_count)
 	{
-		vertex = (t_vector*)(tmp->content);
-		res[0] += vertex->v[0];
-		res[1] += vertex->v[1];
-		res[2] += vertex->v[2];
-		i += 1;
- 		tmp = tmp->next;
+		res[0] += map->vertices[i]->v[0];
+		res[1] += map->vertices[i]->v[1];
+		res[2] += map->vertices[i]->v[2];
+		i++;
 	}
-	res[0] = res[0] / i;
-	res[1] = res[1] / i;
-	res[2] = res[2] / i;
+	res[0] = res[0] / map->vertex_count;
+	res[1] = res[1] / map->vertex_count;
+	res[2] = res[2] / map->vertex_count;
 	if ((center = ft_vector4_new(res[0], res[1], res[2])) == NULL)
 		return (NULL);
 	return (center);
+}
+
+static void			set_vertices_to_map(t_list *vertices, t_map *map)
+{
+	t_vector 	**vs;
+	size_t		i;
+	
+	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL)
+		return ;
+	i = 0;
+	while (vertices)
+	{
+		vs[i] = (t_vector*)(vertices->content);
+		vertices = vertices->next;
+		i++;
+	}
+	map->vertices = vs;
+	free(vertices);
 }
 
 static t_map		*file_to_map(int fd)
@@ -117,7 +130,6 @@ static t_map		*file_to_map(int fd)
 		ft_strdel(&line);
 		y++;
 	}
-	map->vertices = vertices;
 	if (ret == 0)
 		map->y_max = y - 1;
 	if (ret == -1)
@@ -125,6 +137,7 @@ static t_map		*file_to_map(int fd)
 		perror("");
 		return (NULL);
 	}
+	set_vertices_to_map(vertices, map);
 	return (map);
 }
 
@@ -142,7 +155,7 @@ t_map				*serialize(char *filename)
 	}
 	if ((map = file_to_map(fd)) == NULL)
 		return (NULL);
-	if ((center = map_center(map->vertices)) == NULL)
+	if ((center = map_center(map)) == NULL)
 		return (NULL);
 	map->center = center;
 	map->scale = SCALE_INIT;
