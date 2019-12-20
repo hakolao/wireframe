@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 15:49:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/20 16:34:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ t_map				*serialize(char *filename)
 	if ((center = map_center(map)) == NULL)
 		return (NULL);
 	map->center = center;
-	map->scale = SCALE_INIT;
+	map->scale = WINDOW_WIDTH / map->x_max * 0.5;
 	close(fd);
 	return (map);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 15:37:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/20 16:29:56 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@
 # define Z_MAX_LIMIT -1
 
 # define Z_POS_INIT -10
-# define SCALE_INIT 10
 
 typedef struct		s_map
 {
