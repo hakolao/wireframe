@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 17:52:37 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:22:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ static t_matrix		*initial_transform(t_map *map, t_matrix *view,
 	(void)view;
 	(void)projection;
 	if ((transform = ft_scale_matrix(4, 4, map->scale)) == NULL)
-		return (NULL);
-	if ((transform = ft_matrix_id(4, 4)) == NULL)
-		return (NULL);		
+		return (NULL);	
 	return (transform);
 }
 

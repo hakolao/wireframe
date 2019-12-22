@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:07:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:25:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int				log_map(t_map *map)
 	ft_putnbr(map->y_min);
 	ft_putstr(", z_min: ");
 	ft_putnbr(map->z_min);
-	ft_putstr("\n");
 	ft_putstr(", x_max: ");
 	ft_putnbr(map->x_max);
 	ft_putstr(", y_max: ");

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:21:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:22:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 
 static void			set_vertex_limits(t_map *map, t_vector *vertex)
 {
-	ft_putstr("Setting vertex limits \n");
-	ft_putvector(vertex);
 	map->x_max = map->x_max >= vertex->v[0] ? map->x_max : vertex->v[0];
 	map->x_min = map->x_min <= vertex->v[0] ? map->x_min : vertex->v[0];
 	map->y_max = map->y_max >= vertex->v[1] ? map->y_max : vertex->v[1];
