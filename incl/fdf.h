@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 15:20:04 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:05:25 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define UI_VERTICAL_WIDTH 200
-# define UI_HORIZONTAL_HEIGHT 100
-# define VIEW_WIDTH WINDOW_WIDTH - UI_VERTICAL_WIDTH
-# define VIEW_HEIGHT WINDOW_HEIGHT - UI_HORIZONTAL_HEIGHT
+# define WINDOW_HEIGHT 1080
+# define VIEW_SIZE 1000
 
 # define ZOOM_SPEED 0.5
 
@@ -63,10 +61,13 @@ typedef struct		s_map
 {
 	t_vector		**vertices;
 	size_t			vertex_count;
+	double			x_min;
+	double			y_min;
+	double			z_min;
 	double			x_max;
 	double			y_max;
 	double			z_max;
-	double			scale;
+	t_vector		*scale;
 	t_vector		*center;
 }					t_map;
 
@@ -115,7 +116,6 @@ void				draw(t_scene *scene);
 /*
 ** Scene related functions
 */
-t_camera			*new_camera(t_vector *position, t_vector *target, t_vector *up);
 t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
 
 #endif

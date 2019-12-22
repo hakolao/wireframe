@@ -6,19 +6,20 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:28:17 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 16:20:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 17:18:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_matrix	*ft_scale_matrix(size_t cols, size_t rows, double scale)
+t_matrix	*ft_scale_matrix(size_t cols, size_t rows, t_vector *scale)
 {
 	t_matrix	*m;
 	size_t		r;
 	size_t		c;
 
-	if (cols != rows || (m = ft_matrix_new(cols, rows)) == NULL)
+	if (cols != rows || scale->size != rows ||
+		(m = ft_matrix_new(cols, rows)) == NULL)
 	{
 		ft_puterror("Invalid input in ft_matrix_scale.\n");
 		return (NULL);
@@ -29,7 +30,7 @@ t_matrix	*ft_scale_matrix(size_t cols, size_t rows, double scale)
 		c = 0;
 		while (c < cols)
 		{
-			VALUE_AT(m, r, c) = scale;
+			VALUE_AT(m, r, c) = scale->v[r];
 			r++;
 			c++;
 		}

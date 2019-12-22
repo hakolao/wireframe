@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 15:29:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:21:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 			if ((vertices = add_to_list(vertices, x, y, z)) == NULL)
 					return (NULL);
 			map->z_max = map->z_max >= z ? map->z_max : z;
+			map->z_min = map->z_min <= z ? map->z_min : z;
 			map->x_max = map->x_max >= x ? map->x_max : x;
 			(map->vertex_count)++ && x++;	
 		}
@@ -59,47 +60,48 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	return (vertices);
 }
 
-t_vector			*map_center(t_map *map)
+static void			set_vertex_limits(t_map *map, t_vector *vertex)
 {
-	t_vector	*center;
-	double		res[3];
-	size_t		i;
-
-	i = 0;
-	while (i < map->vertex_count)
-	{
-		res[0] += map->vertices[i]->v[0];
-		res[1] += map->vertices[i]->v[1];
-		res[2] += map->vertices[i]->v[2];
-		i++;
-	}
-	res[0] = res[0] / map->vertex_count;
-	res[1] = res[1] / map->vertex_count;
-	res[2] = res[2] / map->vertex_count;
-	if ((center = ft_vector4_new(res[0], res[1], res[2])) == NULL)
-		return (NULL);
-	return (center);
+	ft_putstr("Setting vertex limits \n");
+	ft_putvector(vertex);
+	map->x_max = map->x_max >= vertex->v[0] ? map->x_max : vertex->v[0];
+	map->x_min = map->x_min <= vertex->v[0] ? map->x_min : vertex->v[0];
+	map->y_max = map->y_max >= vertex->v[1] ? map->y_max : vertex->v[1];
+	map->y_min = map->y_min <= vertex->v[1] ? map->y_min : vertex->v[1];
+	map->z_max = map->z_max >= vertex->v[2] ? map->z_max : vertex->v[2];
+	map->z_min = map->z_min <= vertex->v[2] ? map->z_min : vertex->v[2];
 }
 
-static void			set_vertices_to_map(t_list *vertices, t_map *map)
+static int			set_vertices_to_map(t_list *vertices, t_map *map)
 {
 	t_vector 	**vs;
+	t_vector	*shift;
 	size_t		i;
 	
-	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL)
-		return ;
+	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL ||
+		(shift = ft_vector4_new(-map->x_max / 2, -map->y_max / 2, -(map->z_max - map->z_min) / 2)) == NULL)
+		return (0);
+	if (!(map->x_max = 0) && !(map->x_min = 0) && !(map->y_max = 0) &&
+	!(map->y_min = 0) && !(map->z_max = 0) && !(map->z_min = 0))
+		;
 	i = 0;
 	while (vertices)
 	{
-		vs[i] = (t_vector*)(vertices->content);
+		if ((vs[i] = ft_vector_new(4)) == NULL ||
+			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0)
+			return (0);
+		set_vertex_limits(map, vs[i]);
+		ft_vector_free((t_vector*)(vertices->content));
+		vs[i++]->v[3] = 1;
 		vertices = vertices->next;
-		i++;
 	}
 	map->vertices = vs;
+	ft_vector_free(shift);
 	free(vertices);
+	return (1);
 }
 
-static t_map		*file_to_map(int fd, t_map *map)
+static t_map		*file_to_centered_map(int fd, t_map *map)
 {
 	char	*line;
 	int		ret;
@@ -122,29 +124,28 @@ static t_map		*file_to_map(int fd, t_map *map)
 		map->y_max = y - 1;
 	if (ret == -1 && log_perror(""))
 		return (NULL);
-	set_vertices_to_map(vertices, map);
+	if (set_vertices_to_map(vertices, map) == 0)
+		return (NULL);
 	return (map);
 }
 
 t_map				*serialize(char *filename)
 {
 	t_map		*map;
-	t_vector	*center;
 	int			fd;
 
 	if ((map = (t_map*)malloc(sizeof(*map))) == NULL)
 		return (NULL);
-	if ((fd = open(filename, O_RDONLY)) == -1)
-	{
-		perror("");
+	if ((fd = open(filename, O_RDONLY)) == -1 && log_perror(""))
 		return (NULL);
-	}
-	if ((map = file_to_map(fd, map)) == NULL)
+	if ((map = file_to_centered_map(fd, map)) == NULL ||
+		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
+		(map->scale = ft_vector4_new(
+			 VIEW_SIZE / (map->x_max - map->x_min),
+			 VIEW_SIZE / (map->y_max - map->y_min),
+			 VIEW_SIZE / (map->z_max - map->z_min)
+		)) == NULL)
 		return (NULL);
-	if ((center = map_center(map)) == NULL)
-		return (NULL);
-	map->center = center;
-	map->scale = WINDOW_WIDTH / map->x_max * 0.5;
 	close(fd);
 	return (map);
 }

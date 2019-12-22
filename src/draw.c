@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 17:53:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 17:34:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 t_vector			*point_to_screen(t_vector *point, t_scene *scene)
 {
-	return (ft_matrix_mul_vector(scene->camera->transform, point));
+	t_vector	*on_screen;
+
+	if ((on_screen = ft_vector_new(4)) == NULL ||
+		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == 0)
+		return (NULL);
+	return (on_screen);
 }
 
 // static void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
@@ -53,18 +58,6 @@ t_vector			*point_to_screen(t_vector *point, t_scene *scene)
 // 	}
 // }
 
-static t_matrix		*model_matrix(t_scene *scene)
-{
-	t_matrix	*model;
-
-	if ((model = ft_matrix_id(4, 4)) == NULL)
-		return (NULL);
-	VALUE_AT(model, 0, 0) = scene->map->scale;
-	VALUE_AT(model, 1, 1) = scene->map->scale;
-	VALUE_AT(model, 2, 2) = scene->map->scale;
-	return (model);
-}
-
 static void			draw_map(t_scene *scene)
 {
 	t_vector	*on_screen1;
@@ -81,10 +74,11 @@ static void			draw_map(t_scene *scene)
 			exit(1);
 		}
 		mlx_pixel_put(scene->mlx, scene->mlx_wdw,
-			on_screen1->v[0] + WINDOW_WIDTH / 2 - (scene->map->x_max / 2) * scene->map->scale,
-			on_screen1->v[1] + WINDOW_HEIGHT / 2 - (scene->map->y_max / 2) * scene->map->scale,
+			on_screen1->v[0] + WINDOW_WIDTH / 2,
+			on_screen1->v[1] + WINDOW_HEIGHT / 2,
 			color);
 		// draw_line(on_screen1, on_screen2, color, scene);
+		ft_vector_free(on_screen1);
 		i++;
 	}
 }
@@ -109,30 +103,9 @@ static void			draw_map(t_scene *scene)
 // 	free(vectors);
 // }
 
-static void			set_transform(t_scene *scene)
-{
-	t_matrix	*transform;
-	t_matrix	*model;
-
-	if ((model = model_matrix(scene)) == NULL)
-		return ;
-	// if ((transform = ft_matrix_mul(scene->camera->projection, scene->camera->view)) == NULL)
-	// 	return ;
-	if ((transform = ft_matrix_id(4, 4)) == NULL)
-		return ;
-	if ((transform = ft_matrix_mul(transform, model)) == NULL)
-		return ;
-	if (scene->camera->transform)
-	{
-		ft_matrix_free(model);
-		ft_matrix_free(scene->camera->transform);
-	}
-	scene->camera->transform = transform;
-}
 
 void				draw(t_scene *scene)
 {
-	set_transform(scene);
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	// draw_axes(scene);
 	draw_map(scene);
