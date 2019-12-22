@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_set_vals.c                               :+:      :+:    :+:   */
+/*   ft_scale_matrix.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 16:03:48 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 16:26:41 by ohakola          ###   ########.fr       */
+/*   Created: 2019/12/17 18:28:17 by ohakola           #+#    #+#             */
+/*   Updated: 2019/12/22 16:20:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-int		ft_matrix_set_vals(t_matrix *mat, double *arr, size_t arr_size)
+t_matrix	*ft_scale_matrix(size_t cols, size_t rows, double scale)
 {
-	size_t	r;
-	size_t	c;
-	size_t	len;
+	t_matrix	*m;
+	size_t		r;
+	size_t		c;
 
-	len = mat->cols * mat->rows;
-	if (arr_size != len || !mat || !arr)
+	if (cols != rows || (m = ft_matrix_new(cols, rows)) == NULL)
 	{
-		ft_puterror("Invalid input in ft_matrix_set_vals.\n");
-		return (0);
+		ft_puterror("Invalid input in ft_matrix_scale.\n");
+		return (NULL);
 	}
 	r = 0;
-	while (r < mat->rows)
+	while (r < rows)
 	{
 		c = 0;
-		while (c < mat->cols)
+		while (c < cols)
 		{
-			VALUE_AT(mat, r, c) = arr[c * (mat)->rows + r];
+			VALUE_AT(m, r, c) = scale;
+			r++;
 			c++;
 		}
 		r++;
 	}
-	return (1);
+	return (m);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:56:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 18:12:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 16:47:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,26 @@ t_matrix			*ft_view_matrix(t_vector *position, t_vector *target,
 {
 	t_vector	*forward;
 	t_vector	*sideways;
+	t_vector	*cross_forward_up;
 	t_vector	*v;
 	t_matrix	*view;
 
-	if ((forward = ft_vector_forward(position, target)) == NULL)
+	if ((cross_forward_up = ft_vector_new(position->size)) == NULL ||
+		(sideways = ft_vector_new(position->size)) == NULL ||
+		(v = ft_vector_new(position->size)) == NULL ||
+		(forward = ft_vector_new(position->size)) == NULL ||
+		ft_vector_forward(position, target, forward) == 0 ||
+		ft_vector_cross(forward, up, cross_forward_up) == 0 ||
+		ft_vector_normalize(cross_forward_up, sideways) == 0 ||
+		ft_vector_cross(sideways, forward, v) == 0 ||
+		(view = view_matrix(sideways, v, forward, position)) == NULL)
+	{
+		ft_puterror("Invalid input or smth went wrong in ft_view_matrix.\n");
 		return (NULL);
-	if ((sideways = ft_vector_normalize(ft_vector_cross(forward, up))) == NULL)
-		return (NULL);
-	sideways->v[3] = 1;
-	if ((v = ft_vector_cross(sideways, forward)) == NULL)
-		return (NULL);
-	v->v[3] = 1;
-	if ((view = view_matrix(sideways, v, forward, position)) == NULL)
-		return (NULL);
+	}
 	ft_vector_free(forward);
 	ft_vector_free(sideways);
+	ft_vector_free(cross_forward_up);
 	ft_vector_free(v);
 	return (view);
 }

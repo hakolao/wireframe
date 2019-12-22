@@ -6,15 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:34:31 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 18:03:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 16:16:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_vector 	*ft_vector_new(size_t size)
+t_vector	*ft_vector_new(size_t size)
 {
-	t_vector 	*vec;
+	t_vector	*vec;
 	size_t		i;
 
 	if ((vec = (t_vector *)malloc(sizeof(*vec))) == NULL)

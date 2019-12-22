@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 14:27:39 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 17:15:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 16:07:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ double		ft_vector_dot(t_vector *v1, t_vector *v2)
 
 	if (!v1 || !v2 || !(v1->size == v2->size))
 	{
-		ft_puterror("Invalid vector sizes for dot product\n");
+		ft_puterror("Invalid input in ft_vector_dot.\n");
 		return (0);
 	}
 	i = 0;

@@ -5,35 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 18:28:17 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 15:57:01 by ohakola          ###   ########.fr       */
+/*   Created: 2019/12/22 16:21:21 by ohakola           #+#    #+#             */
+/*   Updated: 2019/12/22 16:23:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_matrix	*ft_matrix_scale(size_t cols, size_t rows, double scale)
+int		ft_matrix_scale(t_matrix *mat, t_matrix *scale, t_matrix *res)
 {
-	t_matrix	*m;
-	size_t		r;
-	size_t		c;
-
-	if (cols != rows || (m = ft_matrix_new(cols, rows)) == NULL)
+	if (!mat || !scale || !ft_dimensions_equal(mat, scale))
 	{
 		ft_puterror("Invalid input in ft_matrix_scale.\n");
-		return (NULL);
+		return (0);
 	}
-	r = 0;
-	while (r < rows)
-	{
-		c = 0;
-		while (c < cols)
-		{
-			VALUE_AT(m, r, c) = scale;
-			r++;
-			c++;
-		}
-		r++;
-	}
-	return (m);
+	return (ft_matrix_mul(mat, scale, res));
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 16:01:18 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 16:44:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ int			ft_matrix_mul_double(const t_matrix *m1,
 			const double d, t_matrix *res);
 t_vector	*ft_vector_new(size_t size);
 t_vector	*ft_vector4_new(double x, double y, double z);
-t_matrix	*ft_vector_to_matrix(const t_vector *vec);
+int			ft_vector_to_matrix(const t_vector *vec, t_matrix *res);
 int			ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v,
 			t_vector *res);
-t_matrix	*ft_matrix_scale(size_t cols, size_t rows, double scale);
-void		ft_vector_scale(t_vector *vec, double scale);
-void		ft_vector_set_all(t_vector *vec, double d);
-void		ft_vector_set_vals(t_vector *vec, double *arr, size_t arr_size);
-void		ft_matrix_set_vals(t_matrix *mat, double *arr, size_t arr_size);
+t_matrix	*ft_scale_matrix(size_t cols, size_t rows, double scale);
+int			ft_matrix_scale(t_matrix *mat, t_matrix *scale, t_matrix *res);
+int			ft_vector_scale(t_vector *vec, t_vector *scale);
+int			ft_vector_set_all(t_vector *vec, double d);
+int			ft_vector_set_vals(t_vector *vec, double *arr, size_t arr_size);
+int			ft_matrix_set_vals(t_matrix *mat, double *arr, size_t arr_size);
 int			ft_dimensions_equal(const t_matrix *m1, const t_matrix *m2);
 void		ft_putint_fd(int nb, int fd);
 void 		ft_putstr_fd(char const *str, int fd);
@@ -70,22 +71,22 @@ void 		ft_puterror(char *err);
 void		ft_putstr(char const *str);
 void		ft_putint(int nb);
 size_t		ft_strlen(const char *str);
-void		ft_putdouble(double num);
 void		ft_putmatrix(t_matrix *mat);
-void		ft_matrix_set_all(t_matrix *mat, double nb);
+int			ft_matrix_set_all(t_matrix *mat, double nb);
 void		ft_matrix_free(t_matrix *mat);
 void		ft_vector_free(t_vector *vec);
 void		ft_putvector(t_vector *vec);
 double		ft_vector_mag(t_vector *vec);
-t_vector	*ft_vector_normalize(t_vector *vec);
-t_vector	*ft_vector_sub(t_vector *v1, t_vector *v2);
-t_vector	*ft_vector_add(t_vector *v1, t_vector *v2);
+int			ft_vector_normalize(t_vector *vec, t_vector *res);
+int			ft_vector_sub(t_vector *v1, t_vector *v2, t_vector *res);
+int			ft_vector_add(t_vector *v1, t_vector *v2, t_vector *res);
 double		ft_vector_dot(t_vector *v1, t_vector *v2);
-t_vector	*ft_vector_cross(t_vector *v1, t_vector *v2);
+int			ft_vector_cross(t_vector *v1, t_vector *v2, t_vector *res);
 t_matrix	*ft_view_matrix(t_vector *position, t_vector *target,
 			t_vector *up);
 t_matrix	*ft_perspective_matrix(t_canvas *c);
 t_matrix	*ft_orthographic_matrix(t_canvas *c);
-t_vector	*ft_vector_forward(t_vector *position, t_vector *target);
-
+int			ft_vector_forward(t_vector *position, t_vector *target,
+			t_vector *res);
+			
 #endif

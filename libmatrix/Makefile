@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 13:09:18 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/22 15:41:47 by ohakola          ###   ########.fr        #
+#    Updated: 2019/12/22 16:23:38 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SOURCES = ft_matrix_new.c \
 			ft_matrix_mul.c \
 			ft_matrix_id.c \
 			ft_matrix_set_all.c \
+			ft_scale_matrix.c \
 			ft_matrix_scale.c \
 			ft_matrix_set_vals.c \
 			ft_dimensions_equal.c \
@@ -29,7 +30,6 @@ SOURCES = ft_matrix_new.c \
 			ft_matrix_mul_vector.c \
 			ft_putint_fd.c \
 			ft_putint.c \
-			ft_putdouble.c \
 			ft_puterror.c \
 			ft_putstr_fd.c \
 			ft_putstr.c \

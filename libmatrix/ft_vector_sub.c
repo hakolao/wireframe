@@ -6,26 +6,28 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 14:18:04 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 17:56:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 16:28:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_vector	*ft_vector_sub(t_vector *v1, t_vector *v2)
+int		ft_vector_sub(t_vector *v1, t_vector *v2, t_vector *res)
 {
 	size_t		i;
-	t_vector	*res;
 
 	if (!v1 || !v2 ||
 		!(v1->size == v2->size) ||
-		(res = ft_vector_new(v1->size)) == NULL)
-		return (NULL);
+		!(v1->size == res->size))
+	{
+		ft_puterror("Invalid input in ft_vector_sub.\n");
+		return (0);
+	}
 	i = 0;
 	while (i < v1->size)
 	{
 		res->v[i] = v1->v[i] - v2->v[i];
 		i++;
 	}
-	return (res);
+	return (1);
 }
