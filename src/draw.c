@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 19:01:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 20:04:32 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,63 +22,137 @@ t_vector			*point_to_screen(t_vector *point, t_scene *scene)
 	return (on_screen);
 }
 
-// static void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
-// {
-//     int dx;
-// 	int	dy;
-// 	int	p;
-// 	int	x;
-// 	int	y;
- 
-// 	dx = point2->v[0] - point1->v[0];
-// 	dy = point2->v[1] - point1->v[1];
-// 	x = point1->v[0];
-// 	y = point1->v[1];
-// 	p = 2 * dy - dx;
-// 	while (x < point2->v[0])
-// 	{
-// 		if ( p >= 0)
-// 		{
-// 			mlx_pixel_put(scene->mlx, scene->mlx_wdw,
-// 				x + WINDOW_WIDTH / 2 - (scene->map->x_max / 2) * scene->map->scale,
-// 				y + WINDOW_HEIGHT / 2 - (scene->map->y_max / 2) * scene->map->scale,
-// 				color);
-// 			y = y + 1;
-// 			p = p + 2 * dy - 2 * dx;
-// 		}
-// 		else
-// 		{
-// 			mlx_pixel_put(scene->mlx, scene->mlx_wdw,
-// 				x + WINDOW_WIDTH / 2 - (scene->map->x_max / 2) * scene->map->scale,
-// 				y + WINDOW_HEIGHT / 2 - (scene->map->y_max / 2) * scene->map->scale,
-// 				color);
-// 			p = p + 2 * dy;
-// 		}
-// 		x = x + 1;
-// 	}
-// }
+static void			plot_pixel(int x, int y, int color, t_scene *scene)
+{
+	mlx_pixel_put(
+		scene->mlx,
+		scene->mlx_wdw,
+		x + WINDOW_WIDTH / 2,
+		y + WINDOW_HEIGHT / 2,
+	color);
+}
+
+static void			plot_line_low(t_vector *point1, t_vector *point2, int color, t_scene *scene)
+{
+	int	dx;
+	int	dy;
+	int	x;
+	int	y;
+	int	yi;
+	int	p;
+
+	yi = 1;
+	dx = point2->v[0] - point1->v[0];
+	dy = point2->v[1] - point1->v[1];
+	if (dy < 0)
+	{
+		yi = -1;
+		dy = -dy;
+	}
+	p = 2 * dy - dx;
+	y = point1->v[1];
+	x = point1->v[0];
+	while (x < point2->v[0])
+	{
+		plot_pixel(x, y, color, scene);
+		if (p > 0)
+		{
+			y = y + yi;
+			p = p - 2 * dx;
+		}
+		p = p + 2 * dy;
+		x += 1;
+	}
+}
+
+static void			plot_line_high(t_vector *point1, t_vector *point2, int color, t_scene *scene)
+{
+	int	dx;
+	int	dy;
+	int	x;
+	int	y;
+	int	xi;
+	int	p;
+
+	xi = 1;
+	dx = point2->v[0] - point1->v[0];
+	dy = point2->v[1] - point1->v[1];
+	if (dx < 0)
+	{
+		xi = -1;
+		dx = -dx;
+	}
+	p = 2 * dx - dy;
+	y = point1->v[1];
+	x = point1->v[0];
+	while (y < point2->v[0])
+	{
+		plot_pixel(x, y, color, scene);
+		if (p > 0)
+		{
+			x = x + xi;
+			p = p - 2 * dy;
+		}
+		p = p + 2 * dx;
+		y += 1;
+	}
+}
+
+static void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
+{
+	if (abs((int)(point2->v[1] - point1->v[1])) <
+		abs((int)(point2->v[0] - point1->v[0])))
+	{
+		if (point1->v[0] > point2->v[0])
+			plot_line_low(point2, point1, color, scene);
+		else
+			plot_line_low(point1, point2, color, scene);
+	}
+	else
+	{
+		if (point1->v[1] > point2->v[1])
+			plot_line_high(point2, point1, color, scene);
+		else
+			plot_line_high(point1, point2, color, scene);
+	}
+}
 
 static void			draw_map(t_scene *scene)
 {
 	t_vector	*on_screen1;
+	t_vector	*on_screen2;
 	int			color;
 	size_t		i;
 	
 	color = ft_rgbtoi(*(scene->camera->color));
 	i = 0;
-	while (i < scene->map->vertex_count)
+	on_screen1 = NULL;
+	on_screen2 = NULL;
+	while (i < scene->map->vertex_count - 1)
 	{
-		if ((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL)
+		if ((i + 1) % (scene->map->x + 1) != 0)
 		{
-			log_error("Something failed in point_to_screen.", "");
-			exit(1);
+			if ((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
+				(on_screen2 = point_to_screen(scene->map->vertices[i + 1], scene)) == NULL)
+			{
+				log_error("Something failed in point_to_screen.", "");
+				exit(1);
+			}
+			draw_line(on_screen1, on_screen2, color, scene);
 		}
-		mlx_pixel_put(scene->mlx, scene->mlx_wdw,
-			on_screen1->v[0] + WINDOW_WIDTH / 2,
-			on_screen1->v[1] + WINDOW_HEIGHT / 2,
-			color);
+		// if (i + 1 + scene->map->x < scene->map->vertex_count && 
+		// 	((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
+		// 	(on_screen2 =
+		// 		point_to_screen(scene->map->vertices[i + 1 + scene->map->x], scene)) == NULL))
+		// {
+		// 	log_error("Something failed in point_to_screen.", "");
+		// 	exit(1);
+		// }
 		// draw_line(on_screen1, on_screen2, color, scene);
-		ft_vector_free(on_screen1);
+		// if (on_screen1)
+		// 	ft_vector_free(on_screen1);
+		// if (on_screen2)
+		// 	ft_vector_free(on_screen2);
 		i++;
 	}
 }

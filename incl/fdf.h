@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:05:25 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:08:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct		s_map
 	double			x_max;
 	double			y_max;
 	double			z_max;
+	size_t			x;
+	size_t			y;
 	t_vector		*scale;
 	t_vector		*center;
 }					t_map;

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:25:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:11:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int				log_map(t_map *map)
 	}
 	ft_putstr("\nMAP:\nvertex_count: ");
 	ft_putnbr(map->vertex_count);
+	ft_putstr(", x: ");
+	ft_putnbr(map->x);
+	ft_putstr(", y: ");
+	ft_putnbr(map->y);
 	ft_putstr(", x_min: ");
 	ft_putnbr(map->x_min);
 	ft_putstr(", y_min: ");
