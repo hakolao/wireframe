@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 16:09:57 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:19:47 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		log_vertex(t_vector *vertex)
 	ft_putvector(vertex);
 }
 
-void			log_map(t_map *map)
+int				log_map(t_map *map)
 {
 	size_t	i;
 
@@ -39,11 +39,19 @@ void			log_map(t_map *map)
 	ft_putstr("\n");
 	ft_putstr("Center:\n");
 	ft_putvector(map->center);
+	return (1);
 }
 
-void			log_error(char *str, char *strerror)
+int				log_error(char *str, char *strerror)
 {
 	ft_putstr_fd(strerror, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(str, 2);
+	return (1);
+}
+
+int				log_perror(char *str)
+{
+	perror(str);
+	return (1);
 }

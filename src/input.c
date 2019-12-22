@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 16:34:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:27:29 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,9 @@ static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 	t_list		*node;
 	t_vector	*vertex;
 
-	if ((vertex = ft_vector4_new(x, y, z)) == NULL)
-			return (NULL);
-	if (vertices == NULL)
-	{
-		if ((vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
-			return (NULL);
-	}
+	if (((vertex = ft_vector4_new(x, y, z)) == NULL || vertices == NULL) &&
+		(vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
+		return (NULL);
 	else
 	{
 		if ((node = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
@@ -41,12 +37,9 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	x = 0;
 	while (*line)
 	{
-		if (!(*line == ' ' || *line == '-' || ft_isdigit(*line)))
-		{
-			ft_putchar(*line);
-			log_error(ERR_INVALID_INPUT, strerror(ERRNO_INVALID_INPUT));
+		if (!(*line == ' ' || *line == '-' || ft_isdigit(*line)) &&
+			log_error(ERR_INVALID_INPUT, strerror(ERRNO_INVALID_INPUT)))
 			return (NULL);
-		}
 		if (ft_isdigit(*line))
 		{
 			z = ft_atoi(line);
@@ -107,16 +100,13 @@ static void			set_vertices_to_map(t_list *vertices, t_map *map)
 	free(vertices);
 }
 
-static t_map		*file_to_map(int fd)
+static t_map		*file_to_map(int fd, t_map *map)
 {
 	char	*line;
 	int		ret;
 	int		y;
 	t_list	*vertices;
-	t_map	*map;
 
-	if ((map = (t_map*)malloc(sizeof(*map))) == NULL)
-		return (NULL);
 	line = NULL;
 	vertices = NULL;
 	y = 0;
@@ -125,18 +115,14 @@ static t_map		*file_to_map(int fd)
 	map->z_max = 0;
 	while ((ret = get_next_line(fd, &line)) == 1)
 	{
-		if ((vertices = add_vertices(vertices, line, y, map)) == NULL)
+		if ((vertices = add_vertices(vertices, line, y++, map)) == NULL)
 			return (NULL);
 		ft_strdel(&line);
-		y++;
 	}
 	if (ret == 0)
 		map->y_max = y - 1;
-	if (ret == -1)
-	{
-		perror("");
+	if (ret == -1 && log_perror(""))
 		return (NULL);
-	}
 	set_vertices_to_map(vertices, map);
 	return (map);
 }
@@ -147,13 +133,14 @@ t_map				*serialize(char *filename)
 	t_vector	*center;
 	int			fd;
 
-	map = NULL;
+	if ((map = (t_map*)malloc(sizeof(*map))) == NULL)
+		return (NULL);
 	if ((fd = open(filename, O_RDONLY)) == -1)
 	{
 		perror("");
 		return (NULL);
 	}
-	if ((map = file_to_map(fd)) == NULL)
+	if ((map = file_to_map(fd, map)) == NULL)
 		return (NULL);
 	if ((center = map_center(map)) == NULL)
 		return (NULL);

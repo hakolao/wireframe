@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 16:29:56 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:20:04 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ t_map				*serialize(char *filename);
 /*
 ** Logging functions
 */
-void				log_map(t_map *map);
-void				log_error(char *str, char *strerror);
+int					log_map(t_map *map);
+int					log_error(char *str, char *strerror);
+int					log_perror(char *str);
 
 /*
 ** Event handling
