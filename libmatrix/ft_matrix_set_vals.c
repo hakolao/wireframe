@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrix_set_vals.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 16:03:48 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 18:03:17 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:58:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	ft_matrix_set_vals(t_matrix *mat, double *arr, size_t arr_size)
 	size_t	len;
 
 	len = mat->cols * mat->rows;
-	if (arr_size != len)
+	if (arr_size != len || !mat || !arr)
 	{
-		ft_puterror("Invalid array passed (size)\n");
-		return;
+		ft_puterror("Invalid input in ft_matrix_set_vals.\n");
+		return ;
 	}
 	r = 0;
 	while (r < mat->rows)

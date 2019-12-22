@@ -6,25 +6,23 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:28:43 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 15:03:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:45:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_vector	*ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v)
+int		ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v,
+		t_vector *res)
 {
-	t_vector	*res;
 	size_t		r;
 	size_t		c;
 
-	if (m1->cols != v->size)
+	if (m1->cols != v->size || v->size != res->size)
 	{
-		ft_puterror("Invalid matrix in matrix vector multiplcation\n");
-		return (NULL);
+		ft_puterror("Invalid input in ft_matrix_mul_vector\n");
+		return (0);
 	}
-	if ((res = ft_vector_new(m1->rows)) == NULL)
-		return (NULL);
 	r = 0;
 	while (r < m1->rows)
 	{
@@ -36,5 +34,5 @@ t_vector	*ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v)
 		}
 		r++;
 	}
-	return (res);
+	return (1);
 }

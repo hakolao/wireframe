@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:28:17 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 17:26:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:57:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_matrix	*ft_matrix_scale(size_t cols, size_t rows, double scale)
 	size_t		c;
 
 	if (cols != rows || (m = ft_matrix_new(cols, rows)) == NULL)
+	{
+		ft_puterror("Invalid input in ft_matrix_scale.\n");
 		return (NULL);
+	}
 	r = 0;
 	while (r < rows)
 	{
