@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 15:27:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:29:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 					return (NULL);
 			map->z_max = map->z_max >= z ? map->z_max : z;
 			map->x_max = map->x_max >= x ? map->x_max : x;
-			(map->vertex_count)++;
-			x++;
+			(map->vertex_count)++ && x++;	
 		}
 		else
 			line++;
@@ -60,7 +59,7 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	return (vertices);
 }
 
-t_vector		*map_center(t_map *map)
+t_vector			*map_center(t_map *map)
 {
 	t_vector	*center;
 	double		res[3];

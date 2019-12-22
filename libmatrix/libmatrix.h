@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 17:21:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 15:43:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ typedef struct		s_canvas
 
 t_matrix	*ft_matrix_new(size_t cols, size_t rows);
 t_matrix	*ft_matrix_id(size_t cols, size_t rows);
-t_matrix	*ft_matrix_add_double(const t_matrix *m1, const double d);
-t_matrix	*ft_matrix_add(const t_matrix *m1, const t_matrix *m2);
+int			ft_matrix_add_double(const t_matrix *m1, const double d, t_matrix *res);
+int			ft_matrix_add(const t_matrix *m1, const t_matrix *m2, t_matrix *res);
+int			ft_matrix_inv(t_matrix *mat, t_matrix *res);
 t_matrix	*ft_matrix_sub_double(const t_matrix *m1, const double d);
 t_matrix	*ft_matrix_sub(const t_matrix *m1, const t_matrix *m2);
 t_matrix	*ft_matrix_mul(const t_matrix *m1, const t_matrix *m2);
-t_matrix	*ft_matrix_mul_double(const t_matrix *m1, const double d);
+int			ft_matrix_mul_double(const t_matrix *m1,
+			const double d, t_matrix *res);
 t_vector	*ft_vector_new(size_t size);
 t_vector	*ft_vector4_new(double x, double y, double z);
 t_matrix	*ft_vector_to_matrix(const t_vector *vec);
