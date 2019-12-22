@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:22:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:42:37 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 			map->z_max = map->z_max >= z ? map->z_max : z;
 			map->z_min = map->z_min <= z ? map->z_min : z;
 			map->x_max = map->x_max >= x ? map->x_max : x;
-			(map->vertex_count)++ && x++;	
+			(map->vertex_count)++;
+			x++;	
 		}
 		else
 			line++;
@@ -60,7 +61,7 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	return (vertices);
 }
 
-static void			set_vertex_limits(t_map *map, t_vector *vertex)
+static int			set_vertex_limits(t_map *map, t_vector *vertex)
 {
 	map->x_max = map->x_max >= vertex->v[0] ? map->x_max : vertex->v[0];
 	map->x_min = map->x_min <= vertex->v[0] ? map->x_min : vertex->v[0];
@@ -68,6 +69,7 @@ static void			set_vertex_limits(t_map *map, t_vector *vertex)
 	map->y_min = map->y_min <= vertex->v[1] ? map->y_min : vertex->v[1];
 	map->z_max = map->z_max >= vertex->v[2] ? map->z_max : vertex->v[2];
 	map->z_min = map->z_min <= vertex->v[2] ? map->z_min : vertex->v[2];
+	return (1);
 }
 
 static int			set_vertices_to_map(t_list *vertices, t_map *map)
@@ -77,7 +79,9 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 	size_t		i;
 	
 	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL ||
-		(shift = ft_vector4_new(-map->x_max / 2, -map->y_max / 2, -(map->z_max - map->z_min) / 2)) == NULL)
+		(shift = ft_vector4_new(
+			-map->x_max / 2, -map->y_max / 2, -(map->z_max - map->z_min) / 2)
+			) == NULL)
 		return (0);
 	if (!(map->x_max = 0) && !(map->x_min = 0) && !(map->y_max = 0) &&
 	!(map->y_min = 0) && !(map->z_max = 0) && !(map->z_min = 0))
@@ -86,9 +90,9 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 	while (vertices)
 	{
 		if ((vs[i] = ft_vector_new(4)) == NULL ||
-			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0)
+			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0 ||
+			set_vertex_limits(map, vs[i]))
 			return (0);
-		set_vertex_limits(map, vs[i]);
 		ft_vector_free((t_vector*)(vertices->content));
 		vs[i++]->v[3] = 1;
 		vertices = vertices->next;
