@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 20:04:32 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 20:19:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,39 @@ static void			plot_line_high(t_vector *point1, t_vector *point2, int color, t_sc
 	}
 }
 
+static double		ft_abs(double nb)
+{
+	return (nb >= 0 ? nb : -nb);
+}
+
 static void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
 {
-	if (abs((int)(point2->v[1] - point1->v[1])) <
-		abs((int)(point2->v[0] - point1->v[0])))
+	if (ft_abs((point2->v[1] - point1->v[1])) <
+		ft_abs((point2->v[0] - point1->v[0])))
 	{
 		if (point1->v[0] > point2->v[0])
+		{
+			ft_putstr("Plot line low p2->p1.\n");
 			plot_line_low(point2, point1, color, scene);
+		}
 		else
+		{
+			ft_putstr("Plot line low p1->p2.\n");
 			plot_line_low(point1, point2, color, scene);
+		}
 	}
 	else
 	{
 		if (point1->v[1] > point2->v[1])
+		{
+			ft_putstr("Plot line high p2->p1.\n");
 			plot_line_high(point2, point1, color, scene);
+		}
 		else
+		{
+			ft_putstr("Plot line high p1->p2.\n");
 			plot_line_high(point1, point2, color, scene);
+		}
 	}
 }
 
@@ -139,20 +156,22 @@ static void			draw_map(t_scene *scene)
 				exit(1);
 			}
 			draw_line(on_screen1, on_screen2, color, scene);
+			ft_vector_free(on_screen1);
+			ft_vector_free(on_screen2);
 		}
-		// if (i + 1 + scene->map->x < scene->map->vertex_count && 
-		// 	((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
-		// 	(on_screen2 =
-		// 		point_to_screen(scene->map->vertices[i + 1 + scene->map->x], scene)) == NULL))
-		// {
-		// 	log_error("Something failed in point_to_screen.", "");
-		// 	exit(1);
-		// }
-		// draw_line(on_screen1, on_screen2, color, scene);
-		// if (on_screen1)
-		// 	ft_vector_free(on_screen1);
-		// if (on_screen2)
-		// 	ft_vector_free(on_screen2);
+		if (i / scene->map->x < scene->map->y)
+		{
+			if ((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
+				(on_screen2 =
+					point_to_screen(scene->map->vertices[i + 1 + scene->map->x], scene)) == NULL)
+			{
+				log_error("Something failed in point_to_screen.", "");
+				exit(1);
+			}
+			draw_line(on_screen1, on_screen2, color, scene);
+			ft_vector_free(on_screen1);
+			ft_vector_free(on_screen2);
+		}
 		i++;
 	}
 }
