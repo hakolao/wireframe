@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:09:34 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/18 18:54:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 16:50:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(void)
 
 	t_matrix *m3;
 	t_matrix *m4;
-	t_matrix *res34;
+	t_matrix *res34 = ft_matrix_new(4, 4);
 	double data3[] = {5.50, 3.30, 2.50, 9.11,
 					  1.10, 2.20, -3.39, -2.20,
 					  5.50, 33.30, 11.51, -21.01,
@@ -45,12 +45,12 @@ int		main(void)
 	ft_putstr("m4: ");
 	ft_putmatrix(m4);
 	ft_putstr("\nres34: ");
-	res34 = ft_matrix_add(m3, m4);
+	ft_matrix_add(m3, m4, res34);
 	ft_putmatrix(res34);
 
 	t_matrix *m5;
 	t_matrix *m6;
-	t_matrix *res56;
+	t_matrix *res56 = ft_matrix_new(4, 4);
 	double data5[] = {15, 11, 14, 2, 3, 6, 7, 9};
 	double data6[] = {-2, 2, 4, 22, -25, -3, 33, 11};
 	m5 = ft_matrix_new(2, 4);
@@ -62,11 +62,11 @@ int		main(void)
 	ft_putstr("m6: ");
 	ft_putmatrix(m6);
 	ft_putstr("\nres56: ");
-	res56 = ft_matrix_mul(m5, m6);
+	ft_matrix_mul(m5, m6, res56);
 	ft_putmatrix(res56);
 
 	t_matrix *m7;
-	t_vector *res71;
+	t_vector *res71 = ft_vector_new(3);
 	double data7[] = {1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12};
 	m7 = ft_matrix_new(3, 4);
 	ft_matrix_set_vals(m7, data7, 12);
@@ -74,7 +74,7 @@ int		main(void)
 	v1 = ft_vector_new(3);
 	double datav1[] = {-2, 1, 0};
 	ft_vector_set_vals(v1, datav1, 3);
-	res71 = ft_matrix_mul_vector(m7, v1);
+	ft_matrix_mul_vector(m7, v1, res71);
 
 	ft_putstr("\nm7: ");
 	ft_putmatrix(m7);
