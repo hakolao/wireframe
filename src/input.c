@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:42:37 by ohakola          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:01:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 	t_list		*node;
 	t_vector	*vertex;
 
-	if (((vertex = ft_vector4_new(x, y, z)) == NULL || vertices == NULL) &&
-		(vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
-		return (NULL);
+	if (((vertex = ft_vector4_new(x, y, z)) == NULL || vertices == NULL))
+	{
+		if ((vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
+			return (NULL);
+	}
 	else
 	{
 		if ((node = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
@@ -91,7 +93,7 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 	{
 		if ((vs[i] = ft_vector_new(4)) == NULL ||
 			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0 ||
-			set_vertex_limits(map, vs[i]))
+			set_vertex_limits(map, vs[i]) == 0)
 			return (0);
 		ft_vector_free((t_vector*)(vertices->content));
 		vs[i++]->v[3] = 1;
