@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 14:07:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 14:35:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,32 @@ static t_canvas		*new_canvas()
 	c->width = WINDOW_WIDTH;
 	c->height = WINDOW_HEIGHT;
 	c->near = 0.1;
-	c->far	= 20;
+	c->far	= 100;
 	c->angle = 70;
 	return (c);
 }
 
-static t_matrix		*initial_transform(t_map *map, t_matrix *view,
+t_matrix		*cam_transform(t_map *map, t_matrix *view,
 					t_matrix *projection)
 {
 	t_matrix *scale;
 	t_matrix *transform;
+	t_matrix *projxview;
 
 	(void)view;
 	if ((scale = ft_scale_matrix(4, 4, map->scale)) == NULL ||
-		(transform = ft_matrix_new(4, 4)) == NULL)
+		(transform = ft_matrix_new(4, 4)) == NULL ||
+		(projxview = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(projection, scale, transform) == 0)
+	if (ft_matrix_mul(projection, view, projxview) == 0 ||
+		ft_matrix_mul(projxview, scale, transform) == 0)
 		return (NULL);
 	ft_matrix_free(scale);
+	ft_matrix_free(projxview);
 	return (transform);
 }
 
-static t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
+t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 {
 	t_camera	*camera;
 
@@ -53,7 +57,7 @@ static t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera->view = ft_view_matrix(position, map->center, up)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->transform =
-			initial_transform(map, camera->view, camera->projection)) == NULL)
+			cam_transform(map, camera->view, camera->projection)) == NULL)
 		return (NULL);
 	camera->position = position;
 	camera->target = map->center;

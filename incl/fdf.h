@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 13:23:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 14:23:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,8 @@ void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
 ** Scene related functions
 */
 t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
+t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map);
+t_matrix			*cam_transform(t_map *map, t_matrix *view,
+						t_matrix *projection);
 
 #endif
