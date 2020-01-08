@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 15:37:32 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 16:43:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_P 35
 
 # include <mlx.h>
 # include <stdio.h>
@@ -55,7 +56,10 @@
 # define Z_MIN_LIMIT -100
 # define Z_MAX_LIMIT -1
 
-# define Z_POS_INIT -100
+# define Z_POS_INIT -10
+
+# define ORTHOGRAPHIC 1
+# define PERSPECTIVE 2
 
 typedef struct		s_map
 {
@@ -83,6 +87,7 @@ typedef struct 		s_camera
 	t_matrix		*transform;
 	t_canvas		*canvas;
 	t_rgb			*color;
+	int				perspective;
 }					t_camera;
 
 typedef struct		s_scene

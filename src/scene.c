@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 16:20:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 16:28:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera->transform =
 			cam_transform(map, camera->view, camera->projection)) == NULL)
 		return (NULL);
+	camera->perspective = PERSPECTIVE;
 	camera->position = position;
 	camera->target = map->center;
 	camera->up = up;
