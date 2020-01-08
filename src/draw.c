@@ -6,13 +6,13 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 13:20:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 13:37:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-t_vector			*point_to_screen(t_vector *point, t_scene *scene)
+t_vector			*screen_pt(t_vector *point, t_scene *scene)
 {
 	t_vector	*on_screen;
 
@@ -24,43 +24,31 @@ t_vector			*point_to_screen(t_vector *point, t_scene *scene)
 
 static void			draw_map(t_scene *scene)
 {
-	t_vector	*on_screen1;
-	t_vector	*on_screen2;
+	t_vector	*s1;
+	t_vector	*s2;
 	int			color;
 	size_t		i;
 	
 	color = ft_rgbtoi(*(scene->camera->color));
-	i = 0;
-	on_screen1 = NULL;
-	on_screen2 = NULL;
-	while (i < scene->map->vertex_count - 1)
+	i = -1;
+	while (++i < scene->map->vertex_count - 1)
 	{
 		if ((i + 1) % (scene->map->x + 1) != 0)
 		{
-			if ((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
-				(on_screen2 = point_to_screen(scene->map->vertices[i + 1], scene)) == NULL)
-			{
-				log_error("Something failed in point_to_screen.", "");
+			if (((s1 = screen_pt(scene->map->vertices[i], scene)) == NULL ||
+				(s2 = screen_pt(scene->map->vertices[i + 1], scene)) == NULL) &&
+				log_error("Something failed in point_to_screen.", ""))
 				exit(1);
-			}
-			draw_line(on_screen1, on_screen2, color, scene);
-			ft_vector_free(on_screen1);
-			ft_vector_free(on_screen2);
+			draw_line(s1, s2, color, scene);
 		}
 		if (i < scene->map->vertex_count - scene->map->x - 1)
 		{
-			if ((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
-				(on_screen2 =
-					point_to_screen(scene->map->vertices[i + 1 + scene->map->x], scene)) == NULL)
-			{
-				log_error("Something failed in point_to_screen.", "");
+			if (((s1 = screen_pt(scene->map->vertices[i], scene)) == NULL ||
+				(s2 = screen_pt(scene->map->vertices[i + 1 + scene->map->x], scene)) == NULL) &&
+				log_error("Something failed in point_to_screen.", ""))
 				exit(1);
-			}
-			draw_line(on_screen1, on_screen2, color, scene);
-			ft_vector_free(on_screen1);
-			ft_vector_free(on_screen2);
+			draw_line(s1, s2, color, scene);
 		}
-		i++;
 	}
 }
 
