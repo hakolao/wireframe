@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 14:35:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 15:46:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,18 @@ static t_canvas		*new_canvas()
 t_matrix		*cam_transform(t_map *map, t_matrix *view,
 					t_matrix *projection)
 {
-	t_matrix *scale;
+	t_matrix *world;
 	t_matrix *transform;
 	t_matrix *projxview;
 
-	(void)view;
-	if ((scale = ft_scale_matrix(4, 4, map->scale)) == NULL ||
+	if ((world = ft_scale_matrix(4, 4, map->scale)) == NULL ||
 		(transform = ft_matrix_new(4, 4)) == NULL ||
 		(projxview = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
 	if (ft_matrix_mul(projection, view, projxview) == 0 ||
-		ft_matrix_mul(projxview, scale, transform) == 0)
+		ft_matrix_mul(projxview, world, transform) == 0)
 		return (NULL);
-	ft_matrix_free(scale);
+	ft_matrix_free(world);
 	ft_matrix_free(projxview);
 	return (transform);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/20 16:14:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 15:41:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	main(int argc, char **argv)
 	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL)
 		return (0);
 	draw(scene);
-	mlx_key_hook(mlx_wdw, handle_key_events, scene);
 	mlx_do_key_autorepeaton(mlx);
+	mlx_key_hook(mlx_wdw, handle_key_events, scene);
 	mlx_loop(mlx);
 	return (0);
 }
