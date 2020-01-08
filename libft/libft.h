@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/19 15:50:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 12:55:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ int				ft_rgbtoi(t_rgb rgb);
 int				ft_lmap_int(int nb, int *in_minmax, int *out_minmax);
 double			ft_lmap_double(double nb, double *in_minmax,
 				double *out_minmax);
+double			ft_abs(double nb);
 
 #endif

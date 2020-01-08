@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 20:19:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 13:14:16 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static void			plot_line_low(t_vector *point1, t_vector *point2, int color, t_sce
 		plot_pixel(x, y, color, scene);
 		if (p > 0)
 		{
-			y = y + yi;
-			p = p - 2 * dx;
+			y += yi;
+			p += -2 * dx;
 		}
-		p = p + 2 * dy;
+		p += 2 * dy;
 		x += 1;
 	}
 }
@@ -85,52 +85,43 @@ static void			plot_line_high(t_vector *point1, t_vector *point2, int color, t_sc
 	p = 2 * dx - dy;
 	y = point1->v[1];
 	x = point1->v[0];
-	while (y < point2->v[0])
+	while (y < point2->v[1])
 	{
 		plot_pixel(x, y, color, scene);
 		if (p > 0)
 		{
-			x = x + xi;
-			p = p - 2 * dy;
+			x += xi;
+			p += -2 * dy;
 		}
-		p = p + 2 * dx;
+		p += 2 * dx;
 		y += 1;
 	}
 }
 
-static double		ft_abs(double nb)
-{
-	return (nb >= 0 ? nb : -nb);
-}
-
 static void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
 {
-	if (ft_abs((point2->v[1] - point1->v[1])) <
-		ft_abs((point2->v[0] - point1->v[0])))
+	int	x2;
+	int	x1;
+	int y2;
+	int	y1;
+	
+	x2 = point2->v[0];
+	x1 = point1->v[0];
+	y2 = point2->v[1];
+	y1 = point1->v[1];
+	if (ft_abs(y2 - y1) < ft_abs(x2 - x1))
 	{
-		if (point1->v[0] > point2->v[0])
-		{
-			ft_putstr("Plot line low p2->p1.\n");
+		if (x1 > x2)
 			plot_line_low(point2, point1, color, scene);
-		}
 		else
-		{
-			ft_putstr("Plot line low p1->p2.\n");
 			plot_line_low(point1, point2, color, scene);
-		}
 	}
 	else
 	{
-		if (point1->v[1] > point2->v[1])
-		{
-			ft_putstr("Plot line high p2->p1.\n");
+		if (y1 > y2)
 			plot_line_high(point2, point1, color, scene);
-		}
 		else
-		{
-			ft_putstr("Plot line high p1->p2.\n");
 			plot_line_high(point1, point2, color, scene);
-		}
 	}
 }
 
@@ -159,7 +150,7 @@ static void			draw_map(t_scene *scene)
 			ft_vector_free(on_screen1);
 			ft_vector_free(on_screen2);
 		}
-		if (i / scene->map->x < scene->map->y)
+		if (i < scene->map->vertex_count - scene->map->x - 1)
 		{
 			if ((on_screen1 = point_to_screen(scene->map->vertices[i], scene)) == NULL ||
 				(on_screen2 =
@@ -168,6 +159,7 @@ static void			draw_map(t_scene *scene)
 				log_error("Something failed in point_to_screen.", "");
 				exit(1);
 			}
+			printf("i: %d\n", (int)i);
 			draw_line(on_screen1, on_screen2, color, scene);
 			ft_vector_free(on_screen1);
 			ft_vector_free(on_screen2);
