@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 18:22:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 14:07:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_canvas		*new_canvas()
 	c->width = WINDOW_WIDTH;
 	c->height = WINDOW_HEIGHT;
 	c->near = 0.1;
-	c->far	= 100;
+	c->far	= 20;
 	c->angle = 70;
 	return (c);
 }
@@ -29,12 +29,16 @@ static t_canvas		*new_canvas()
 static t_matrix		*initial_transform(t_map *map, t_matrix *view,
 					t_matrix *projection)
 {
+	t_matrix *scale;
 	t_matrix *transform;
 
 	(void)view;
-	(void)projection;
-	if ((transform = ft_scale_matrix(4, 4, map->scale)) == NULL)
-		return (NULL);	
+	if ((scale = ft_scale_matrix(4, 4, map->scale)) == NULL ||
+		(transform = ft_matrix_new(4, 4)) == NULL)
+		return (NULL);
+	if (ft_matrix_mul(projection, scale, transform) == 0)
+		return (NULL);
+	ft_matrix_free(scale);
 	return (transform);
 }
 
