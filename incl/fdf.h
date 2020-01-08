@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 19:08:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/08 13:23:29 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,17 @@ typedef struct		s_scene
 	void			*mlx_wdw;
 }					t_scene;
 
+typedef struct		s_line
+{
+	int	dx;
+	int	dy;
+	int	x;
+	int	y;
+	int	yi;
+	int	xi;
+	int	p;
+}					t_line;
+
 /*
 ** Input functions & serialization
 */
@@ -114,6 +125,11 @@ int					handle_key_events(int key, void *param);
 ** Draw graphics
 */
 void				draw(t_scene *scene);
+
+/*
+** Line
+*/
+void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene);
 
 /*
 ** Scene related functions

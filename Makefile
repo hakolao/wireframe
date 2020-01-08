@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2019/12/19 17:52:00 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/08 13:24:25 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SOURCES = main.c \
 			log.c \
 			events.c \
 			scene.c \
+			line.c \
 			draw.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
