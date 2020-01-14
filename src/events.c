@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/13 17:11:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/14 14:56:23 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void		re_project(t_scene *scene)
 
 static void		re_draw(t_scene *scene)
 {
-	re_project(scene);
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	draw(scene);
 }
@@ -53,18 +52,21 @@ static void		zoom(t_scene *scene, int dir)
 		scene->camera->canvas->angle = 70;
 	if (scene->camera->canvas->angle >= 180)
 		scene->camera->canvas->angle = 70;
+	re_project(scene);
 	re_draw(scene);
 }
 
 // static void		move_vertical(t_scene *scene, int dir)
 // {
 // 	scene->camera->position->v[1] += dir;
+	// re_project(scene);
 // 	re_draw(scene);
 // }
 
 // static void		move_horizontal(t_scene *scene, int dir)
 // {
 // 	scene->camera->position->v[0] += dir;
+	// re_project(scene);
 // 	re_draw(scene);
 // }
 
@@ -74,7 +76,7 @@ static void		rotate_around_z(t_scene *scene)
 	t_matrix	*transform;
 	double		angle;
 
-	angle = (M_PI / 180) * 25;
+	angle = (M_PI / 180) * 5;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL ||
 		(transform = ft_matrix_new(4, 4)) == NULL)
 		return ;
@@ -93,6 +95,7 @@ static void		loop_perspective(t_scene *scene)
 	scene->camera->perspective++;
 	if (scene->camera->perspective > 2)
 		scene->camera->perspective = 1;
+	re_project(scene);
 	re_draw(scene);
 }
 
