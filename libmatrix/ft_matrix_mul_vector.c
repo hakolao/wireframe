@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:28:43 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 15:45:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/14 16:44:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v,
 		c = 0;
 		while (c < m1->cols)
 		{
-			res->v[c] += VALUE_AT(m1, r, c) * v->v[c];
+			res->v[r] += VALUE_AT(m1, r, c) * v->v[c];
 			c++;
 		}
 		r++;

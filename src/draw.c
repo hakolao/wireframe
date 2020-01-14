@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/13 16:45:30 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/14 18:21:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 {
 	t_vector	*on_screen;
 
+	ft_putstr("Vector: \n");
+	ft_putvector(point);
+	ft_putstr("Matrix: \n");
+	ft_putmatrix(scene->camera->transform);
 	if ((on_screen = ft_vector_new(4)) == NULL ||
 		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == 0)
 		return (NULL);
+	ft_putstr("Result: \n");
+	ft_putvector(on_screen);	
+	printf("w: %f\n", on_screen->v[3]);
 	// on_screen->v[0] /= on_screen->v[3];
 	// on_screen->v[1] /= on_screen->v[3];
 	// on_screen->v[2] /= on_screen->v[3];
 	// on_screen->v[3] /= on_screen->v[3];
-	// printf("w: %f\n", on_screen->v[3]);
 	return (on_screen);
 }
 

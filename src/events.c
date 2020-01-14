@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/14 14:56:23 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/14 16:59:20 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,26 @@ static void		rotate_around_z(t_scene *scene)
 	re_draw(scene);
 }
 
+static void		rotate_around_y(t_scene *scene)
+{
+	t_matrix 	*rotation;
+	t_matrix	*transform;
+	double		angle;
+
+	angle = (M_PI / 180) * 5;
+	if ((rotation = ft_matrix_id(4, 4)) == NULL ||
+		(transform = ft_matrix_new(4, 4)) == NULL)
+		return ;
+	VALUE_AT(rotation, 0, 0) = cos(angle);
+	VALUE_AT(rotation, 2, 0) = sin(angle);
+	VALUE_AT(rotation, 0, 2) = -sin(angle);
+	VALUE_AT(rotation, 2, 2) = cos(angle);
+	ft_matrix_mul(scene->camera->transform, rotation, transform);
+	ft_matrix_free(scene->camera->transform);
+	scene->camera->transform = transform;
+	re_draw(scene);
+}
+
 static void		loop_perspective(t_scene *scene)
 {
 	scene->camera->perspective++;
@@ -118,8 +138,8 @@ int				handle_key_events(int key, void *param)
 	// 	move_vertical(scene, 1);
 	// if (key == KEY_DOWN)
 	// 	move_vertical(scene, -1);
-	// if (key == KEY_LEFT)
-	// 	move_horizontal(scene, 1);
+	if (key == KEY_LEFT)
+		rotate_around_y(scene);
 	if (key == KEY_RIGHT)
 		rotate_around_z(scene);
 	if (key == KEY_P)
