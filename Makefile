@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/08 13:24:25 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/14 14:15:47 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,10 @@ DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
 FLAGS = -Wall -Wextra -Werror
+LIBMLXFLAGS = -L /usr/local/lib -lmlx -I/usr/local/X11/include -L/usr/X11/lib \
+				-lX11 -lXext -framework OpenGL -framework Appkit
+LIBMATRIXFLAGS = -L $(LIBMATRIX) -lmatrix
+LIBFTFLAGS = -L $(LIBFT) -lft
 SOURCES = main.c \
 			input.c \
 			log.c \
@@ -31,11 +35,18 @@ OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
 
 all: $(DIR_OBJ) $(NAME)
 
+home: $(DIR_OBJ) $(NAME)HOME
+
 $(NAME): $(OBJS)
 	@make -C ./libft
 	@make -C ./libmatrix
-	$(CC) $(FLAGS) -L $(LIBFT) -lft -L $(LIBMATRIX) -lmatrix -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
-	
+	$(CC) $(FLAGS) -L $(LIBFT) -lft -L $(LIBMATRIX) -lmatrix -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+
+$(NAME)HOME:
+	@make -C ./libft
+	@make -C ./libmatrix
+	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
+
 $(DIR_OBJ):
 	@mkdir -p temp
 

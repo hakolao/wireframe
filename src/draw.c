@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 16:50:04 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/13 16:45:30 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,34 @@ static void			draw_axes(t_scene *scene)
 	free(vectors);
 }
 
+static void			vector_to_ui(t_scene *scene, char *title, t_vector *v, t_rgb *color, int xpos, int ypos)
+{
+	char x[50];
+	char y[50];
+	char z[50];
+	char *vectorstr;
+
+	snprintf(x, 50, "%f", v->v[0]);
+	snprintf(y, 50, "%f", v->v[1]);
+	snprintf(z, 50, "%f", v->v[2]);
+	if ((vectorstr = ft_strjoin(x, ", ")) == NULL ||
+		(vectorstr = ft_strjoin(vectorstr, y)) == NULL ||
+		(vectorstr = ft_strjoin(vectorstr, ", ")) == NULL ||
+		(vectorstr = ft_strjoin(vectorstr, z)) == NULL)
+		return ;
+	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos, ft_rgbtoi(*color), title);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 15, ft_rgbtoi(*color), vectorstr);
+}
+
+static void			draw_ui(t_scene *scene)
+{
+	vector_to_ui(scene, "Camera position:", scene->camera->position, scene->camera->color, 10, 20);
+}
 
 void				draw(t_scene *scene)
 {
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	draw_axes(scene);
 	draw_map(scene);
+	draw_ui(scene);
 }
