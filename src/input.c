@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/14 18:20:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:53:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0 ||
 			set_vertex_limits(map, vs[i]) == 0)
 			return (0);
-		vs[i]->v[2] = ((t_vector*)(vertices->content))->v[2];
+		// vs[i]->v[2] = ((t_vector*)(vertices->content))->v[2];
 		ft_vector_free((t_vector*)(vertices->content));
 		vs[i++]->v[3] = 1;
 		vertices = vertices->next;

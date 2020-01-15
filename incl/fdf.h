@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/14 18:22:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 18:40:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # define Z_MIN_LIMIT -100
 # define Z_MAX_LIMIT -1
 
-# define Z_POS_INIT 20
+# define Z_POS_INIT -20
 
 # define ORTHOGRAPHIC 1
 # define PERSPECTIVE 2
@@ -81,6 +81,7 @@ typedef struct 		s_camera
 	t_vector		*position;
 	t_vector		*target;
 	t_vector		*up;
+	t_matrix		*world;
 	t_matrix		*view;
 	t_matrix		*projection;
 	t_matrix		*transform;
@@ -140,7 +141,6 @@ void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
 */
 t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
 t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map);
-t_matrix			*cam_transform(t_map *map, t_matrix *view,
-						t_matrix *projection);
+t_matrix			*cam_transform(t_camera *camera);
 
 #endif
