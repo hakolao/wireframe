@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 19:41:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:03:27 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # define Z_MIN_LIMIT -100
 # define Z_MAX_LIMIT -1
 
-# define Z_POS_INIT -20
+# define Z_POS_INIT 1
 
 # define ORTHOGRAPHIC 1
 # define PERSPECTIVE 2

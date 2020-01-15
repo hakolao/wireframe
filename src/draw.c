@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 19:49:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:09:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 	on_screen->v[1] /= on_screen->v[3];
 	on_screen->v[2] /= on_screen->v[3];
 	on_screen->v[3] /= on_screen->v[3];
+	ft_putvector(on_screen);
 	return (on_screen);
 }
 
@@ -37,9 +38,7 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2, t_camera *camera)
 		ft_matrix_mul_vector(camera->view, p1, c1) == 0 ||
 		ft_matrix_mul_vector(camera->view, p2, c2) == 0)
 		return (0);
-	ret = c1->v[2] > 0 && c2->v[2] > 0;
-	ft_putvector(c1);
-	ft_putvector(c2);
+	ret = c1->v[2] > camera->canvas->near && c2->v[2] > camera->canvas->near;
 	ft_vector_free(c1);
 	ft_vector_free(c2);
 	return (ret);
@@ -55,7 +54,6 @@ static void			connect_points(t_vector *p1, t_vector *p2, t_scene *scene, int col
 			(s2 = screen_pt(p2, scene)) == NULL) &&
 				log_error("Something failed in point_to_screen.", ""))
 				exit(1);
-	ft_putvector(s1);
 	draw_line(s1, s2, color, scene);
 }
 
@@ -109,4 +107,6 @@ void				draw(t_scene *scene)
 	ft_putmatrix(scene->camera->view);
 	ft_putstr("Projection: \n");
 	ft_putmatrix(scene->camera->projection);
+	ft_putstr("World: \n");
+	ft_putmatrix(scene->camera->world);
 }

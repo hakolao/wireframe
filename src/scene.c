@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 19:50:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:09:27 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ t_matrix		*cam_transform(t_camera *camera)
 	return (transform);
 }
 
+static t_matrix *world_matrix(t_map *map)
+{
+	t_matrix	*world;
+	
+	if ((world = ft_scale_matrix(4, 4, map->scale)) == NULL)
+		return (NULL);
+	VALUE_AT(world, 2, 2) /= map->scale->v[2];
+	VALUE_AT(world, 3, 3) = 1;
+	return (world);
+}
+
 t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 {
 	t_camera	*camera;
@@ -49,7 +60,7 @@ t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera = (t_camera*)malloc(sizeof(*camera))) == NULL ||
 		(camera->canvas = new_canvas()) == NULL ||
 		(camera->color = ft_itorgb(MAP_COLOR)) == NULL ||
-		(camera->world = ft_scale_matrix(4, 4, map->scale)) == NULL ||
+		(camera->world = world_matrix(map)) == NULL ||
 		(camera->view = ft_view_matrix(position, map->center, up)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->transform = cam_transform(camera)) == NULL)
