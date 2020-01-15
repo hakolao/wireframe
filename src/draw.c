@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 19:09:21 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:49:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,9 @@ static void			draw_ui(t_scene *scene)
 	vector_to_ui(scene, "Camera position:", scene->camera->position, scene->camera->color, 10, 20);
 }
 
-void				set_transform(t_scene *scene)
-{
-	t_matrix	*transform;
-
-	if ((transform = cam_transform(scene->camera)) == NULL)
-		return ;
-	ft_matrix_free(scene->camera->transform);
-	scene->camera->transform = transform;
-}
-
 void				draw(t_scene *scene)
 {
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
-	set_transform(scene);
 	draw_map(scene);
 	draw_ui(scene);
 

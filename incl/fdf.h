@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 18:40:44 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:41:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int					log_perror(char *str);
 ** Event handling
 */
 int					handle_key_events(int key, void *param);
+void				apply_matrix_on_map(t_matrix *m, t_map *map);
 
 /*
 ** Draw graphics

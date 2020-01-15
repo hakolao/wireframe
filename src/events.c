@@ -6,11 +6,21 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 19:28:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:47:30 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
+
+void				set_transform(t_scene *scene)
+{
+	t_matrix	*transform;
+
+	if ((transform = cam_transform(scene->camera)) == NULL)
+		return ;
+	ft_matrix_free(scene->camera->transform);
+	scene->camera->transform = transform;
+}
 
 static void		re_draw(t_scene *scene)
 {
@@ -34,17 +44,23 @@ static void		zoom(t_scene *scene, int dir)
 		return ;
 	ft_matrix_free(scene->camera->projection);
 	scene->camera->projection = projection;
+	set_transform(scene);
 	re_draw(scene);
 }
 
-static void		apply_matrix_on_scene(t_matrix *m, t_scene *scene)
+void		apply_matrix_on_map(t_matrix *m, t_map *map)
 {
 	size_t		i;
+	t_vector	*vec;
 
 	i = 0;
-	while (i < scene->map->vertex_count)
+	while (i < map->vertex_count)
 	{
-		ft_matrix_mul_vector(m, scene->map->vertices[i], scene->map->vertices[i]);
+		vec = ft_vector_new(4);
+		ft_matrix_mul_vector(m, map->vertices[i], vec);
+		vec->v[3] = 1;
+		ft_vector_free(map->vertices[i]);
+		map->vertices[i] = vec;
 		i++;
 	}
 }
@@ -52,19 +68,17 @@ static void		apply_matrix_on_scene(t_matrix *m, t_scene *scene)
 static void		rotate_around_z(t_scene *scene)
 {
 	t_matrix 	*rotation;
-	t_matrix	*projection;
 	double		angle;
 
 
 	angle = (M_PI / 180) * 5;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL ||
-		(projection = ft_matrix_new(4, 4)) == NULL)
+	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return ;
 	VALUE_AT(rotation, 0, 0) = cos(angle);
 	VALUE_AT(rotation, 0, 1) = -sin(angle);
 	VALUE_AT(rotation, 1, 0) = sin(angle);
 	VALUE_AT(rotation, 1, 1) = cos(angle);
-	apply_matrix_on_scene(rotation, scene);
+	apply_matrix_on_map(rotation, scene->map);
 	ft_matrix_free(rotation);
 	re_draw(scene);
 }
@@ -72,18 +86,16 @@ static void		rotate_around_z(t_scene *scene)
 static void		rotate_around_y(t_scene *scene)
 {
 	t_matrix 	*rotation;
-	t_matrix	*projection;
 	double		angle;
 	
 	angle = (M_PI / 180) * 5;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL ||
-		(projection = ft_matrix_new(4, 4)) == NULL)
+	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return ;
 	VALUE_AT(rotation, 0, 0) = cos(angle);
 	VALUE_AT(rotation, 2, 0) = sin(angle);
 	VALUE_AT(rotation, 0, 2) = -sin(angle);
 	VALUE_AT(rotation, 2, 2) = cos(angle);
-	apply_matrix_on_scene(rotation, scene);
+	apply_matrix_on_map(rotation, scene->map);
 	ft_matrix_free(rotation);
 	re_draw(scene);
 }
@@ -91,18 +103,16 @@ static void		rotate_around_y(t_scene *scene)
 static void		rotate_around_x(t_scene *scene)
 {
 	t_matrix 	*rotation;
-	t_matrix	*projection;
 	double		angle;
 	
 	angle = (M_PI / 180) * 5;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL ||
-		(projection = ft_matrix_new(4, 4)) == NULL)
+	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return ;
 	VALUE_AT(rotation, 1, 1) = cos(angle);
 	VALUE_AT(rotation, 1, 2) = -sin(angle);
 	VALUE_AT(rotation, 2, 1) = sin(angle);
 	VALUE_AT(rotation, 2, 2) = cos(angle);
-	apply_matrix_on_scene(rotation, scene);
+	apply_matrix_on_map(rotation, scene->map);
 	ft_matrix_free(rotation);
 	re_draw(scene);
 }
