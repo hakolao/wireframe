@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:56:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 15:02:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 12:30:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_matrix		*view_matrix(t_vector *sideways, t_vector *v,
 	return (view);
 }
 
-t_matrix			*ft_view_matrix(t_vector *position, t_vector *target,
+t_matrix			*ft_look_at(t_vector *position, t_vector *target,
 					t_vector *up)
 {
 	t_vector	*forward;
@@ -65,6 +65,29 @@ t_matrix			*ft_view_matrix(t_vector *position, t_vector *target,
 	ft_vector_free(forward);
 	ft_vector_free(sideways);
 	ft_vector_free(cross_forward_up);
+	ft_vector_free(v);
+	return (view);
+}
+
+t_matrix			*ft_fps_cam(t_vector *position, double pitch, double yaw)
+{
+	t_vector	*forward;
+	t_vector	*sideways;
+	t_vector	*v;
+	t_matrix	*view;
+
+	pitch *= M_PI / 180;
+	yaw *= M_PI / 180;
+	if ((forward = ft_vector4_new(
+		sin(yaw) * cos(pitch), -sin(pitch), cos(pitch) * cos(yaw))) == NULL ||
+		(sideways = ft_vector4_new(cos(yaw), 0, -sin(yaw))) == NULL ||
+		(v = ft_vector4_new(
+			sin(yaw) * sin(pitch), cos(pitch), cos(yaw) * sin(pitch)))
+				== NULL ||
+		(view = view_matrix(sideways, v, forward, position)) == NULL)
+		return (NULL);
+	ft_vector_free(forward);
+	ft_vector_free(sideways);
 	ft_vector_free(v);
 	return (view);
 }

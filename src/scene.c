@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/15 20:09:27 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 12:47:25 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,22 @@ static t_matrix *world_matrix(t_map *map)
 t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 {
 	t_camera	*camera;
+	double		pitch;
+	double		yaw;
 
+	pitch = 0;
+	yaw = 0;
 	if (position == NULL || map->center == NULL || up == NULL ||
 		(camera = (t_camera*)malloc(sizeof(*camera))) == NULL ||
 		(camera->canvas = new_canvas()) == NULL ||
 		(camera->color = ft_itorgb(MAP_COLOR)) == NULL ||
 		(camera->world = world_matrix(map)) == NULL ||
-		(camera->view = ft_view_matrix(position, map->center, up)) == NULL ||
+		(camera->view = ft_fps_cam(position, pitch, yaw)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->transform = cam_transform(camera)) == NULL)
 		return (NULL);
+	camera->pitch = pitch;
+	camera->yaw = yaw;
 	camera->perspective = PERSPECTIVE;
 	camera->position = position;
 	camera->target = map->center;
@@ -80,7 +86,8 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	t_vector	*cam_up;
 
 	if ((cam_pos = ft_vector4_new(map->center->v[0],
-									map->center->v[1], Z_POS_INIT * map->scale->v[0])) == NULL ||
+									map->center->v[1],
+									Z_POS_INIT - map->z_max - 5)) == NULL ||
 		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
 		(camera = new_camera(cam_pos, cam_up, map)) == NULL ||
 		(scene = (t_scene*)malloc(sizeof(*scene))) == NULL)
