@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 12:44:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:39:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 {
 	t_vector	*on_screen;
 
+	ft_putstr("Mul vector:\n");
+	ft_putmatrix(scene->camera->transform);
+	ft_putvector(point);
 	if ((on_screen = ft_vector_new(4)) == NULL ||
 		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == 0)
 		return (NULL);
+	ft_putvector(on_screen);
 	on_screen->v[0] /= on_screen->v[3];
 	on_screen->v[1] /= on_screen->v[3];
 	on_screen->v[2] /= on_screen->v[3];
 	on_screen->v[3] /= on_screen->v[3];
-	// ft_putvector(point);
 	return (on_screen);
 }
 
@@ -38,9 +41,6 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2, t_camera *camera)
 		ft_matrix_mul_vector(camera->view, p1, c1) == 0 ||
 		ft_matrix_mul_vector(camera->view, p2, c2) == 0)
 		return (0);
-	ft_putstr("Is it in front of camera?\n");
-	ft_putvector(c1);
-	ft_putvector(c2);
 	ret = c1->v[2] > 0 && c2->v[2] > 0;
 	ft_vector_free(c1);
 	ft_vector_free(c2);

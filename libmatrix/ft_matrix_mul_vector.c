@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 17:28:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/14 16:44:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:38:38 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v,
 		}
 		r++;
 	}
+	ft_putvector(res);
 	return (1);
 }

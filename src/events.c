@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 13:55:34 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:19:20 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ void		apply_matrix_on_map(t_matrix *m, t_map *map)
 	}
 }
 
-static void		rotate_around_z(t_scene *scene)
+static void		rotate_around_z(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
 
 
-	angle = (M_PI / 180) * 5;
+	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return ;
 	VALUE_AT(rotation, 0, 0) = cos(angle);
@@ -83,12 +83,12 @@ static void		rotate_around_z(t_scene *scene)
 	re_draw(scene);
 }
 
-static void		rotate_around_y(t_scene *scene)
+static void		rotate_around_y(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
 	
-	angle = (M_PI / 180) * 5;
+	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return ;
 	VALUE_AT(rotation, 0, 0) = cos(angle);
@@ -100,12 +100,12 @@ static void		rotate_around_y(t_scene *scene)
 	re_draw(scene);
 }
 
-static void		rotate_around_x(t_scene *scene)
+static void		rotate_around_x(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
 	
-	angle = (M_PI / 180) * 5;
+	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return ;
 	VALUE_AT(rotation, 1, 1) = cos(angle);
@@ -172,19 +172,29 @@ int				handle_key_events(int key, void *param)
 		exit(0);
 	}
 	if (key == KEY_W)
-		zoom(scene, -1);
+		rotate_around_x(scene, 3);
 	if (key == KEY_S)
-		zoom(scene, 1);
+		rotate_around_x(scene, -3);
 	if (key == KEY_A)
-		turn_camera(scene, 0, -1);
+		rotate_around_y(scene, 3);
 	if (key == KEY_D)
-		turn_camera(scene, 0, 1);
-	if (key == KEY_LEFT)
-		rotate_around_y(scene);
-	if (key == KEY_RIGHT)
-		rotate_around_z(scene);
+		rotate_around_y(scene, -3);
+	if (key == KEY_Q)
+		rotate_around_z(scene, -3);
+	if (key == KEY_E)
+		rotate_around_z(scene, 3);
 	if (key == KEY_UP)
-		rotate_around_x(scene);
+		zoom(scene, -1);
+	if (key == KEY_DOWN)
+		zoom(scene, 1);
+	if (key == KEY_NUM_4)
+		turn_camera(scene, 0, -2);
+	if (key == KEY_NUM_6)
+		turn_camera(scene, 0, 2);
+	if (key == KEY_NUM_8)
+		turn_camera(scene, 2, 0);
+	if (key == KEY_NUM_2)
+		turn_camera(scene, -2, 0);
 	if (key == KEY_P)
 		loop_perspective(scene);
 	return (0);

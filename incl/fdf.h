@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 12:25:25 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:13:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@
 # define KEY_A 0 
 # define KEY_S 1 //in home: 115
 # define KEY_D 2
+# define KEY_Q 12
+# define KEY_E 14
 # define KEY_P 35
+# define KEY_NUM_4 86
+# define KEY_NUM_6 88
+# define KEY_NUM_8 91
+# define KEY_NUM_2 84
 
 # include <mlx.h>
 # include <stdio.h>

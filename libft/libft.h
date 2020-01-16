@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/08 12:55:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:50:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,6 @@ int				ft_lmap_int(int nb, int *in_minmax, int *out_minmax);
 double			ft_lmap_double(double nb, double *in_minmax,
 				double *out_minmax);
 double			ft_abs(double nb);
+double			ft_max_double(double *arr, size_t size);
 
 #endif

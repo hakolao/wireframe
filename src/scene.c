@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 13:49:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:56:04 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ static t_canvas		*new_canvas()
 t_matrix		*cam_transform(t_camera *camera)
 {
 	t_matrix *transform;
-	t_matrix *worldxview;
+	t_matrix *worldxprojection;
 
 	if ((transform = ft_matrix_new(4, 4)) == NULL ||
-		(worldxview = ft_matrix_new(4, 4)) == NULL)
+		(worldxprojection = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(camera->world, camera->view, worldxview) == 0 ||
-		ft_matrix_mul(worldxview, camera->projection, transform) == 0)
+	if (ft_matrix_mul(camera->world, camera->projection, worldxprojection) == 0 ||
+		ft_matrix_mul(worldxprojection, camera->view, transform) == 0)
 		return (NULL);
-	ft_matrix_free(worldxview);
+	ft_matrix_free(worldxprojection);
 	return (transform);
 }
 
@@ -84,10 +84,15 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	t_camera	*camera;
 	t_vector	*cam_pos;
 	t_vector	*cam_up;
+	double		arr[3];
 
+	arr[0] = map->x_max;
+	arr[1] = map->y_max;
+	arr[2] = map->z_max;
 	if ((cam_pos = ft_vector4_new(map->center->v[0],
 									map->center->v[1],
-									Z_POS_INIT - map->z_max - 5)) == NULL ||
+									Z_POS_INIT - 
+									ft_max_double(arr, 3) - 5)) == NULL ||
 		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
 		(camera = new_camera(cam_pos, cam_up, map)) == NULL ||
 		(scene = (t_scene*)malloc(sizeof(*scene))) == NULL)
