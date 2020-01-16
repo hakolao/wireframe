@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 16:36:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 17:58:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static t_matrix *world_matrix(t_map *map)
 	
 	if ((world = ft_scale_matrix(4, 4, map->scale)) == NULL)
 		return (NULL);
-	VALUE_AT(world, 2, 2) /= map->scale->v[2];
 	VALUE_AT(world, 3, 3) = 1;
 	return (world);
 }

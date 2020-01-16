@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:59:32 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 16:45:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 17:16:34 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ t_matrix	*ft_perspective_matrix(t_canvas *c)
 	VALUE_AT(m, 1, 1) = 1 / tan(angle / 2);
 	VALUE_AT(m, 2, 2) = (-c->near - c->far) / (c->near - c->far);
 	VALUE_AT(m, 3, 2) = 1;
-	VALUE_AT(m, 2, 3) = 2 * c->near * c->far / (c->near - c->far);
+	VALUE_AT(m, 2, 3) = (2 * c->near * c->far) / (c->near - c->far);
 	return (m);
 }
