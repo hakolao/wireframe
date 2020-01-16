@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 12:50:07 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:49:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera->canvas = new_canvas()) == NULL ||
 		(camera->color = ft_itorgb(MAP_COLOR)) == NULL ||
 		(camera->world = world_matrix(map)) == NULL ||
-		(camera->view = ft_look_at(position, map->center, up)) == NULL ||
+		(camera->view = ft_fps_cam(position, pitch, yaw)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->transform = cam_transform(camera)) == NULL)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:56:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 13:49:10 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:55:17 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,12 @@ t_matrix			*ft_fps_cam(t_vector *position, double pitch, double yaw)
 		(xaxis = ft_vector4_new(cos(yaw), 0, -sin(yaw))) == NULL ||
 		(yaxis = ft_vector4_new(
 			sin(yaw) * sin(pitch), cos(pitch), cos(yaw) * sin(pitch)))
-				== NULL ||
-		(view = view_matrix(xaxis, yaxis, zaxis, position)) == NULL)
+				== NULL)
+		return (NULL);
+	xaxis->v[3] = 0;
+	yaxis->v[3] = 0;
+	zaxis->v[3] = 0;
+	if ((view = view_matrix(xaxis, yaxis, zaxis, position)) == NULL)
 		return (NULL);
 	ft_vector_free(zaxis);
 	ft_vector_free(xaxis);
