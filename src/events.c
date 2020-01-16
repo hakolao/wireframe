@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 12:48:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/16 12:50:27 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,31 +134,31 @@ static void		loop_perspective(t_scene *scene)
 	re_draw(scene);
 }
 
-static void		turn_camera(t_scene *scene, double pitch, double yaw)
-{
-	t_matrix *view;
-	double		new_pitch;
-	double		new_yaw;
+// static void		turn_camera(t_scene *scene, double pitch, double yaw)
+// {
+// 	t_matrix *view;
+// 	double		new_pitch;
+// 	double		new_yaw;
 	
-	new_pitch = scene->camera->pitch;
-	new_yaw = scene->camera->yaw;
-	new_yaw += yaw;
-	if (new_yaw > 360)
-		new_yaw = 1;
-	new_pitch += pitch;
-	if (new_pitch > 90)
-		new_pitch = 90;
-	if (new_pitch < -90)
-		new_pitch = -90;
-	if ((view = ft_fps_cam(scene->camera->position, new_pitch, new_yaw)) == NULL)
-		return ;
-	scene->camera->pitch = new_pitch;
-	scene->camera->yaw = new_yaw;
-	ft_matrix_free(scene->camera->view);
-	scene->camera->view = view;
-	set_transform(scene);
-	re_draw(scene);
-}
+// 	new_pitch = scene->camera->pitch;
+// 	new_yaw = scene->camera->yaw;
+// 	new_yaw += yaw;
+// 	if (new_yaw > 360)
+// 		new_yaw = 1;
+// 	new_pitch += pitch;
+// 	if (new_pitch > 90)
+// 		new_pitch = 90;
+// 	if (new_pitch < -90)
+// 		new_pitch = -90;
+// 	if ((view = ft_fps_cam(scene->camera->position, new_pitch, new_yaw)) == NULL)
+// 		return ;
+// 	scene->camera->pitch = new_pitch;
+// 	scene->camera->yaw = new_yaw;
+// 	ft_matrix_free(scene->camera->view);
+// 	scene->camera->view = view;
+// 	set_transform(scene);
+// 	re_draw(scene);
+// }
 
 int				handle_key_events(int key, void *param)
 {
@@ -175,10 +175,10 @@ int				handle_key_events(int key, void *param)
 		zoom(scene, -1);
 	if (key == KEY_S)
 		zoom(scene, 1);
-	if (key == KEY_A)
-		turn_camera(scene, 0, -1);
-	if (key == KEY_D)
-		turn_camera(scene, 0, 1);
+	// if (key == KEY_A)
+	// 	turn_camera(scene, 0, -1);
+	// if (key == KEY_D)
+	// 	turn_camera(scene, 0, 1);
 	if (key == KEY_LEFT)
 		rotate_around_y(scene);
 	if (key == KEY_RIGHT)
