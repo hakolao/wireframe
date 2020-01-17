@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 16:03:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:59:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define KEY_NUM_6 88
 # define KEY_NUM_8 91
 # define KEY_NUM_2 84
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
 
 # include <mlx.h>
 # include <stdio.h>
@@ -71,6 +73,7 @@ typedef struct		s_map
 	double			z_max;
 	size_t			x;
 	size_t			y;
+	size_t			z;
 	t_vector		*scale;
 	t_vector		*center;
 }					t_map;
@@ -126,6 +129,7 @@ int					log_perror(char *str);
 ** Event handling
 */
 int					handle_key_events(int key, void *param);
+int					handle_mouse_button_events(int key, int x, int y, void *param);
 void				apply_matrix_on_map(t_matrix *m, t_map *map);
 int					rotate_around_x(t_scene *scene, int amount);
 int					rotate_around_y(t_scene *scene, int amount);

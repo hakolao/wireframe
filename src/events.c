@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 16:03:21 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:59:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,13 @@ void		apply_matrix_on_map(t_matrix *m, t_map *map)
 int		rotate_around_z(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
+	t_matrix	*transform;
 	double		angle;
 
 
 	angle = (M_PI / 180) * amount;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL)
+	if ((transform = ft_matrix_id(4, 4)) ||
+		(rotation = ft_matrix_id(4, 4)) == NULL)
 		return (0);
 	VALUE_AT(rotation, 0, 0) = cos(angle);
 	VALUE_AT(rotation, 0, 1) = -sin(angle);
@@ -208,6 +210,14 @@ static int		move_camera_x(t_scene *scene, double amount)
 	return (1);
 }
 
+int				scale_x(t_scene *scene, double amount)
+{
+	VALUE_AT(scene->camera->world, 2, 2) += amount;
+	set_transform(scene);
+	re_draw(scene);
+	return (1);
+}
+
 int				handle_key_events(int key, void *param)
 {
 	t_scene	*scene;
@@ -235,4 +245,15 @@ int				handle_key_events(int key, void *param)
 		(key == KEY_P && loop_perspective(scene)) ||
 		(key == KEY_1 && zoom(scene, 1)) ||
 		(key == KEY_2 && zoom(scene, -1)));
+}
+
+int				handle_mouse_button_events(int key, int x, int y, void *param)
+{
+	t_scene	*scene;
+
+	(void)x;
+	(void)y;
+	scene = (t_scene *)param;
+	return ((key == SCROLL_UP && scale_x(scene, -10)) ||
+			(key == SCROLL_DOWN && scale_x(scene, 10)));
 }

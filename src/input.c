@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:51:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 18:00:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ static t_map		*file_to_centered_map(int fd, t_map *map)
 		map->y_max = y - 1;
 	map->x = map->x_max;
 	map->y = map->y_max;
+	map->z = map->z_max;
 	if (ret == -1 && log_perror(""))
 		return (NULL);
 	if (set_vertices_to_map(vertices, map) == 0)
