@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 17:59:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:11:32 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,46 @@ static void		turn_camera(t_scene *scene, double pitch, double yaw)
 	re_draw(scene);
 }
 
+static void		move_camera_z(t_scene *scene, double amount)
+{
+	t_matrix 	*view;
+	t_vector	*new_pos;
+	
+	if ((new_pos = ft_vector4_new(
+					scene->camera->position->v[0],
+					scene->camera->position->v[1],
+					scene->camera->position->v[2] + amount)) == NULL ||
+		(view = ft_fps_cam(scene->camera->position,
+						scene->camera->pitch,
+							scene->camera->yaw)) == NULL)
+		return ;
+	scene->camera->position = new_pos;
+	ft_matrix_free(scene->camera->view);
+	scene->camera->view = view;
+	set_transform(scene);
+	re_draw(scene);
+}
+
+static void		move_camera_x(t_scene *scene, double amount)
+{
+	t_matrix 	*view;
+	t_vector	*new_pos;
+	
+	if ((new_pos = ft_vector4_new(
+					scene->camera->position->v[0] + amount,
+					scene->camera->position->v[1],
+					scene->camera->position->v[2])) == NULL ||
+		(view = ft_fps_cam(scene->camera->position,
+						scene->camera->pitch,
+							scene->camera->yaw)) == NULL)
+		return ;
+	scene->camera->position = new_pos;
+	ft_matrix_free(scene->camera->view);
+	scene->camera->view = view;
+	set_transform(scene);
+	re_draw(scene);
+}
+
 int				handle_key_events(int key, void *param)
 {
 	t_scene	*scene;
@@ -184,9 +224,13 @@ int				handle_key_events(int key, void *param)
 	if (key == KEY_E)
 		rotate_around_z(scene, 3);
 	if (key == KEY_UP)
-		zoom(scene, -1);
+		move_camera_z(scene, 1);
 	if (key == KEY_DOWN)
-		zoom(scene, 1);
+		move_camera_z(scene, -1);
+	if (key == KEY_RIGHT)
+		move_camera_x(scene, 1);
+	if (key == KEY_LEFT)
+		move_camera_x(scene, -1);
 	if (key == KEY_NUM_4)
 		turn_camera(scene, 0, -2);
 	if (key == KEY_NUM_6)
@@ -197,5 +241,9 @@ int				handle_key_events(int key, void *param)
 		turn_camera(scene, -2, 0);
 	if (key == KEY_P)
 		loop_perspective(scene);
+	if (key == KEY_1)
+		zoom(scene, -1);
+	if (key == KEY_2)
+		zoom(scene, 1);
 	return (0);
 }

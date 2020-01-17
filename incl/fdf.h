@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 15:13:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 14:29:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define KEY_Q 12
 # define KEY_E 14
 # define KEY_P 35
+# define KEY_1 18
+# define KEY_2 19
 # define KEY_NUM_4 86
 # define KEY_NUM_6 88
 # define KEY_NUM_8 91
