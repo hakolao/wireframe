@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:19:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:31:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static int		zoom(t_scene *scene, int dir)
 	t_matrix	*projection;
 
 	scene->camera->canvas->angle += dir;
-	if (scene->camera->canvas->angle <= 0)
-		scene->camera->canvas->angle = 70;
-	if (scene->camera->canvas->angle >= 180)
-		scene->camera->canvas->angle = 70;
+	if (scene->camera->canvas->angle < 1)
+		scene->camera->canvas->angle = 1;
+	if (scene->camera->canvas->angle > 179)
+		scene->camera->canvas->angle = 179;
 	if ((projection =
 			scene->camera->perspective == PERSPECTIVE ?
 			ft_perspective_matrix(scene->camera->canvas) :

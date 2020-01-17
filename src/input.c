@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 14:28:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:46:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,10 @@ t_map				*serialize(char *filename)
 	if ((map = file_to_centered_map(fd, map)) == NULL ||
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
 		(map->scale = ft_vector4_new(
-			 WINDOW_HEIGHT / (map->x_max - map->x_min),
-			 WINDOW_HEIGHT / (map->x_max - map->x_min),
-			 WINDOW_HEIGHT / (map->x_max - map->x_min)
+			 (map->x_max - map->x_min) / (map->y_max - map->y_min) *
+			 	WINDOW_WIDTH / (map->x_max - map->x_min),
+			 WINDOW_HEIGHT / (map->y_max - map->y_min),
+			 VIEW_SIZE / (map->z_max - map->z_min)
 		)) == NULL)
 		return (NULL);
 	close(fd);

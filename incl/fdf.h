@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 14:29:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:41:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,19 @@
 # define WINDOW_HEIGHT 1080
 # define VIEW_SIZE 1000
 
-# define ZOOM_SPEED 0.5
-
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
 # define ERR_SERIALIZATION "Input serialization failed."
 # define ERRNO_INVALID_INPUT 5
 
-# define KEY_ESC 53 //in home: 65307
+# define KEY_ESC 53
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
 # define KEY_UP 126
-# define KEY_W 13 //in home: 119
+# define KEY_W 13
 # define KEY_A 0 
-# define KEY_S 1 //in home: 115
+# define KEY_S 1
 # define KEY_D 2
 # define KEY_Q 12
 # define KEY_E 14
@@ -55,13 +53,6 @@
 # define MAP_GREEN 255
 # define MAP_BLUE 0
 # define MAP_COLOR ((MAP_RED & 255) << 16) | ((MAP_GREEN & 255) << 8 | (MAP_BLUE & 255))
-
-# define X_MIN_LIMIT -100
-# define X_MAX_LIMIT 100
-# define Y_MIN_LIMIT -100
-# define Y_MAX_LIMIT 100
-# define Z_MIN_LIMIT -100
-# define Z_MAX_LIMIT -1
 
 # define Z_POS_INIT 0
 
