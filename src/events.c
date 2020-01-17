@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 18:08:16 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 18:33:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		apply_matrix_on_map(t_matrix *m, t_map *map)
 	}
 }
 
-int		rotate_around_z(t_scene *scene, int amount)
+t_matrix	*rotation_around_x(int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
@@ -74,47 +74,76 @@ int		rotate_around_z(t_scene *scene, int amount)
 
 	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
-		return (0);
-	VALUE_AT(rotation, 0, 0) = cos(angle);
-	VALUE_AT(rotation, 0, 1) = -sin(angle);
-	VALUE_AT(rotation, 1, 0) = sin(angle);
-	VALUE_AT(rotation, 1, 1) = cos(angle);
-	apply_matrix_on_map(rotation, scene->map);
-	ft_matrix_free(rotation);
-	re_draw(scene);
-	return (1);
-}
-
-int		rotate_around_y(t_scene *scene, int amount)
-{
-	t_matrix 	*rotation;
-	double		angle;
-	
-	angle = (M_PI / 180) * amount;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL)
-		return (0);
-	VALUE_AT(rotation, 0, 0) = cos(angle);
-	VALUE_AT(rotation, 2, 0) = sin(angle);
-	VALUE_AT(rotation, 0, 2) = -sin(angle);
-	VALUE_AT(rotation, 2, 2) = cos(angle);
-	apply_matrix_on_map(rotation, scene->map);
-	ft_matrix_free(rotation);
-	re_draw(scene);
-	return (1);
-}
-
-int		rotate_around_x(t_scene *scene, int amount)
-{
-	t_matrix 	*rotation;
-	double		angle;
-	
-	angle = (M_PI / 180) * amount;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL)
-		return (0);
+		return (NULL);
 	VALUE_AT(rotation, 1, 1) = cos(angle);
 	VALUE_AT(rotation, 1, 2) = -sin(angle);
 	VALUE_AT(rotation, 2, 1) = sin(angle);
 	VALUE_AT(rotation, 2, 2) = cos(angle);
+	return (rotation);
+}
+
+t_matrix	*rotation_around_y(int amount)
+{
+	t_matrix 	*rotation;
+	double		angle;
+
+
+	angle = (M_PI / 180) * amount;
+	if ((rotation = ft_matrix_id(4, 4)) == NULL)
+		return (NULL);
+	VALUE_AT(rotation, 0, 0) = cos(angle);
+	VALUE_AT(rotation, 2, 0) = sin(angle);
+	VALUE_AT(rotation, 0, 2) = -sin(angle);
+	VALUE_AT(rotation, 2, 2) = cos(angle);
+	return (rotation);
+}
+
+t_matrix	*rotation_around_z(int amount)
+{
+	t_matrix 	*rotation;
+	double		angle;
+
+
+	angle = (M_PI / 180) * amount;
+	if ((rotation = ft_matrix_id(4, 4)) == NULL)
+		return (NULL);
+	VALUE_AT(rotation, 0, 0) = cos(angle);
+	VALUE_AT(rotation, 0, 1) = -sin(angle);
+	VALUE_AT(rotation, 1, 0) = sin(angle);
+	VALUE_AT(rotation, 1, 1) = cos(angle);
+	return (rotation);
+}
+
+t_matrix	*rotation_matrix(int angle_x, int angle_y, int angle_z)
+{
+	t_matrix	*rotation_x;
+	t_matrix	*rotation_y;
+	t_matrix	*rotation_z;
+	t_matrix	*tmp;
+	t_matrix	*res;
+	
+	if ((tmp = ft_matrix_new(4, 4)) == NULL ||
+		(res = ft_matrix_new(4, 4)) == NULL ||
+		(rotation_x = rotation_around_x(angle_x)) == NULL ||
+		(rotation_y = rotation_around_y(angle_y)) == NULL ||
+		(rotation_z = rotation_around_z(angle_z)) == NULL)
+		return (NULL);
+	if (ft_matrix_mul(rotation_x, rotation_y, tmp) == 0 ||
+		ft_matrix_mul(tmp, rotation_z, res) == 0)
+		return (NULL);
+	ft_matrix_free(rotation_x);
+	ft_matrix_free(rotation_y);
+	ft_matrix_free(rotation_z);
+	ft_matrix_free(tmp);
+	return (res);
+}
+
+int		rotate_map(t_scene *scene, int amount_x, int amount_y, int amount_z)
+{
+	t_matrix 	*rotation;
+	
+	if ((rotation = rotation_matrix(amount_x, amount_y, amount_z)) == NULL)
+		return (0);
 	apply_matrix_on_map(rotation, scene->map);
 	ft_matrix_free(rotation);
 	re_draw(scene);
@@ -226,12 +255,12 @@ int				handle_key_events(int key, void *param)
 		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
 	}
-	return ((key == KEY_W && rotate_around_x(scene, 3)) ||
-		(key == KEY_S && rotate_around_x(scene, -3)) ||
-		(key == KEY_A && rotate_around_y(scene, 3)) ||
-		(key == KEY_D && rotate_around_y(scene, -3)) ||
-		(key == KEY_Q && rotate_around_z(scene, -3)) ||
-		(key == KEY_E && rotate_around_z(scene, 3)) ||
+	return ((key == KEY_W && rotate_map(scene, 3, 0, 0)) ||
+		(key == KEY_S && rotate_map(scene, -3, 0, 0)) ||
+		(key == KEY_A && rotate_map(scene, 0, 3, 0)) ||
+		(key == KEY_D && rotate_map(scene, 0, -3, 0)) ||
+		(key == KEY_Q && rotate_map(scene, 0, 0, -3)) ||
+		(key == KEY_E && rotate_map(scene, 0, 0, 3)) ||
 		(key == KEY_UP && move_camera_z(scene, 1)) ||
 		(key == KEY_DOWN && move_camera_z(scene, -1)) ||
 		(key == KEY_RIGHT && move_camera_x(scene, 1)) ||

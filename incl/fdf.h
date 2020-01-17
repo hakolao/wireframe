@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 17:59:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 18:29:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,7 @@ int					log_perror(char *str);
 int					handle_key_events(int key, void *param);
 int					handle_mouse_button_events(int key, int x, int y, void *param);
 void				apply_matrix_on_map(t_matrix *m, t_map *map);
-int					rotate_around_x(t_scene *scene, int amount);
-int					rotate_around_y(t_scene *scene, int amount);
-int					rotate_around_z(t_scene *scene, int amount);
+int					rotate_map(t_scene *scene, int amount_x, int amount_y, int amount_z);
 
 /*
 ** Draw graphics
