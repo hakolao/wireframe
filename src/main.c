@@ -6,21 +6,35 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 15:04:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 16:02:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-int	main(int argc, char **argv)
+int	init_fdf(t_map *map)
 {
+	t_scene		*scene;
 	void		*mlx;
 	void		*mlx_wdw;
+	
+	mlx = mlx_init();
+	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Wireframe - ohakola");
+	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL)
+		return (0);
+	rotate_around_x(scene, 45);
+	draw(scene);
+	mlx_do_key_autorepeaton(mlx);
+	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
+	mlx_loop(mlx);
+	return (0);
+}
+
+int		main(int argc, char **argv)
+{
 	t_map		*map;
-	t_scene		*scene;
 
 	map = NULL;
-	scene = NULL;
 	if (argc > 1)
 	{
 		if ((map = serialize(argv[1])) == NULL)
@@ -31,13 +45,5 @@ int	main(int argc, char **argv)
 		log_map(map);
 	}
 
-	mlx = mlx_init();
-	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Wireframe - ohakola");
-	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL)
-		return (0);
-	draw(scene);
-	mlx_do_key_autorepeaton(mlx);
-	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
-	mlx_loop(mlx);
-	return (0);
+	return (init_fdf(map));
 }

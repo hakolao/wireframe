@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:46:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:51:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0 ||
 			set_vertex_limits(map, vs[i]) == 0)
 			return (0);
+		vs[i]->v[2] = ((t_vector*)(vertices->content))->v[2];
 		ft_vector_free((t_vector*)(vertices->content));
 		vs[i++]->v[3] = 1;
 		vertices = vertices->next;
@@ -148,9 +149,9 @@ t_map				*serialize(char *filename)
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
 		(map->scale = ft_vector4_new(
 			 (map->x_max - map->x_min) / (map->y_max - map->y_min) *
-			 	WINDOW_WIDTH / (map->x_max - map->x_min),
-			 WINDOW_HEIGHT / (map->y_max - map->y_min),
-			 VIEW_SIZE / (map->z_max - map->z_min)
+			 	WINDOW_WIDTH / (map->x_max - map->x_min) * 4,
+			 WINDOW_HEIGHT / (map->y_max - map->y_min) * 4,
+			 VIEW_SIZE / (map->z_max - map->z_min) * 4
 		)) == NULL)
 		return (NULL);
 	close(fd);

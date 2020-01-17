@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:31:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 16:03:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		apply_matrix_on_map(t_matrix *m, t_map *map)
 	}
 }
 
-static int		rotate_around_z(t_scene *scene, int amount)
+int		rotate_around_z(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
@@ -85,7 +85,7 @@ static int		rotate_around_z(t_scene *scene, int amount)
 	return (1);
 }
 
-static int		rotate_around_y(t_scene *scene, int amount)
+int		rotate_around_y(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
@@ -103,7 +103,7 @@ static int		rotate_around_y(t_scene *scene, int amount)
 	return (1);
 }
 
-static int		rotate_around_x(t_scene *scene, int amount)
+int		rotate_around_x(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
 	double		angle;
@@ -121,7 +121,7 @@ static int		rotate_around_x(t_scene *scene, int amount)
 	return (1);
 }
 
-static int		loop_perspective(t_scene *scene)
+int		loop_perspective(t_scene *scene)
 {
 	t_matrix	*projection;
 

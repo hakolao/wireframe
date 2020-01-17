@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:42:15 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:51:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	if ((cam_pos = ft_vector4_new(map->center->v[0],
 									map->center->v[1],
 									Z_POS_INIT - 
-									ft_max_double(arr, 3) - 1)) == NULL ||
+									ft_max_double(arr, 3) - 5)) == NULL ||
 		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
 		(camera = new_camera(cam_pos, cam_up, map)) == NULL ||
 		(scene = (t_scene*)malloc(sizeof(*scene))) == NULL)
