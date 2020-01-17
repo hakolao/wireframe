@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:56:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 16:42:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 14:05:36 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_matrix		*view_matrix(t_vector *xaxis, t_vector *yaxis,
 	vals[7] = 0;
 	vals[8] = xaxis->v[2];
 	vals[9] = yaxis->v[2];
-	vals[10] = zaxis->v[2];
+	vals[10] = -zaxis->v[2];
 	vals[11] = 0;
 	vals[12] = -ft_vector_dot(xaxis, position);
 	vals[13] = -ft_vector_dot(yaxis, position);
