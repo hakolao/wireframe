@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 17:59:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/17 18:08:16 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,11 @@ void		apply_matrix_on_map(t_matrix *m, t_map *map)
 int		rotate_around_z(t_scene *scene, int amount)
 {
 	t_matrix 	*rotation;
-	t_matrix	*transform;
 	double		angle;
 
 
 	angle = (M_PI / 180) * amount;
-	if ((transform = ft_matrix_id(4, 4)) ||
-		(rotation = ft_matrix_id(4, 4)) == NULL)
+	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return (0);
 	VALUE_AT(rotation, 0, 0) = cos(angle);
 	VALUE_AT(rotation, 0, 1) = -sin(angle);
