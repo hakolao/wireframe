@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:53:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int		apply_matrix_on_map(t_matrix *m, t_map *map)
 	while (i < map->vertex_count)
 	{
 		if ((vec = ft_vector4_new(0, 0, 0)) == NULL ||
-			ft_matrix_mul_vector(m, map->vertices[i], vec) == 0)
+			ft_matrix_mul_vector(m, map->vertices[i], vec) == FALSE)
 			return (0);
 		vec->v[3] = 1;
 		ft_vector_free(map->vertices[i]);
@@ -38,8 +38,8 @@ int		rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 	
 	if ((map_rotation = ft_matrix_new(4, 4)) == NULL ||
 		(rotation = ft_rotation_matrix(amount_x, amount_y, amount_z)) == NULL ||
-		apply_matrix_on_map(rotation, map) == 0 ||
-		ft_matrix_mul(map->rotation, rotation, map_rotation) == 0)
+		apply_matrix_on_map(rotation, map) == FALSE ||
+		ft_matrix_mul(map->rotation, rotation, map_rotation) == FALSE)
 		return (0);
 	ft_matrix_free(rotation);
 	ft_matrix_free(map->rotation);
@@ -56,9 +56,9 @@ int		scale_map_z(t_map *map, double amount)
 	if ((scale = ft_vector4_new(1, 1, amount)) == NULL ||
 		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
 		(reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-		apply_matrix_on_map(reset_rotation, map) == 0 ||
-		apply_matrix_on_map(scale_m, map) == 0 ||
-		apply_matrix_on_map(map->rotation, map) == 0)
+		apply_matrix_on_map(reset_rotation, map) == FALSE ||
+		apply_matrix_on_map(scale_m, map) == FALSE ||
+		apply_matrix_on_map(map->rotation, map) == FALSE)
 		return (0);
 	ft_vector_free(scale);
 	ft_matrix_free(scale_m);
@@ -71,7 +71,7 @@ int		reset_map(t_map *map)
 	t_matrix	*reset_rotation;
 
 	if ((reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-	 	apply_matrix_on_map(reset_rotation, map) == 0)
+	 	apply_matrix_on_map(reset_rotation, map) == FALSE)
 		return (0);
 	ft_matrix_free(map->rotation);
 	map->rotation = reset_rotation;

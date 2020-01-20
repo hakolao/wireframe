@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:44:58 by ohakola           #+#    #+#             */
-/*   Updated: 2019/10/28 14:07:29 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		dst_cpy++;
 	dst_len = dst_cpy - dst;
 	n = dstsize - dst_len;
-	if (n == 0)
+	if (n == FALSE)
 		return (dst_len + ft_strlen(src_cpy));
 	while (*src_cpy)
 	{

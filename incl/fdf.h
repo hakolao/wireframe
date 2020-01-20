@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:52:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:06:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define KEY_NUM_2 84
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
+# define MOUSE_BUTTON_RIGHT 2
 # define KEY_R 15
 
 /*
@@ -126,6 +127,7 @@ typedef struct		s_scene
 	t_map			*map;
 	void			*mlx;
 	void			*mlx_wdw;
+	int				mouse_right_pressed;
 }					t_scene;
 
 typedef struct		s_line
@@ -161,7 +163,9 @@ int					log_perror(char *str);
 */
 int					handle_key_events(int key, void *param);
 int					handle_key_events_home(int key, void *param);
-int					handle_mouse_button_events(int key, int x, int y, void *param);
+int					handle_mouse_button_press(int key, int x, int y, void *param);
+int					handle_mouse_button_release(int key, int x, int y, void *param);
+int					handle_mouse_move(int x, int y, void *param);
 
 /*
 ** Draw graphics

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 19:10:25 by ohakola           #+#    #+#             */
-/*   Updated: 2019/10/29 14:34:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static size_t		get_num_len(int nb)
 	size_t	i;
 
 	i = 0;
-	if (nb == 0)
+	if (nb == FALSE)
 		return (1);
 	while (nb != 0 && i++ >= 0)
 		nb = nb / 10;
@@ -55,7 +55,7 @@ char				*ft_itoa(int nb)
 	sign = nb < 0 ? -1 : 1;
 	if (!(arr = (char*)ft_memalloc(get_num_len(nb) + (sign < 0 ? 1 : 0) + 1)))
 		return (NULL);
-	if (nb == 0)
+	if (nb == FALSE)
 		arr[0] = '0';
 	i = 0;
 	while (nb != 0)

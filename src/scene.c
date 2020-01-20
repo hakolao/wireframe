@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:51:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:02:23 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_matrix		*cam_transform(t_camera *camera)
 	if ((transform = ft_matrix_new(4, 4)) == NULL ||
 		(worldxprojection = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(camera->world, camera->projection, worldxprojection) == 0 ||
-		ft_matrix_mul(worldxprojection, camera->view, transform) == 0)
+	if (ft_matrix_mul(camera->world, camera->projection, worldxprojection) == FALSE ||
+		ft_matrix_mul(worldxprojection, camera->view, transform) == FALSE)
 		return (NULL);
 	ft_matrix_free(worldxprojection);
 	return (transform);
@@ -100,5 +100,6 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	scene->map = map;
 	scene->mlx = mlx;
 	scene->mlx_wdw = mlx_wdw;
+	scene->mouse_right_pressed = FALSE;
 	return (scene);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 15:21:45 by ohakola           #+#    #+#             */
-/*   Updated: 2019/10/29 14:34:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:09:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static size_t		get_num_len(int nb, int base)
 
 	i = 0;
 	temp_nb = nb;
-	if (nb == 0)
+	if (nb == FALSE)
 		return (1);
 	while (temp_nb != 0)
 	{
@@ -70,7 +70,7 @@ char				*ft_itoa_base(int nb, int base)
 	bases = "0123456789ABCDEF";
 	if (!(arr = (char*)ft_memalloc(get_arr_size(nb, base, sign))))
 		return (NULL);
-	if (nb == 0)
+	if (nb == FALSE)
 		arr[0] = '0';
 	i = 0;
 	while (nb != 0)
@@ -78,7 +78,7 @@ char				*ft_itoa_base(int nb, int base)
 		arr[i++] = bases[sign * (nb % base)];
 		nb = nb / base;
 	}
-	if (sign == -1 && base == 10)
+	if (sign == -1 && base == TRUE)
 		arr[i] = '-';
 	str_rev(arr);
 	return (arr);

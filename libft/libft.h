@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 14:50:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # define BUFF_SIZE 50
 # define MAX_FD 65536
+
+# define TRUE 1
+# define FALSE 0
 
 # include <string.h>
 # include <fcntl.h>

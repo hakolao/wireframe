@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   libmatrix.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/18 17:01:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:04 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBMATRIX_H
 # define LIBMATRIX_H
+
+# define TRUE 1
+# define FALSE 0
 
 # include <math.h>
 # include <stdlib.h>

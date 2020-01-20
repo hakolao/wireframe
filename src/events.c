@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:54:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:08:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int				handle_key_events(int key, void *param)
 	return (ret);
 }
 
-int				handle_mouse_button_events(int key, int x, int y, void *param)
+int				handle_mouse_button_press(int button, int x, int y, void *param)
 {
 	t_scene	*scene;
 	int 	ret;
@@ -89,8 +89,41 @@ int				handle_mouse_button_events(int key, int x, int y, void *param)
 	(void)x;
 	(void)y;
 	scene = (t_scene *)param;
-	ret = ((key == SCROLL_UP && scale_map_z(scene->map, 1.1)) ||
-			(key == SCROLL_DOWN && scale_map_z(scene->map, 0.9)));
+	ret = ((button == SCROLL_UP && scale_map_z(scene->map, 1.1)) ||
+			(button == SCROLL_DOWN && scale_map_z(scene->map, 0.9)));
+	if (button == MOUSE_BUTTON_RIGHT)
+		scene->mouse_right_pressed = TRUE;
 	draw(scene);
 	return (ret);
+}
+
+int				handle_mouse_button_release(int button, int x, int y, void *param)
+{
+	t_scene	*scene;
+
+	(void)x;
+	(void)y;
+	scene = (t_scene *)param;
+	if (button == MOUSE_BUTTON_RIGHT)
+		scene->mouse_right_pressed = FALSE;
+	return (1);
+}
+
+int				handle_mouse_move(int x, int y, void *param)
+{
+	t_scene	*scene;
+	// int s
+
+	(void)x;
+	(void)y;
+	scene = (t_scene *)param;
+	if (scene->mouse_right_pressed == TRUE)
+	{
+		ft_putstr("x: \n");
+		ft_putnbr(x);
+		ft_putstr("y: \n");
+		ft_putnbr(y);
+	}
+
+	return (1);
 }

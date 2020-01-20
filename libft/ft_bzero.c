@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 13:56:04 by ohakola           #+#    #+#             */
-/*   Updated: 2019/10/28 12:43:10 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_bzero(void *s, size_t n)
 {
 	char	*cpy;
 
-	if (n == 0)
+	if (n == FALSE)
 		return ;
 	cpy = s;
 	while (n--)

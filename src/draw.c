@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:31:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 	t_vector	*on_screen;
 
 	if ((on_screen = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == 0)
+		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == FALSE)
 		return (NULL);
 	on_screen->v[0] /= on_screen->v[3];
 	on_screen->v[1] /= on_screen->v[3];
@@ -34,8 +34,8 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2, t_camera *camera)
 
 	if ((c1 = ft_vector_new(4)) == NULL ||
 		(c2 = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(camera->view, p1, c1) == 0 ||
-		ft_matrix_mul_vector(camera->view, p2, c2) == 0)
+		ft_matrix_mul_vector(camera->view, p1, c1) == FALSE ||
+		ft_matrix_mul_vector(camera->view, p2, c2) == FALSE)
 		return (0);
 	ret = c1->v[2] > 0 && c2->v[2] > 0;
 	ft_vector_free(c1);

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:16:39 by ohakola           #+#    #+#             */
-/*   Updated: 2019/10/28 14:12:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int		ft_strnequ(char const *s1, char const *s2, size_t n)
 {
 	if (!s1 || !s2)
 		return (0);
-	return (ft_strncmp(s1, s2, n) == 0 ? 1 : 0);
+	return (ft_strncmp(s1, s2, n) == FALSE ? 1 : 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrix_inverse_4x4.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 16:59:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/18 17:13:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ t_matrix	*ft_matrix_inverse_4x4(t_matrix *m1)
 		m[i] = m1->m[i];
 	set_inverse(m, inv);
 	det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
-	if (det == 0)
+	if (det == FALSE)
 	{
-		ft_puterror("Det == 0 in ft_matrix_invert_4x4.\n");
+		ft_puterror("Det == FALSE in ft_matrix_invert_4x4.\n");
 		return (NULL);
 	}
 	det = 1.0 / det;

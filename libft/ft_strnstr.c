@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 17:25:13 by ohakola           #+#    #+#             */
-/*   Updated: 2019/10/28 14:13:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t slen)
 	src = (char *)haystack;
 	find = (char *)needle;
 	needle_len = ft_strlen(needle);
-	if (needle_len == 0)
+	if (needle_len == FALSE)
 		return (char *)(src);
 	if (needle_len > slen)
 		return ((char *)NULL);
 	while (slen >= needle_len && *src)
 	{
-		if (ft_strncmp(src, find, needle_len) == 0)
+		if (ft_strncmp(src, find, needle_len) == FALSE)
 			return ((char *)src);
 		src++;
 		slen--;

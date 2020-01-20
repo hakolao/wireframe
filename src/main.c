@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:46:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:07:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	reset_fdf(t_scene *scene)
 {
-	if (reset_map(scene->map) == 0 ||
-		rotate_map(scene->map, 45, 0, 0) == 0)
+	if (reset_map(scene->map) == FALSE ||
+		rotate_map(scene->map, 45, 0, 0) == FALSE)
 		return (0);
 	draw(scene);
 	return (0);
@@ -34,7 +34,9 @@ int	init_fdf(t_map *map)
 	reset_fdf(scene);
 	// mlx_key_hook(mlx_wdw, handle_key_events_home, scene);
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
-	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_events, scene);
+	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);
+	mlx_hook(mlx_wdw, 5, 0, handle_mouse_button_release, scene);
+	mlx_hook(mlx_wdw, 6, 0, handle_mouse_move, scene);
 	mlx_loop(mlx);
 	return (0);
 }

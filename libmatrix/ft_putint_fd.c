@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putint_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:51:27 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/17 14:52:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			ft_putint_fd(int nb, int fd)
 
 	index = 0;
 	sign = nb >= 0 ? 1 : -1;
-	if (nb == 0)
+	if (nb == FALSE)
 		ft_putchar_fd('0', fd);
 	while (nb != 0)
 	{

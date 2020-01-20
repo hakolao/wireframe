@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rotation_matrix.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:30:23 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/18 15:33:16 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ t_matrix	*ft_rotation_matrix(int angle_x, int angle_y, int angle_z)
 		(rotation_y = rotation_around_y(angle_y)) == NULL ||
 		(rotation_z = rotation_around_z(angle_z)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(rotation_x, rotation_y, tmp) == 0 ||
-		ft_matrix_mul(tmp, rotation_z, res) == 0)
+	if (ft_matrix_mul(rotation_x, rotation_y, tmp) == FALSE ||
+		ft_matrix_mul(tmp, rotation_z, res) == FALSE)
 		return (NULL);
 	ft_matrix_free(rotation_x);
 	ft_matrix_free(rotation_y);
