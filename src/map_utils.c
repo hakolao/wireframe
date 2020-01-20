@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:50:57 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:53:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,12 @@ int		rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 {
 	t_matrix 	*rotation;
 	t_matrix 	*map_rotation;
-
-	map->rot_x += amount_x;
-	map->rot_y += amount_y;
-	map->rot_z += amount_z;
 	
 	if ((map_rotation = ft_matrix_new(4, 4)) == NULL ||
 		(rotation = ft_rotation_matrix(amount_x, amount_y, amount_z)) == NULL ||
 		apply_matrix_on_map(rotation, map) == 0 ||
 		ft_matrix_mul(map->rotation, rotation, map_rotation) == 0)
-	{
-		map->rot_x -= amount_x;
-		map->rot_y -= amount_y;
-		map->rot_z -= amount_z;
 		return (0);
-	}
 	ft_matrix_free(rotation);
 	ft_matrix_free(map->rotation);
 	map->rotation = map_rotation;
@@ -82,9 +73,6 @@ int		reset_map(t_map *map)
 	if ((reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
 	 	apply_matrix_on_map(reset_rotation, map) == 0)
 		return (0);
-	map->rot_x = 0;
-	map->rot_y = 0;
-	map->rot_z = 0;
 	ft_matrix_free(map->rotation);
 	map->rotation = reset_rotation;
 	return (1);

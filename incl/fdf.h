@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:47:41 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:52:39 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ typedef struct		s_map
 	size_t			y;
 	size_t			z;
 	t_matrix 		*rotation;
-	double			rot_x;
-	double			rot_y;
-	double			rot_z;
 	t_vector		*scale;
 	t_vector		*center;
 }					t_map;

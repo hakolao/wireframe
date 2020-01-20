@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:48:16 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:54:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int				handle_key_events(int key, void *param)
 			(key == KEY_1 && zoom(scene, 1)) ||
 			(key == KEY_2 && zoom(scene, -1)));
 	draw(scene);
-	ft_putnbr(key);
 	return (ret);
 }
 
