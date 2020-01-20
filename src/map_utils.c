@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/18 17:41:27 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:50:57 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,20 @@ int		scale_map_z(t_map *map, double amount)
 	ft_vector_free(scale);
 	ft_matrix_free(scale_m);
 	ft_matrix_free(reset_rotation);
+	return (1);
+}
+
+int		reset_map(t_map *map)
+{
+	t_matrix	*reset_rotation;
+
+	if ((reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
+	 	apply_matrix_on_map(reset_rotation, map) == 0)
+		return (0);
+	map->rot_x = 0;
+	map->rot_y = 0;
+	map->rot_z = 0;
+	ft_matrix_free(map->rotation);
+	map->rotation = reset_rotation;
 	return (1);
 }

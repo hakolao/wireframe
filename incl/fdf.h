@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 15:31:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:47:41 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define KEY_NUM_2 84
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
+# define KEY_R 15
 
 /*
 ** These are used only for working from home...
@@ -142,6 +143,11 @@ typedef struct		s_line
 }					t_line;
 
 /*
+** Main.c
+*/
+int					reset_fdf(t_scene *scene);
+
+/*
 ** Input functions & serialization
 */
 t_map				*serialize(char *filename);
@@ -182,6 +188,7 @@ t_matrix			*cam_transform(t_camera *camera);
 */
 int					rotate_map(t_map *map, int amount_x, int amount_y, int amount_z);
 int					scale_map_z(t_map *map, double amount);
+int					reset_map(t_map *map);
 
 /*
 ** Cam utils

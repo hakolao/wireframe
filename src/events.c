@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/18 17:18:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:48:16 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ int				handle_key_events(int key, void *param)
 			(key == KEY_NUM_8 && turn_camera(scene, 2, 0)) ||
 			(key == KEY_NUM_2 && turn_camera(scene, -2, 0)) ||
 			(key == KEY_P && loop_perspective(scene)) ||
+			(key == KEY_R && reset_fdf(scene)) ||
 			(key == KEY_1 && zoom(scene, 1)) ||
 			(key == KEY_2 && zoom(scene, -1)));
 	draw(scene);
+	ft_putnbr(key);
 	return (ret);
 }
 
