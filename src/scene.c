@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 16:02:23 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 17:28:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	scene->mlx = mlx;
 	scene->mlx_wdw = mlx_wdw;
 	scene->mouse_right_pressed = FALSE;
+	scene->mouse_x = 0;
+	scene->mouse_y = 0;
 	return (scene);
 }

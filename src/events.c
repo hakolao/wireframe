@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 16:08:44 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:03:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,15 @@ int				handle_mouse_button_press(int button, int x, int y, void *param)
 	t_scene	*scene;
 	int 	ret;
 
-	(void)x;
-	(void)y;
 	scene = (t_scene *)param;
 	ret = ((button == SCROLL_UP && scale_map_z(scene->map, 1.1)) ||
 			(button == SCROLL_DOWN && scale_map_z(scene->map, 0.9)));
 	if (button == MOUSE_BUTTON_RIGHT)
+	{
 		scene->mouse_right_pressed = TRUE;
+		scene->mouse_x = x;
+		scene->mouse_y = y;
+	}
 	draw(scene);
 	return (ret);
 }
@@ -112,18 +114,24 @@ int				handle_mouse_button_release(int button, int x, int y, void *param)
 int				handle_mouse_move(int x, int y, void *param)
 {
 	t_scene	*scene;
-	// int s
+	int		x_diff;
+	int		y_diff;
 
-	(void)x;
-	(void)y;
 	scene = (t_scene *)param;
 	if (scene->mouse_right_pressed == TRUE)
 	{
-		ft_putstr("x: \n");
-		ft_putnbr(x);
-		ft_putstr("y: \n");
-		ft_putnbr(y);
+		x_diff = x - scene->mouse_x;
+		y_diff = y - scene->mouse_y;
+		if (ft_abs(x_diff) > 5)
+			rotate_map(scene->map, 0, x_diff > 0 ? -2 : 2, 0);
+		if (ft_abs(y_diff) > 5)
+			rotate_map(scene->map, y_diff > 0 ? -2 : 2, 0, 0);
+		if (ft_abs(x_diff) > 5 || ft_abs(y_diff) > 5)
+		{
+			scene->mouse_x = x;
+			scene->mouse_y = y;
+		}
+		draw(scene);
 	}
-
 	return (1);
 }

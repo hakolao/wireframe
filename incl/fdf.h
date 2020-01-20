@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 16:06:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 17:28:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ typedef struct		s_scene
 	void			*mlx;
 	void			*mlx_wdw;
 	int				mouse_right_pressed;
+	int				mouse_x;
+	int				mouse_y;
 }					t_scene;
 
 typedef struct		s_line
