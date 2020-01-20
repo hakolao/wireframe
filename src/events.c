@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 18:03:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:05:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,13 @@ int				handle_mouse_move(int x, int y, void *param)
 		x_diff = x - scene->mouse_x;
 		y_diff = y - scene->mouse_y;
 		if (ft_abs(x_diff) > 5)
-			rotate_map(scene->map, 0, x_diff > 0 ? -2 : 2, 0);
-		if (ft_abs(y_diff) > 5)
-			rotate_map(scene->map, y_diff > 0 ? -2 : 2, 0, 0);
-		if (ft_abs(x_diff) > 5 || ft_abs(y_diff) > 5)
 		{
+			rotate_map(scene->map, 0, x_diff > 0 ? -2 : 2, 0);
 			scene->mouse_x = x;
+		}
+		if (ft_abs(y_diff) > 5)
+		{
+			rotate_map(scene->map, y_diff > 0 ? -2 : 2, 0, 0);
 			scene->mouse_y = y;
 		}
 		draw(scene);
