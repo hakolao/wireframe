@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 17:59:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:31:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 	if ((on_screen = ft_vector_new(4)) == NULL ||
 		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == 0)
 		return (NULL);
-	ft_putvector(point);
 	on_screen->v[0] /= on_screen->v[3];
 	on_screen->v[1] /= on_screen->v[3];
 	on_screen->v[2] /= on_screen->v[3];
@@ -73,28 +72,28 @@ static void			draw_map(t_scene *scene)
 	}
 }
 
-static void			vector_to_ui(t_scene *scene, char *title, t_vector *v, t_rgb *color, int xpos, int ypos)
+static void			vector_to_ui(t_scene *scene, t_vector *v, int xpos, int ypos)
 {
 	char x[50];
 	char y[50];
 	char z[50];
 	char *vectorstr;
 
-	snprintf(x, 50, "%f", v->v[0]);
-	snprintf(y, 50, "%f", v->v[1]);
-	snprintf(z, 50, "%f", v->v[2]);
+	ft_strcpy(x, ft_itoa(v->v[0]));
+	ft_strcpy(y, ft_itoa(v->v[1]));
+	ft_strcpy(z, ft_itoa(v->v[2]));
 	if ((vectorstr = ft_strjoin(x, ", ")) == NULL ||
 		(vectorstr = ft_strjoin(vectorstr, y)) == NULL ||
 		(vectorstr = ft_strjoin(vectorstr, ", ")) == NULL ||
 		(vectorstr = ft_strjoin(vectorstr, z)) == NULL)
 		return ;
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos, ft_rgbtoi(*color), title);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 15, ft_rgbtoi(*color), vectorstr);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos, UI_COLOR, vectorstr);
 }
 
 static void			draw_ui(t_scene *scene)
 {
-	vector_to_ui(scene, "Camera position:", scene->camera->position, scene->camera->color, 10, 20);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera position:");
+	vector_to_ui(scene, scene->camera->position, 10, 35);
 }
 
 void				draw(t_scene *scene)
@@ -102,11 +101,4 @@ void				draw(t_scene *scene)
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	draw_map(scene);
 	draw_ui(scene);
-
-	ft_putstr("View: \n");
-	ft_putmatrix(scene->camera->view);
-	ft_putstr("Projection: \n");
-	ft_putmatrix(scene->camera->projection);
-	ft_putstr("World: \n");
-	ft_putmatrix(scene->camera->world);
 }

@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/14 14:15:47 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/20 15:15:13 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,23 +29,19 @@ SOURCES = main.c \
 			events.c \
 			scene.c \
 			line.c \
+			map_utils.c \
+			cam_utils.c \
 			draw.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
 
 all: $(DIR_OBJ) $(NAME)
 
-home: $(DIR_OBJ) $(NAME)HOME
-
 $(NAME): $(OBJS)
 	@make -C ./libft
 	@make -C ./libmatrix
-	$(CC) $(FLAGS) -L $(LIBFT) -lft -L $(LIBMATRIX) -lmatrix -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
-
-$(NAME)HOME:
-	@make -C ./libft
-	@make -C ./libmatrix
-	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
+	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+	# $(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
 
 $(DIR_OBJ):
 	@mkdir -p temp
@@ -66,4 +62,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, $(DIR_OBJ), clean, fclean, re
+.PHONY: all, $(DIR_OBJ), clean, fclean

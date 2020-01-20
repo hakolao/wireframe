@@ -3,251 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 18:33:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/18 17:18:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-static void		set_transform(t_scene *scene)
+int				handle_key_events_home(int key, void *param)
 {
-	t_matrix	*transform;
+	t_scene	*scene;
+	int 	ret;
 
-	if ((transform = cam_transform(scene->camera)) == NULL)
-		return ;
-	ft_matrix_free(scene->camera->transform);
-	scene->camera->transform = transform;
-}
-
-static void		re_draw(t_scene *scene)
-{
-	mlx_clear_window(scene->mlx, scene->mlx_wdw);
-	draw(scene);
-}
-
-static int		zoom(t_scene *scene, int dir)
-{
-	t_matrix	*projection;
-
-	scene->camera->canvas->angle += dir;
-	if (scene->camera->canvas->angle < 1)
-		scene->camera->canvas->angle = 1;
-	if (scene->camera->canvas->angle > 179)
-		scene->camera->canvas->angle = 179;
-	if ((projection =
-			scene->camera->perspective == PERSPECTIVE ?
-			ft_perspective_matrix(scene->camera->canvas) :
-			ft_orthographic_matrix(scene->camera->canvas)) == NULL)
-		return (0);
-	ft_matrix_free(scene->camera->projection);
-	scene->camera->projection = projection;
-	set_transform(scene);
-	re_draw(scene);
-	return (1);
-}
-
-void		apply_matrix_on_map(t_matrix *m, t_map *map)
-{
-	size_t		i;
-	t_vector	*vec;
-
-	i = 0;
-	while (i < map->vertex_count)
+	scene = (t_scene *)param;
+	if (key == HOME_KEY_ESC)
 	{
-		vec = ft_vector_new(4);
-		ft_matrix_mul_vector(m, map->vertices[i], vec);
-		vec->v[3] = 1;
-		ft_vector_free(map->vertices[i]);
-		map->vertices[i] = vec;
-		i++;
+		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
+		exit(0);
 	}
-}
-
-t_matrix	*rotation_around_x(int amount)
-{
-	t_matrix 	*rotation;
-	double		angle;
-
-
-	angle = (M_PI / 180) * amount;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL)
-		return (NULL);
-	VALUE_AT(rotation, 1, 1) = cos(angle);
-	VALUE_AT(rotation, 1, 2) = -sin(angle);
-	VALUE_AT(rotation, 2, 1) = sin(angle);
-	VALUE_AT(rotation, 2, 2) = cos(angle);
-	return (rotation);
-}
-
-t_matrix	*rotation_around_y(int amount)
-{
-	t_matrix 	*rotation;
-	double		angle;
-
-
-	angle = (M_PI / 180) * amount;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL)
-		return (NULL);
-	VALUE_AT(rotation, 0, 0) = cos(angle);
-	VALUE_AT(rotation, 2, 0) = sin(angle);
-	VALUE_AT(rotation, 0, 2) = -sin(angle);
-	VALUE_AT(rotation, 2, 2) = cos(angle);
-	return (rotation);
-}
-
-t_matrix	*rotation_around_z(int amount)
-{
-	t_matrix 	*rotation;
-	double		angle;
-
-
-	angle = (M_PI / 180) * amount;
-	if ((rotation = ft_matrix_id(4, 4)) == NULL)
-		return (NULL);
-	VALUE_AT(rotation, 0, 0) = cos(angle);
-	VALUE_AT(rotation, 0, 1) = -sin(angle);
-	VALUE_AT(rotation, 1, 0) = sin(angle);
-	VALUE_AT(rotation, 1, 1) = cos(angle);
-	return (rotation);
-}
-
-t_matrix	*rotation_matrix(int angle_x, int angle_y, int angle_z)
-{
-	t_matrix	*rotation_x;
-	t_matrix	*rotation_y;
-	t_matrix	*rotation_z;
-	t_matrix	*tmp;
-	t_matrix	*res;
-	
-	if ((tmp = ft_matrix_new(4, 4)) == NULL ||
-		(res = ft_matrix_new(4, 4)) == NULL ||
-		(rotation_x = rotation_around_x(angle_x)) == NULL ||
-		(rotation_y = rotation_around_y(angle_y)) == NULL ||
-		(rotation_z = rotation_around_z(angle_z)) == NULL)
-		return (NULL);
-	if (ft_matrix_mul(rotation_x, rotation_y, tmp) == 0 ||
-		ft_matrix_mul(tmp, rotation_z, res) == 0)
-		return (NULL);
-	ft_matrix_free(rotation_x);
-	ft_matrix_free(rotation_y);
-	ft_matrix_free(rotation_z);
-	ft_matrix_free(tmp);
-	return (res);
-}
-
-int		rotate_map(t_scene *scene, int amount_x, int amount_y, int amount_z)
-{
-	t_matrix 	*rotation;
-	
-	if ((rotation = rotation_matrix(amount_x, amount_y, amount_z)) == NULL)
-		return (0);
-	apply_matrix_on_map(rotation, scene->map);
-	ft_matrix_free(rotation);
-	re_draw(scene);
-	return (1);
-}
-
-int		loop_perspective(t_scene *scene)
-{
-	t_matrix	*projection;
-
-	scene->camera->perspective++;
-	if (scene->camera->perspective > 2)
-		scene->camera->perspective = PERSPECTIVE;
-	if ((projection =
-			scene->camera->perspective == PERSPECTIVE ?
-			ft_perspective_matrix(scene->camera->canvas) :
-			ft_orthographic_matrix(scene->camera->canvas)) == NULL)
-		return (0);
-	ft_matrix_free(scene->camera->projection);
-	scene->camera->projection = projection;
-	re_draw(scene);
-	return (1);
-}
-
-static int		turn_camera(t_scene *scene, double pitch, double yaw)
-{
-	t_matrix *view;
-	double		new_pitch;
-	double		new_yaw;
-	
-	new_pitch = scene->camera->pitch;
-	new_yaw = scene->camera->yaw;
-	new_yaw += yaw;
-	if (new_yaw > 360)
-		new_yaw = 1;
-	new_pitch += pitch;
-	if (new_pitch > 90)
-		new_pitch = 90;
-	if (new_pitch < -90)
-		new_pitch = -90;
-	if ((view = ft_fps_cam(scene->camera->position, new_pitch, new_yaw)) == NULL)
-		return (0);
-	scene->camera->pitch = new_pitch;
-	scene->camera->yaw = new_yaw;
-	ft_matrix_free(scene->camera->view);
-	scene->camera->view = view;
-	set_transform(scene);
-	re_draw(scene);
-	return (1);
-}
-
-static int		move_camera_z(t_scene *scene, double amount)
-{
-	t_matrix 	*view;
-	t_vector	*new_pos;
-	
-	if ((new_pos = ft_vector4_new(
-					scene->camera->position->v[0],
-					scene->camera->position->v[1],
-					scene->camera->position->v[2] + amount)) == NULL ||
-		(view = ft_fps_cam(scene->camera->position,
-						scene->camera->pitch,
-							scene->camera->yaw)) == NULL)
-		return (0);
-	scene->camera->position = new_pos;
-	ft_matrix_free(scene->camera->view);
-	scene->camera->view = view;
-	set_transform(scene);
-	re_draw(scene);
-	return (1);
-}
-
-static int		move_camera_x(t_scene *scene, double amount)
-{
-	t_matrix 	*view;
-	t_vector	*new_pos;
-	
-	if ((new_pos = ft_vector4_new(
-					scene->camera->position->v[0] + amount,
-					scene->camera->position->v[1],
-					scene->camera->position->v[2])) == NULL ||
-		(view = ft_fps_cam(scene->camera->position,
-						scene->camera->pitch,
-							scene->camera->yaw)) == NULL)
-		return (0);
-	scene->camera->position = new_pos;
-	ft_matrix_free(scene->camera->view);
-	scene->camera->view = view;
-	set_transform(scene);
-	re_draw(scene);
-	return (1);
-}
-
-int				scale_x(t_scene *scene, double amount)
-{
-	VALUE_AT(scene->camera->world, 2, 2) += amount;
-	set_transform(scene);
-	re_draw(scene);
-	return (1);
+	ret = ((key == HOME_KEY_W && rotate_map(scene->map, 3, 0, 0)) ||
+			(key == HOME_KEY_S && rotate_map(scene->map, -3, 0, 0)) ||
+			(key == HOME_KEY_A && rotate_map(scene->map, 0, 3, 0)) ||
+			(key == HOME_KEY_D && rotate_map(scene->map, 0, -3, 0)) ||
+			(key == HOME_KEY_Q && rotate_map(scene->map, 0, 0, -3)) ||
+			(key == HOME_KEY_E && rotate_map(scene->map, 0, 0, 3)) ||
+			(key == HOME_KEY_UP && move_camera_z(scene, 1)) ||
+			(key == HOME_KEY_DOWN && move_camera_z(scene, -1)) ||
+			(key == HOME_KEY_RIGHT && move_camera_x(scene, 1)) ||
+			(key == HOME_KEY_LEFT && move_camera_x(scene, -1)) ||
+			(key == HOME_KEY_J && turn_camera(scene, 0, -2)) ||
+			(key == HOME_KEY_K && turn_camera(scene, 0, 2)) ||
+			(key == HOME_KEY_I && turn_camera(scene, 2, 0)) ||
+			(key == HOME_KEY_M && turn_camera(scene, -2, 0)) ||
+			(key == HOME_KEY_P && loop_perspective(scene)) ||
+			(key == HOME_KEY_1 && zoom(scene, 1)) ||
+			(key == HOME_KEY_2 && zoom(scene, -1)) ||
+			(key == HOME_PLUS && scale_map_z(scene->map, 1.1)) ||
+			(key == HOME_MINUS && scale_map_z(scene->map, 0.9)));
+	draw(scene);
+	ft_putnbr(key);
+	ft_putstr("\n");
+	return (ret);
 }
 
 int				handle_key_events(int key, void *param)
 {
 	t_scene	*scene;
+	int 	ret;
 
 	scene = (t_scene *)param;
 	if (key == KEY_ESC)
@@ -255,32 +59,37 @@ int				handle_key_events(int key, void *param)
 		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
 	}
-	return ((key == KEY_W && rotate_map(scene, 3, 0, 0)) ||
-		(key == KEY_S && rotate_map(scene, -3, 0, 0)) ||
-		(key == KEY_A && rotate_map(scene, 0, 3, 0)) ||
-		(key == KEY_D && rotate_map(scene, 0, -3, 0)) ||
-		(key == KEY_Q && rotate_map(scene, 0, 0, -3)) ||
-		(key == KEY_E && rotate_map(scene, 0, 0, 3)) ||
-		(key == KEY_UP && move_camera_z(scene, 1)) ||
-		(key == KEY_DOWN && move_camera_z(scene, -1)) ||
-		(key == KEY_RIGHT && move_camera_x(scene, 1)) ||
-		(key == KEY_LEFT && move_camera_x(scene, -1)) ||
-		(key == KEY_NUM_4 && turn_camera(scene, 0, -2)) ||
-		(key == KEY_NUM_6 && turn_camera(scene, 0, 2)) ||
-		(key == KEY_NUM_8 && turn_camera(scene, 2, 0)) ||
-		(key == KEY_NUM_2 && turn_camera(scene, -2, 0)) ||
-		(key == KEY_P && loop_perspective(scene)) ||
-		(key == KEY_1 && zoom(scene, 1)) ||
-		(key == KEY_2 && zoom(scene, -1)));
+	ret = ((key == KEY_W && rotate_map(scene->map, 3, 0, 0)) ||
+			(key == KEY_S && rotate_map(scene->map, -3, 0, 0)) ||
+			(key == KEY_A && rotate_map(scene->map, 0, 3, 0)) ||
+			(key == KEY_D && rotate_map(scene->map, 0, -3, 0)) ||
+			(key == KEY_Q && rotate_map(scene->map, 0, 0, -3)) ||
+			(key == KEY_E && rotate_map(scene->map, 0, 0, 3)) ||
+			(key == KEY_UP && move_camera_z(scene, 1)) ||
+			(key == KEY_DOWN && move_camera_z(scene, -1)) ||
+			(key == KEY_RIGHT && move_camera_x(scene, 1)) ||
+			(key == KEY_LEFT && move_camera_x(scene, -1)) ||
+			(key == KEY_NUM_4 && turn_camera(scene, 0, -2)) ||
+			(key == KEY_NUM_6 && turn_camera(scene, 0, 2)) ||
+			(key == KEY_NUM_8 && turn_camera(scene, 2, 0)) ||
+			(key == KEY_NUM_2 && turn_camera(scene, -2, 0)) ||
+			(key == KEY_P && loop_perspective(scene)) ||
+			(key == KEY_1 && zoom(scene, 1)) ||
+			(key == KEY_2 && zoom(scene, -1)));
+	draw(scene);
+	return (ret);
 }
 
 int				handle_mouse_button_events(int key, int x, int y, void *param)
 {
 	t_scene	*scene;
+	int 	ret;
 
 	(void)x;
 	(void)y;
 	scene = (t_scene *)param;
-	return ((key == SCROLL_UP && scale_x(scene, -10)) ||
-			(key == SCROLL_DOWN && scale_x(scene, 10)));
+	ret = ((key == SCROLL_UP && scale_map_z(scene->map, 1.1)) ||
+			(key == SCROLL_DOWN && scale_map_z(scene->map, 0.9)));
+	draw(scene);
+	return (ret);
 }

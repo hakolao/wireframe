@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libmatrix.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 16:36:17 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/18 17:01:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,7 @@ t_matrix	*ft_orthographic_matrix(t_canvas *c);
 int			ft_vector_forward(t_vector *position, t_vector *target,
 			t_vector *res);
 t_matrix	*ft_fps_cam(t_vector *position, double pitch, double yaw);
-	
+t_matrix	*ft_rotation_matrix(int angle_x, int angle_y, int angle_z);
+t_matrix	*ft_matrix_inverse_4x4(t_matrix *m1);
+
 #endif

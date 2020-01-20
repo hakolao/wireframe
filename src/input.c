@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 18:00:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:35:15 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == 0 ||
 			set_vertex_limits(map, vs[i]) == 0)
 			return (0);
-		vs[i]->v[2] = ((t_vector*)(vertices->content))->v[2];
 		ft_vector_free((t_vector*)(vertices->content));
 		vs[i++]->v[3] = 1;
 		vertices = vertices->next;
@@ -129,7 +128,7 @@ static t_map		*file_to_centered_map(int fd, t_map *map)
 		map->y_max = y - 1;
 	map->x = map->x_max;
 	map->y = map->y_max;
-	map->z = map->z_max;
+	map->z = map->z_max - map->z_min;
 	if (ret == -1 && log_perror(""))
 		return (NULL);
 	if (set_vertices_to_map(vertices, map) == 0)
@@ -153,8 +152,12 @@ t_map				*serialize(char *filename)
 			 	WINDOW_WIDTH / (map->x_max - map->x_min) * 4,
 			 WINDOW_HEIGHT / (map->y_max - map->y_min) * 4,
 			 VIEW_SIZE / (map->z_max - map->z_min) * 4
-		)) == NULL)
+		)) == NULL ||
+		(map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL)
 		return (NULL);
+	map->rot_x = 0;
+	map->rot_y = 0;
+	map->rot_z = 0;
 	close(fd);
 	return (map);
 }

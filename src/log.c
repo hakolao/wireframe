@@ -6,28 +6,14 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 19:11:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:31:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-static void		log_vertex(t_vector *vertex)
-{
-	ft_putstr("Vertex: ");
-	ft_putvector(vertex);
-}
-
 int				log_map(t_map *map)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < map->vertex_count)
-	{
-		log_vertex(map->vertices[i]);
-		i++;
-	}
 	ft_putstr("\nMAP:\nvertex_count: ");
 	ft_putnbr(map->vertex_count);
 	ft_putstr(", x: ");

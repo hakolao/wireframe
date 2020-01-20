@@ -6,16 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 18:29:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:31:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
-# define VIEW_SIZE 1000
+# define WINDOW_WIDTH 960
+# define WINDOW_HEIGHT 540
+# define VIEW_SIZE 500
 
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
@@ -43,6 +43,32 @@
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 
+/*
+** These are used only for working from home...
+** (different keycodes at school)
+*/
+
+# define HOME_KEY_ESC 65307
+# define HOME_KEY_LEFT 65361
+# define HOME_KEY_RIGHT 65363
+# define HOME_KEY_DOWN 65364
+# define HOME_KEY_UP 65362
+# define HOME_KEY_W 119
+# define HOME_KEY_A 97
+# define HOME_KEY_S 115
+# define HOME_KEY_D 100
+# define HOME_KEY_Q 113
+# define HOME_KEY_E 101
+# define HOME_KEY_P 112
+# define HOME_KEY_1 49
+# define HOME_KEY_2 50
+# define HOME_KEY_J 106
+# define HOME_KEY_K 107
+# define HOME_KEY_I 105
+# define HOME_KEY_M 109
+# define HOME_MINUS 45
+# define HOME_PLUS 61
+
 # include <mlx.h>
 # include <stdio.h>
 # include <math.h>
@@ -51,10 +77,8 @@
 
 #define MOVE_SPEED 0.1
 
-# define MAP_RED 0
-# define MAP_GREEN 255
-# define MAP_BLUE 0
-# define MAP_COLOR ((MAP_RED & 255) << 16) | ((MAP_GREEN & 255) << 8 | (MAP_BLUE & 255))
+# define MAP_COLOR ((255 & 255) << 16) | ((0 & 255) << 8 | (42 & 255))
+# define UI_COLOR ((255 & 255) << 16) | ((255 & 255) << 8 | (255 & 255))
 
 # define Z_POS_INIT 0
 
@@ -74,6 +98,10 @@ typedef struct		s_map
 	size_t			x;
 	size_t			y;
 	size_t			z;
+	t_matrix 		*rotation;
+	double			rot_x;
+	double			rot_y;
+	double			rot_z;
 	t_vector		*scale;
 	t_vector		*center;
 }					t_map;
@@ -129,9 +157,8 @@ int					log_perror(char *str);
 ** Event handling
 */
 int					handle_key_events(int key, void *param);
+int					handle_key_events_home(int key, void *param);
 int					handle_mouse_button_events(int key, int x, int y, void *param);
-void				apply_matrix_on_map(t_matrix *m, t_map *map);
-int					rotate_map(t_scene *scene, int amount_x, int amount_y, int amount_z);
 
 /*
 ** Draw graphics
@@ -149,5 +176,20 @@ void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
 t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
 t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map);
 t_matrix			*cam_transform(t_camera *camera);
+
+/*
+** Map utils
+*/
+int					rotate_map(t_map *map, int amount_x, int amount_y, int amount_z);
+int					scale_map_z(t_map *map, double amount);
+
+/*
+** Cam utils
+*/
+int					turn_camera(t_scene *scene, double pitch, double yaw);
+int					move_camera_z(t_scene *scene, double amount);
+int					move_camera_x(t_scene *scene, double amount);
+int					zoom(t_scene *scene, int dir);
+int					loop_perspective(t_scene *scene);
 
 #endif
