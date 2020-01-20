@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/17 15:38:36 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:53:34 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,4 @@ void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
 		else
 			plot_line_high(point1, point2, color, scene);
 	}
-	ft_vector_free(point1);
-	ft_vector_free(point2);
 }

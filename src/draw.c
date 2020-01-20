@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 17:52:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:54:32 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 t_vector			*screen_pt(t_vector *point, t_scene *scene)
 {
 	t_vector	*on_screen;
+	t_matrix	*transform;
 
-	if ((on_screen = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == FALSE)
+	if ((transform = ft_matrix_new(4, 4)) == NULL ||
+		(on_screen = ft_vector_new(4)) == NULL ||
+		ft_matrix_mul(scene->unit_scale, scene->camera->transform, transform) == FALSE ||
+		ft_matrix_mul_vector(transform, point, on_screen) == FALSE)
 		return (NULL);
 	on_screen->v[0] /= on_screen->v[3];
 	on_screen->v[1] /= on_screen->v[3];
 	on_screen->v[2] /= on_screen->v[3];
 	on_screen->v[3] /= on_screen->v[3];
+	ft_matrix_free(transform);
 	return (on_screen);
 }
 
@@ -53,7 +57,11 @@ static void			connect_points(t_vector *p1, t_vector *p2, t_scene *scene, int col
 			(s2 = screen_pt(p2, scene)) == NULL) &&
 			log_error("Something failed in point_to_screen.", ""))
 			exit(1);
+	s1->v[0] = (s1->v[0] * ASPECT_RATIO);
+	s2->v[0] = (s2->v[0] * ASPECT_RATIO);
 	draw_line(s1, s2, color, scene);
+	ft_vector_free(s1);
+	ft_vector_free(s2);
 }
 
 static void			draw_map(t_scene *scene)

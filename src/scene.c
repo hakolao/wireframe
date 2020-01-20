@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 17:28:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:50:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,12 @@ static t_canvas		*new_canvas()
 t_matrix		*cam_transform(t_camera *camera)
 {
 	t_matrix *transform;
-	t_matrix *worldxprojection;
 
-	if ((transform = ft_matrix_new(4, 4)) == NULL ||
-		(worldxprojection = ft_matrix_new(4, 4)) == NULL)
+	if ((transform = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(camera->world, camera->projection, worldxprojection) == FALSE ||
-		ft_matrix_mul(worldxprojection, camera->view, transform) == FALSE)
+	if (ft_matrix_mul(camera->projection, camera->view, transform) == FALSE)
 		return (NULL);
-	ft_matrix_free(worldxprojection);
 	return (transform);
-}
-
-static t_matrix *world_matrix(t_map *map)
-{
-	t_matrix	*world;
-	
-	if ((world = ft_scale_matrix(4, 4, map->scale)) == NULL)
-		return (NULL);
-	VALUE_AT(world, 3, 3) = 1;
-	return (world);
 }
 
 t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
@@ -63,7 +49,6 @@ t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera = (t_camera*)malloc(sizeof(*camera))) == NULL ||
 		(camera->canvas = new_canvas()) == NULL ||
 		(camera->color = ft_itorgb(MAP_COLOR)) == NULL ||
-		(camera->world = world_matrix(map)) == NULL ||
 		(camera->view = ft_fps_cam(position, pitch, yaw)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->transform = cam_transform(camera)) == NULL)
@@ -77,7 +62,7 @@ t_camera		*new_camera(t_vector *position, t_vector *up, t_map *map)
 	return (camera);
 }
 
-t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
+t_scene			*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 {
 	t_scene		*scene;
 	t_camera	*camera;
@@ -103,5 +88,10 @@ t_scene		*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	scene->mouse_right_pressed = FALSE;
 	scene->mouse_x = 0;
 	scene->mouse_y = 0;
+	if ((scene->unit_scale = ft_scale_matrix_xyz(
+			WORLD_UNIT_SCALE,
+			WORLD_UNIT_SCALE,
+			WORLD_UNIT_SCALE)) == NULL)
+		return (NULL);
 	return (scene);
 }

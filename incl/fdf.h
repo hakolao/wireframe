@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 17:28:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:53:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 
 # define WINDOW_WIDTH 960
 # define WINDOW_HEIGHT 540
+# define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
 # define VIEW_SIZE 500
+
+/*
+** A world unit in map data is one pixel, let's scale them by
+*/
+# define WORLD_UNIT_SCALE 200
 
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
@@ -101,7 +107,6 @@ typedef struct		s_map
 	size_t			y;
 	size_t			z;
 	t_matrix 		*rotation;
-	t_vector		*scale;
 	t_vector		*center;
 }					t_map;
 
@@ -130,6 +135,7 @@ typedef struct		s_scene
 	int				mouse_right_pressed;
 	int				mouse_x;
 	int				mouse_y;
+	t_matrix		*unit_scale;
 }					t_scene;
 
 typedef struct		s_line

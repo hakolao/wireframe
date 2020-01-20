@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 16:03:04 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/20 18:49:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int			ft_vector_forward(t_vector *position, t_vector *target,
 t_matrix	*ft_fps_cam(t_vector *position, double pitch, double yaw);
 t_matrix	*ft_rotation_matrix(int angle_x, int angle_y, int angle_z);
 t_matrix	*ft_matrix_inverse_4x4(t_matrix *m1);
+t_matrix	*ft_scale_matrix_xyz(double x, double y, double z);
 
 #endif
