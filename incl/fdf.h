@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:39:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:40:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@
 # define MAP_COLOR ((255 & 255) << 16) | ((0 & 255) << 8 | (42 & 255))
 # define UI_COLOR ((255 & 255) << 16) | ((255 & 255) << 8 | (255 & 255))
 
+/*
+** Don't allow zero to prevent division by zero (in pos 0,0,0);
+*/
 # define Z_POS_INIT 0.1
 
 # define ORTHOGRAPHIC 2

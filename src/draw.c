@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:37:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:41:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 	t_vector	*on_screen;
 
 	if ((on_screen = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(scene->camera->transform, point, on_screen) == FALSE)
+		ft_matrix_mul_vector(
+			scene->camera->transform, point, on_screen) == FALSE)
 		return (NULL);
 	printf("%f\n", on_screen->v[3]);
 	on_screen->v[0] /= on_screen->v[3];
