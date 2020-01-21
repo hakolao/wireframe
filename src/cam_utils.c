@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 17:46:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 17:49:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ int				loop_perspective(t_camera *camera)
 			ft_perspective_matrix(camera->canvas) :
 			ft_orthographic_matrix(camera->canvas)) == NULL)
 		return (0);
-	ft_putmatrix(projection);
 	ft_matrix_free(camera->projection);
 	camera->projection = projection;
+	ft_putmatrix(camera->projection);
 	set_transform(camera);
 	return (1);
 }

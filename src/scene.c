@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 17:45:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:00:52 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static t_canvas		*new_canvas(void)
 
 	if ((c = (t_canvas*)malloc(sizeof(*c))) == NULL)
 		return (NULL);
-	c->width = WINDOW_WIDTH;
-	c->height = WINDOW_HEIGHT;
+	c->width = ASPECT_RATIO * 25;
+	c->height = 25;
 	c->near = 0.1;
 	c->far = 50;
 	c->angle = 70;
