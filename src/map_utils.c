@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 13:12:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 	if ((map_rotation = ft_matrix_new(4, 4)) == NULL ||
 		(rotation = ft_rotation_matrix(amount_x, amount_y, amount_z)) == NULL ||
 		apply_matrix_on_map(rotation, map) == FALSE ||
-		ft_matrix_mul(map->rotation, rotation, map_rotation) == FALSE)
+		ft_matrix_mul(rotation, map->rotation, map_rotation) == FALSE)
 		return (0);
 	ft_matrix_free(rotation);
 	ft_matrix_free(map->rotation);

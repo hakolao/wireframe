@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 18:53:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 13:20:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,27 @@
 /*
 ** These are used only for working from home...
 ** (different keycodes at school)
+** # define HOME_KEY_ESC 65307
+** # define HOME_KEY_LEFT 65361
+** # define HOME_KEY_RIGHT 65363
+** # define HOME_KEY_DOWN 65364
+** # define HOME_KEY_UP 65362
+** # define HOME_KEY_W 119
+** # define HOME_KEY_A 97
+** # define HOME_KEY_S 115
+** # define HOME_KEY_D 100
+** # define HOME_KEY_Q 113
+** # define HOME_KEY_E 101
+** # define HOME_KEY_P 112
+** # define HOME_KEY_1 49
+** # define HOME_KEY_2 50
+** # define HOME_KEY_J 106
+** # define HOME_KEY_K 107
+** # define HOME_KEY_I 105
+** # define HOME_KEY_M 109
+** # define HOME_MINUS 45
+** # define HOME_PLUS 61
 */
-
-# define HOME_KEY_ESC 65307
-# define HOME_KEY_LEFT 65361
-# define HOME_KEY_RIGHT 65363
-# define HOME_KEY_DOWN 65364
-# define HOME_KEY_UP 65362
-# define HOME_KEY_W 119
-# define HOME_KEY_A 97
-# define HOME_KEY_S 115
-# define HOME_KEY_D 100
-# define HOME_KEY_Q 113
-# define HOME_KEY_E 101
-# define HOME_KEY_P 112
-# define HOME_KEY_1 49
-# define HOME_KEY_2 50
-# define HOME_KEY_J 106
-# define HOME_KEY_K 107
-# define HOME_KEY_I 105
-# define HOME_KEY_M 109
-# define HOME_MINUS 45
-# define HOME_PLUS 61
 
 # include <mlx.h>
 # include <stdio.h>

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 17:32:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 13:17:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ int	init_fdf(t_map *map)
 	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL)
 		return (0);
 	reset_fdf(scene);
-	// mlx_key_hook(mlx_wdw, handle_key_events_home, scene);
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);
 	mlx_hook(mlx_wdw, 5, 0, handle_mouse_button_release, scene);
 	mlx_hook(mlx_wdw, 6, 0, handle_mouse_move, scene);
-	// mlx_loop_hook(mlx_wdw, handle_map_rotation, scene);
 	mlx_loop(mlx);
 	return (0);
 }
