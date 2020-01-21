@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:30:23 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 15:25:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:11:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_matrix			*ft_rotation_matrix(int angle_x, int angle_y, int angle_z)
 		(rotation_y = rotation_around_y(angle_y)) == NULL ||
 		(rotation_z = rotation_around_z(angle_z)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(rotation_x, rotation_y, tmp) == FALSE ||
-		ft_matrix_mul(tmp, rotation_z, res) == FALSE)
+	if (ft_matrix_mul(rotation_y, rotation_x, tmp) == FALSE ||
+		ft_matrix_mul(rotation_z, tmp, res) == FALSE)
 		return (NULL);
 	ft_matrix_free(rotation_x);
 	ft_matrix_free(rotation_y);

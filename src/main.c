@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 14:59:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:14:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int		reset_map(t_map *map)
 			map->vertex_count) == FALSE)
 		return (0);
 	ft_matrix_free(map->rotation);
-	map->rotation = reset_rotation;
+	if ((map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL)
+		return (0);
 	return (1);
 }
 
@@ -31,7 +32,7 @@ int				reset_fdf(t_scene *scene)
 		rotate_map(scene->map, 45, 0, 0) == FALSE)
 		return (0);
 	draw(scene);
-	return (0);
+	return (1);
 }
 
 int				init_fdf(t_map *map)
@@ -43,9 +44,9 @@ int				init_fdf(t_map *map)
 	mlx = mlx_init();
 	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 		"Wireframe - ohakola");
-	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL)
+	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL ||
+		reset_fdf(scene) == 0)
 		return (0);
-	reset_fdf(scene);
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);
 	mlx_hook(mlx_wdw, 5, 0, handle_mouse_button_release, scene);
