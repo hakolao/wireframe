@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:59:32 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/16 17:16:34 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 17:38:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_matrix	*ft_orthographic_matrix(t_canvas *c)
 
 	if ((m = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
-	VALUE_AT(m, 0, 0) = 1 / c->width;
-	VALUE_AT(m, 1, 1) = 1 / c->height;
-	VALUE_AT(m, 2, 2) = -2 / (c->far - c->near);
-	VALUE_AT(m, 2, 3) = -(c->far + c->near) / (c->far - c->near);
+	VALUE_AT(m, 0, 0) = 2 / c->width;
+	VALUE_AT(m, 1, 1) = 2 / c->height;
+	VALUE_AT(m, 2, 2) = 1 / (c->far - c->near);
+	VALUE_AT(m, 2, 3) = -c->near / (c->far - c->near);
 	VALUE_AT(m, 3, 3) = 1;
 	return (m);
 }

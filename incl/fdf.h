@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 16:00:10 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 17:44:10 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@
 
 # define Z_POS_INIT 0
 
-# define ORTHOGRAPHIC 1
-# define PERSPECTIVE 2
+# define ORTHOGRAPHIC 2
+# define PERSPECTIVE 1
 
 typedef struct		s_map
 {
@@ -110,8 +110,6 @@ typedef struct		s_map
 typedef struct		s_camera
 {
 	t_vector		*position;
-	t_vector		*target;
-	t_vector		*up;
 	t_matrix		*world;
 	t_matrix		*view;
 	t_matrix		*projection;
@@ -121,6 +119,7 @@ typedef struct		s_camera
 	double			pitch;
 	double			yaw;
 	int				perspective;
+	t_matrix		*unit_scale;
 }					t_camera;
 
 typedef struct		s_scene
@@ -132,7 +131,6 @@ typedef struct		s_scene
 	int				mouse_right_pressed;
 	int				mouse_x;
 	int				mouse_y;
-	t_matrix		*unit_scale;
 }					t_scene;
 
 typedef struct		s_line

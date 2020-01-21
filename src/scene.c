@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 14:34:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 17:45:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ static t_canvas		*new_canvas(void)
 
 t_matrix			*cam_transform(t_camera *camera)
 {
+	t_matrix *tmp;
 	t_matrix *transform;
 
-	if ((transform = ft_matrix_new(4, 4)) == NULL)
+	if ((tmp = ft_matrix_new(4, 4)) == NULL ||
+		(transform = ft_matrix_new(4, 4)) == NULL)
 		return (NULL);
-	if (ft_matrix_mul(camera->projection, camera->view, transform) == FALSE)
+	if (ft_matrix_mul(camera->projection, camera->view, tmp) == FALSE ||
+		ft_matrix_mul(
+			camera->unit_scale, tmp, transform) == FALSE)
 		return (NULL);
+	ft_matrix_free(tmp);
 	return (transform);
 }
 
@@ -51,14 +56,14 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera->color = ft_itorgb(MAP_COLOR)) == NULL ||
 		(camera->view = ft_fps_cam(position, pitch, yaw)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
+		(camera->unit_scale =
+			ft_scale_matrix_xyz(SCALE, SCALE, SCALE)) == NULL ||
 		(camera->transform = cam_transform(camera)) == NULL)
 		return (NULL);
 	camera->pitch = pitch;
 	camera->yaw = yaw;
 	camera->perspective = PERSPECTIVE;
 	camera->position = position;
-	camera->target = map->center;
-	camera->up = up;
 	return (camera);
 }
 
@@ -86,7 +91,5 @@ t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	scene->mouse_right_pressed = FALSE;
 	scene->mouse_x = 0;
 	scene->mouse_y = 0;
-	if ((scene->unit_scale = ft_scale_matrix_xyz(SCALE, SCALE, SCALE)) == NULL)
-		return (NULL);
 	return (scene);
 }
