@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:03:41 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:32:38 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int				move_camera(t_camera *camera, double amount)
 			-sin(camera->pitch),
 			cos(camera->pitch) * cos(camera->yaw))) == NULL ||
 		(new_pos = ft_vector_new(4)) == NULL ||
-		(amount > 0 ? ft_vector_add(camera->position, forward, new_pos) :
-			ft_vector_sub(camera->position, forward, new_pos)) == FALSE ||
+		(amount > 0 ? ft_vector_sub(camera->position, forward, new_pos) :
+			ft_vector_add(camera->position, forward, new_pos)) == FALSE ||
 		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
 		return (0);
 	ft_vector_free(forward);
