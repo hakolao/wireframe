@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 13:20:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 13:20:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int					handle_mouse_move(int x, int y, void *param);
 void				draw(t_scene *scene);
 
 /*
-** Line
+** Line drawing
 */
 void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene);
 
