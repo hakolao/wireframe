@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 16:00:27 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:29:39 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static int		check_key_events(int key, t_scene *scene)
 		(key == KEY_E && rotate_map(scene->map, 0, 0, 3)) ||
 		(key == KEY_UP && move_camera(scene->camera, 1)) ||
 		(key == KEY_DOWN && move_camera(scene->camera, -1)) ||
-		(key == KEY_NUM_4 && turn_camera(scene->camera, 0, -2)) ||
-		(key == KEY_NUM_6 && turn_camera(scene->camera, 0, 2)) ||
-		(key == KEY_NUM_8 && turn_camera(scene->camera, 2, 0)) ||
-		(key == KEY_NUM_2 && turn_camera(scene->camera, -2, 0)) ||
+		(key == KEY_NUM_4 && turn_camera(scene->camera, 0, 2)) ||
+		(key == KEY_NUM_6 && turn_camera(scene->camera, 0, -2)) ||
+		(key == KEY_NUM_8 && turn_camera(scene->camera, -2, 0)) ||
+		(key == KEY_NUM_2 && turn_camera(scene->camera, 2, 0)) ||
 		(key == KEY_P && loop_perspective(scene->camera)) ||
 		(key == KEY_R && reset_fdf(scene)) ||
 		(key == KEY_1 && zoom(scene->camera, 1)) ||
