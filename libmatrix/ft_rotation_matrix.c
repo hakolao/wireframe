@@ -6,17 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:30:23 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 16:03:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 15:25:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-static t_matrix	*rotation_around_x(int amount)
+static t_matrix		*rotation_around_x(int amount)
 {
-	t_matrix 	*rotation;
+	t_matrix	*rotation;
 	double		angle;
-
 
 	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
@@ -28,11 +27,10 @@ static t_matrix	*rotation_around_x(int amount)
 	return (rotation);
 }
 
-static t_matrix	*rotation_around_y(int amount)
+static t_matrix		*rotation_around_y(int amount)
 {
-	t_matrix 	*rotation;
+	t_matrix	*rotation;
 	double		angle;
-
 
 	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
@@ -44,11 +42,10 @@ static t_matrix	*rotation_around_y(int amount)
 	return (rotation);
 }
 
-static t_matrix	*rotation_around_z(int amount)
+static t_matrix		*rotation_around_z(int amount)
 {
-	t_matrix 	*rotation;
+	t_matrix	*rotation;
 	double		angle;
-
 
 	angle = (M_PI / 180) * amount;
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
@@ -60,14 +57,14 @@ static t_matrix	*rotation_around_z(int amount)
 	return (rotation);
 }
 
-t_matrix	*ft_rotation_matrix(int angle_x, int angle_y, int angle_z)
+t_matrix			*ft_rotation_matrix(int angle_x, int angle_y, int angle_z)
 {
 	t_matrix	*rotation_x;
 	t_matrix	*rotation_y;
 	t_matrix	*rotation_z;
 	t_matrix	*tmp;
 	t_matrix	*res;
-	
+
 	if ((tmp = ft_matrix_new(4, 4)) == NULL ||
 		(res = ft_matrix_new(4, 4)) == NULL ||
 		(rotation_x = rotation_around_x(angle_x)) == NULL ||
