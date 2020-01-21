@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 13:56:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 14:21:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,19 @@ static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 	return (vertices);
 }
 
-static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
+static int			read_z_from_digit(char **line)
+{
+	int	z;
+
+	z = ft_atoi(*line);
+	while (**line && ft_isdigit(**line))
+		(*line)++;
+	while (**line && !ft_isdigit(**line))
+		(*line)++;
+	return (z);
+}
+
+static t_list		*read_map_line(t_list *vertices, char *line, int y, t_map *map)
 {
 	int			x;
 	int			z;
@@ -44,11 +56,7 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 			return (NULL);
 		if (ft_isdigit(*line))
 		{
-			z = ft_atoi(line);
-			while (*line && ft_isdigit(*line))
-				line++;
-			while (*line && !ft_isdigit(*line))
-				line++;
+			z = read_z_from_digit(&line);
 			if ((vertices = add_to_list(vertices, x, y, z)) == NULL)
 					return (NULL);
 			map->z_max = map->z_max >= z ? map->z_max : z;
@@ -63,47 +71,6 @@ static t_list		*add_vertices(t_list *vertices, char *line, int y, t_map *map)
 	return (vertices);
 }
 
-static int			set_vertex_limits(t_map *map, t_vector *vertex)
-{
-	map->x_max = map->x_max >= vertex->v[0] ? map->x_max : vertex->v[0];
-	map->x_min = map->x_min <= vertex->v[0] ? map->x_min : vertex->v[0];
-	map->y_max = map->y_max >= vertex->v[1] ? map->y_max : vertex->v[1];
-	map->y_min = map->y_min <= vertex->v[1] ? map->y_min : vertex->v[1];
-	map->z_max = map->z_max >= vertex->v[2] ? map->z_max : vertex->v[2];
-	map->z_min = map->z_min <= vertex->v[2] ? map->z_min : vertex->v[2];
-	return (1);
-}
-
-static int			center_and_set_vertices(t_list *vtx_lst, t_map *map)
-{
-	t_vector 	**vs;
-	t_vector	*shift;
-	size_t		i;
-	
-	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL ||
-		(shift = ft_vector4_new(
-			-map->x_max / 2, -map->y_max / 2, -(map->z_max - map->z_min) / 2)
-			) == NULL)
-		return (0);
-	if (!(map->x_max = 0) && !(map->x_min = 0) && !(map->y_max = 0) &&
-	!(map->y_min = 0) && !(map->z_max = 0) && !(map->z_min = 0))
-		;
-	i = 0;
-	while (vtx_lst)
-	{
-		vs[i] = (t_vector*)(vtx_lst->content);
-		if (ft_vector_add(vs[i], shift, vs[i]) == FALSE ||
-			set_vertex_limits(map, vs[i]) == FALSE)
-			return (0);
-		vs[i++]->v[3] = 1;
-		vtx_lst = vtx_lst->next;
-	}
-	map->vertices = vs;
-	ft_vector_free(shift);
-	free(vtx_lst);
-	return (1);
-}
-
 static t_map		*file_to_map(int fd, t_map *map)
 {
 	char	*line;
@@ -111,26 +78,25 @@ static t_map		*file_to_map(int fd, t_map *map)
 	int		y;
 	t_list	*vertex_list;
 
-	line = NULL;
-	vertex_list = NULL;
 	y = 0;
 	map->vertex_count = 0;
 	map->x_max = 0;
 	map->z_max = 0;
 	while ((ret = get_next_line(fd, &line)) == TRUE)
 	{
-		if ((vertex_list = add_vertices(vertex_list, line, y++, map)) == NULL)
+		if ((vertex_list = read_map_line(vertex_list, line, y++, map)) == NULL)
 			return (NULL);
 		ft_strdel(&line);
 	}
 	if (ret == FALSE)
 		map->y_max = y - 1;
-	map->x = map->x_max;
-	map->y = map->y_max;
-	map->z = map->z_max - map->z_min;
+	if ((map->x = map->x_max) && (map->y = map->y_max) &&
+		(map->z = map->z_max - map->z_min))
+		;
 	if ((ret == -1 && log_perror("")) ||
-		center_and_set_vertices(vertex_list, map) == FALSE)
+		center_and_set_map_vertices(vertex_list, map) == FALSE)
 		return (NULL);
+	ft_strdel(&line);
 	return (map);
 }
 

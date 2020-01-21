@@ -6,28 +6,50 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 13:12:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 14:28:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int		apply_matrix_on_map(t_matrix *m, t_map *map)
+static int		set_vertex_limits(t_map *map, t_vector *vertex)
 {
-	size_t		i;
-	t_vector	*vec;
+	map->x_max = map->x_max >= vertex->v[0] ? map->x_max : vertex->v[0];
+	map->x_min = map->x_min <= vertex->v[0] ? map->x_min : vertex->v[0];
+	map->y_max = map->y_max >= vertex->v[1] ? map->y_max : vertex->v[1];
+	map->y_min = map->y_min <= vertex->v[1] ? map->y_min : vertex->v[1];
+	map->z_max = map->z_max >= vertex->v[2] ? map->z_max : vertex->v[2];
+	map->z_min = map->z_min <= vertex->v[2] ? map->z_min : vertex->v[2];
+	return (1);
+}
 
+int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
+{
+	t_vector 	**vs;
+	t_vector	*shift;
+	size_t		i;
+	
+	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL ||
+		(shift = ft_vector4_new(
+			-map->x_max / 2, -map->y_max / 2, -(map->z_max - map->z_min) / 2)
+			) == NULL)
+		return (0);
+	if (!(map->x_max = 0) && !(map->x_min = 0) && !(map->y_max = 0) &&
+	!(map->y_min = 0) && !(map->z_max = 0) && !(map->z_min = 0))
+		;
 	i = 0;
-	while (i < map->vertex_count)
+	while (vtx_lst)
 	{
-		if ((vec = ft_vector4_new(0, 0, 0)) == NULL ||
-			ft_matrix_mul_vector(m, map->vertices[i], vec) == FALSE)
+		vs[i] = (t_vector*)(vtx_lst->content);
+		if (ft_vector_add(vs[i], shift, vs[i]) == FALSE ||
+			set_vertex_limits(map, vs[i]) == FALSE)
 			return (0);
-		vec->v[3] = 1;
-		ft_vector_free(map->vertices[i]);
-		map->vertices[i] = vec;
-		i++;
+		vs[i++]->v[3] = 1;
+		vtx_lst = vtx_lst->next;
 	}
+	map->vertices = vs;
+	ft_vector_free(shift);
+	free(vtx_lst);
 	return (1);
 }
 
@@ -38,7 +60,8 @@ int		rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 	
 	if ((map_rotation = ft_matrix_new(4, 4)) == NULL ||
 		(rotation = ft_rotation_matrix(amount_x, amount_y, amount_z)) == NULL ||
-		apply_matrix_on_map(rotation, map) == FALSE ||
+		ft_matrix_mul_vector_lst(rotation, map->vertices,
+			map->vertex_count) == FALSE ||
 		ft_matrix_mul(rotation, map->rotation, map_rotation) == FALSE)
 		return (0);
 	ft_matrix_free(rotation);
@@ -56,9 +79,12 @@ int		scale_map_z(t_map *map, double amount)
 	if ((scale = ft_vector4_new(1, 1, amount)) == NULL ||
 		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
 		(reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-		apply_matrix_on_map(reset_rotation, map) == FALSE ||
-		apply_matrix_on_map(scale_m, map) == FALSE ||
-		apply_matrix_on_map(map->rotation, map) == FALSE)
+		ft_matrix_mul_vector_lst(reset_rotation, map->vertices,
+			map->vertex_count) == FALSE ||
+		ft_matrix_mul_vector_lst(scale_m,  map->vertices,
+			map->vertex_count) == FALSE ||
+		ft_matrix_mul_vector_lst(map->rotation,  map->vertices,
+			map->vertex_count) == FALSE)
 		return (0);
 	ft_vector_free(scale);
 	ft_matrix_free(scale_m);
@@ -71,7 +97,8 @@ int		reset_map(t_map *map)
 	t_matrix	*reset_rotation;
 
 	if ((reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-	 	apply_matrix_on_map(reset_rotation, map) == FALSE)
+	 	ft_matrix_mul_vector_lst(reset_rotation,  map->vertices,
+			map->vertex_count) == FALSE)
 		return (0);
 	ft_matrix_free(map->rotation);
 	map->rotation = reset_rotation;

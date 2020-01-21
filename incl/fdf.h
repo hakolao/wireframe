@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 13:20:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 14:21:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ t_matrix			*cam_transform(t_camera *camera);
 int					rotate_map(t_map *map, int amount_x, int amount_y, int amount_z);
 int					scale_map_z(t_map *map, double amount);
 int					reset_map(t_map *map);
+int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 
 /*
 ** Cam utils

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+         #
+#    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 13:09:18 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/18 17:09:05 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/21 14:26:01 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SOURCES = ft_matrix_new.c \
 			ft_vector_forward.c \
 			ft_rotation_matrix.c \
 			ft_matrix_inverse_4x4.c \
+			ft_matrix_mul_vector_lst.c \
 			ft_putmatrix.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
