@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 18:53:34 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 14:54:18 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void			plot_pixel(int x, int y, int color, t_scene *scene)
 	color);
 }
 
-static void			plot_line_low(t_vector *point1, t_vector *point2, int color, t_scene *scene)
+static void			plot_line_low(t_vector *point1, t_vector *point2,
+					int color, t_scene *scene)
 {
 	t_line	line;
 
@@ -50,7 +51,8 @@ static void			plot_line_low(t_vector *point1, t_vector *point2, int color, t_sce
 	}
 }
 
-static void			plot_line_high(t_vector *point1, t_vector *point2, int color, t_scene *scene)
+static void			plot_line_high(t_vector *point1, t_vector *point2,
+					int color, t_scene *scene)
 {
 	t_line	line;
 
@@ -82,13 +84,14 @@ static void			plot_line_high(t_vector *point1, t_vector *point2, int color, t_sc
 ** https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#Optimization
 */
 
-void			draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene)
+void				draw_line(t_vector *point1, t_vector *point2, int color,
+					t_scene *scene)
 {
 	int	x2;
 	int	x1;
 	int y2;
 	int	y1;
-	
+
 	x2 = point2->v[0];
 	x1 = point1->v[0];
 	y2 = point2->v[1];

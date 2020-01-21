@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 14:21:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 14:55:34 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int			read_z_from_digit(char **line)
 	return (z);
 }
 
-static t_list		*read_map_line(t_list *vertices, char *line, int y, t_map *map)
+static t_list		*read_map_line(t_list *vertices, char *line, int y,
+					t_map *map)
 {
 	int			x;
 	int			z;
@@ -58,12 +59,12 @@ static t_list		*read_map_line(t_list *vertices, char *line, int y, t_map *map)
 		{
 			z = read_z_from_digit(&line);
 			if ((vertices = add_to_list(vertices, x, y, z)) == NULL)
-					return (NULL);
+				return (NULL);
 			map->z_max = map->z_max >= z ? map->z_max : z;
 			map->z_min = map->z_min <= z ? map->z_min : z;
 			map->x_max = map->x_max >= x ? map->x_max : x;
 			(map->vertex_count)++;
-			x++;	
+			x++;
 		}
 		else
 			line++;
@@ -90,9 +91,9 @@ static t_map		*file_to_map(int fd, t_map *map)
 	}
 	if (ret == FALSE)
 		map->y_max = y - 1;
-	if ((map->x = map->x_max) && (map->y = map->y_max) &&
-		(map->z = map->z_max - map->z_min))
-		;
+	map->x = map->x_max;
+	map->y = map->y_max;
+	map->z = map->z_max - map->z_min;
 	if ((ret == -1 && log_perror("")) ||
 		center_and_set_map_vertices(vertex_list, map) == FALSE)
 		return (NULL);

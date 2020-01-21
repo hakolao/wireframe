@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 14:21:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 15:08:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 /*
 ** A world unit in map data is one pixel, let's scale them by
 */
-# define WORLD_UNIT_SCALE 200
+# define SCALE 200
 
 # define ERR_INVALID_INPUT "Lines must "\
 						"consist of spaces & numbers."
@@ -180,6 +180,11 @@ int					handle_mouse_move(int x, int y, void *param);
 void				draw(t_scene *scene);
 
 /*
+** UI
+*/
+void				draw_ui(t_scene *scene);
+
+/*
 ** Line drawing
 */
 void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene);
@@ -196,15 +201,13 @@ t_matrix			*cam_transform(t_camera *camera);
 */
 int					rotate_map(t_map *map, int amount_x, int amount_y, int amount_z);
 int					scale_map_z(t_map *map, double amount);
-int					reset_map(t_map *map);
 int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 
 /*
 ** Cam utils
 */
 int					turn_camera(t_scene *scene, double pitch, double yaw);
-int					move_camera_z(t_scene *scene, double amount);
-int					move_camera_x(t_scene *scene, double amount);
+int					move_camera(t_scene *scene, double x, double y, double z);
 int					zoom(t_scene *scene, int dir);
 int					loop_perspective(t_scene *scene);
 

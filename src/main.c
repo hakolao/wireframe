@@ -6,13 +6,26 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 13:17:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 14:59:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-int	reset_fdf(t_scene *scene)
+static int		reset_map(t_map *map)
+{
+	t_matrix	*reset_rotation;
+
+	if ((reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
+		ft_matrix_mul_vector_lst(reset_rotation, map->vertices,
+			map->vertex_count) == FALSE)
+		return (0);
+	ft_matrix_free(map->rotation);
+	map->rotation = reset_rotation;
+	return (1);
+}
+
+int				reset_fdf(t_scene *scene)
 {
 	if (reset_map(scene->map) == FALSE ||
 		rotate_map(scene->map, 45, 0, 0) == FALSE)
@@ -21,14 +34,15 @@ int	reset_fdf(t_scene *scene)
 	return (0);
 }
 
-int	init_fdf(t_map *map)
+int				init_fdf(t_map *map)
 {
 	t_scene		*scene;
 	void		*mlx;
 	void		*mlx_wdw;
-	
+
 	mlx = mlx_init();
-	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Wireframe - ohakola");
+	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
+		"Wireframe - ohakola");
 	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL)
 		return (0);
 	reset_fdf(scene);
@@ -40,7 +54,7 @@ int	init_fdf(t_map *map)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_map		*map;
 
@@ -54,6 +68,5 @@ int		main(int argc, char **argv)
 		}
 		log_map(map);
 	}
-
 	return (init_fdf(map));
 }
