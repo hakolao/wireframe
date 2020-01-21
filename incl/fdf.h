@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 15:08:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 15:14:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@
 ** A world unit in map data is one pixel, let's scale them by
 */
 # define SCALE 200
-
-# define ERR_INVALID_INPUT "Lines must "\
-						"consist of spaces & numbers."
+# define ERR_INVALID_INPUT "Lines must consist of spaces & numbers."
 # define ERR_SERIALIZATION "Input serialization failed."
 # define ERRNO_INVALID_INPUT 5
 
@@ -34,7 +32,7 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 # define KEY_W 13
-# define KEY_A 0 
+# define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_Q 12
@@ -82,7 +80,7 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-#define MOVE_SPEED 0.1
+# define MOVE_SPEED 0.1
 
 # define MAP_COLOR ((255 & 255) << 16) | ((0 & 255) << 8 | (42 & 255))
 # define UI_COLOR ((255 & 255) << 16) | ((255 & 255) << 8 | (255 & 255))
@@ -105,11 +103,11 @@ typedef struct		s_map
 	size_t			x;
 	size_t			y;
 	size_t			z;
-	t_matrix 		*rotation;
+	t_matrix		*rotation;
 	t_vector		*center;
 }					t_map;
 
-typedef struct 		s_camera
+typedef struct		s_camera
 {
 	t_vector		*position;
 	t_vector		*target;
@@ -167,11 +165,13 @@ int					log_perror(char *str);
 
 /*
 ** Event handling
+** add int handle_key_events_home(int key, void *param), when working home;
 */
 int					handle_key_events(int key, void *param);
-int					handle_key_events_home(int key, void *param);
-int					handle_mouse_button_press(int key, int x, int y, void *param);
-int					handle_mouse_button_release(int key, int x, int y, void *param);
+int					handle_mouse_button_press(int key, int x, int y,
+					void *param);
+int					handle_mouse_button_release(int key, int x, int y,
+					void *param);
 int					handle_mouse_move(int x, int y, void *param);
 
 /*
@@ -187,7 +187,8 @@ void				draw_ui(t_scene *scene);
 /*
 ** Line drawing
 */
-void				draw_line(t_vector *point1, t_vector *point2, int color, t_scene *scene);
+void				draw_line(t_vector *point1, t_vector *point2,
+					int color, t_scene *scene);
 
 /*
 ** Scene related functions
@@ -199,7 +200,8 @@ t_matrix			*cam_transform(t_camera *camera);
 /*
 ** Map utils
 */
-int					rotate_map(t_map *map, int amount_x, int amount_y, int amount_z);
+int					rotate_map(t_map *map, int amount_x,
+					int amount_y, int amount_z);
 int					scale_map_z(t_map *map, double amount);
 int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 
