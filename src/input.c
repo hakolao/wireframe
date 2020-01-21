@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 18:37:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 13:56:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int			set_vertex_limits(t_map *map, t_vector *vertex)
 	return (1);
 }
 
-static int			set_vertices_to_map(t_list *vertices, t_map *map)
+static int			center_and_set_vertices(t_list *vtx_lst, t_map *map)
 {
 	t_vector 	**vs;
 	t_vector	*shift;
@@ -89,38 +89,37 @@ static int			set_vertices_to_map(t_list *vertices, t_map *map)
 	!(map->y_min = 0) && !(map->z_max = 0) && !(map->z_min = 0))
 		;
 	i = 0;
-	while (vertices)
+	while (vtx_lst)
 	{
-		if ((vs[i] = ft_vector_new(4)) == NULL ||
-			ft_vector_add((t_vector*)(vertices->content), shift, vs[i]) == FALSE ||
+		vs[i] = (t_vector*)(vtx_lst->content);
+		if (ft_vector_add(vs[i], shift, vs[i]) == FALSE ||
 			set_vertex_limits(map, vs[i]) == FALSE)
 			return (0);
-		ft_vector_free((t_vector*)(vertices->content));
 		vs[i++]->v[3] = 1;
-		vertices = vertices->next;
+		vtx_lst = vtx_lst->next;
 	}
 	map->vertices = vs;
 	ft_vector_free(shift);
-	free(vertices);
+	free(vtx_lst);
 	return (1);
 }
 
-static t_map		*file_to_centered_map(int fd, t_map *map)
+static t_map		*file_to_map(int fd, t_map *map)
 {
 	char	*line;
 	int		ret;
 	int		y;
-	t_list	*vertices;
+	t_list	*vertex_list;
 
 	line = NULL;
-	vertices = NULL;
+	vertex_list = NULL;
 	y = 0;
 	map->vertex_count = 0;
 	map->x_max = 0;
 	map->z_max = 0;
 	while ((ret = get_next_line(fd, &line)) == TRUE)
 	{
-		if ((vertices = add_vertices(vertices, line, y++, map)) == NULL)
+		if ((vertex_list = add_vertices(vertex_list, line, y++, map)) == NULL)
 			return (NULL);
 		ft_strdel(&line);
 	}
@@ -129,9 +128,8 @@ static t_map		*file_to_centered_map(int fd, t_map *map)
 	map->x = map->x_max;
 	map->y = map->y_max;
 	map->z = map->z_max - map->z_min;
-	if (ret == -1 && log_perror(""))
-		return (NULL);
-	if (set_vertices_to_map(vertices, map) == FALSE)
+	if ((ret == -1 && log_perror("")) ||
+		center_and_set_vertices(vertex_list, map) == FALSE)
 		return (NULL);
 	return (map);
 }
@@ -145,7 +143,7 @@ t_map				*serialize(char *filename)
 		return (NULL);
 	if ((fd = open(filename, O_RDONLY)) == -1 && log_perror(""))
 		return (NULL);
-	if ((map = file_to_centered_map(fd, map)) == NULL ||
+	if ((map = file_to_map(fd, map)) == NULL ||
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
 		(map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL)
 		return (NULL);
