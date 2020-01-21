@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 15:10:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 16:14:05 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static void		set_transform(t_camera *camera)
 	camera->transform = transform;
 }
 
-int				turn_camera(t_scene *scene, double pitch, double yaw)
+int				turn_camera(t_camera *camera, double pitch, double yaw)
 {
 	t_matrix	*view;
 	double		new_pitch;
 	double		new_yaw;
 
-	new_pitch = scene->camera->pitch;
-	new_yaw = scene->camera->yaw;
+	new_pitch = camera->pitch;
+	new_yaw = camera->yaw;
 	new_yaw += yaw;
 	if (new_yaw > 360)
 		new_yaw = 1;
@@ -39,70 +39,73 @@ int				turn_camera(t_scene *scene, double pitch, double yaw)
 	if (new_pitch < -90)
 		new_pitch = -90;
 	if ((view =
-		ft_fps_cam(scene->camera->position, new_pitch, new_yaw)) == NULL)
+		ft_fps_cam(camera->position, new_pitch, new_yaw)) == NULL)
 		return (0);
-	scene->camera->pitch = new_pitch;
-	scene->camera->yaw = new_yaw;
-	ft_matrix_free(scene->camera->view);
-	scene->camera->view = view;
-	set_transform(scene->camera);
+	camera->pitch = new_pitch;
+	camera->yaw = new_yaw;
+	ft_matrix_free(camera->view);
+	camera->view = view;
+	set_transform(camera);
 	return (1);
 }
 
-int				move_camera(t_scene *scene, double x, double y, double z)
+int				move_camera(t_camera *camera, double amount)
 {
 	t_matrix	*view;
+	t_vector	*forward;
 	t_vector	*new_pos;
 
-	if ((new_pos = ft_vector4_new(
-					scene->camera->position->v[0] + x,
-					scene->camera->position->v[1] + y,
-					scene->camera->position->v[2] + z)) == NULL ||
-		(view = ft_fps_cam(scene->camera->position,
-						scene->camera->pitch,
-							scene->camera->yaw)) == NULL)
+	if ((forward = ft_vector4_new(
+			sin(camera->yaw) * cos(camera->pitch),
+			-sin(camera->pitch),
+			cos(camera->pitch) * cos(camera->yaw))) == NULL ||
+		(new_pos = ft_vector_new(4)) == NULL ||
+		(amount > 0 ? ft_vector_add(camera->position, forward, new_pos) :
+			ft_vector_sub(camera->position, forward, new_pos)) == FALSE ||
+		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
 		return (0);
-	scene->camera->position = new_pos;
-	ft_matrix_free(scene->camera->view);
-	scene->camera->view = view;
-	set_transform(scene->camera);
+	ft_vector_free(forward);
+	camera->position = new_pos;
+	ft_matrix_free(camera->view);
+	camera->view = view;
+	set_transform(camera);
 	return (1);
 }
 
-int				zoom(t_scene *scene, int dir)
+int				zoom(t_camera *camera, int dir)
 {
 	t_matrix	*projection;
 
-	scene->camera->canvas->angle += dir;
-	if (scene->camera->canvas->angle < 1)
-		scene->camera->canvas->angle = 1;
-	if (scene->camera->canvas->angle > 179)
-		scene->camera->canvas->angle = 179;
+	camera->canvas->angle += dir;
+	if (camera->canvas->angle < 1)
+		camera->canvas->angle = 1;
+	if (camera->canvas->angle > 179)
+		camera->canvas->angle = 179;
 	if ((projection =
-			scene->camera->perspective == PERSPECTIVE ?
-			ft_perspective_matrix(scene->camera->canvas) :
-			ft_orthographic_matrix(scene->camera->canvas)) == NULL)
+			camera->perspective == PERSPECTIVE ?
+			ft_perspective_matrix(camera->canvas) :
+			ft_orthographic_matrix(camera->canvas)) == NULL)
 		return (0);
-	ft_matrix_free(scene->camera->projection);
-	scene->camera->projection = projection;
-	set_transform(scene->camera);
+	ft_matrix_free(camera->projection);
+	camera->projection = projection;
+	set_transform(camera);
 	return (1);
 }
 
-int				loop_perspective(t_scene *scene)
+int				loop_perspective(t_camera *camera)
 {
 	t_matrix	*projection;
 
-	scene->camera->perspective++;
-	if (scene->camera->perspective > 2)
-		scene->camera->perspective = PERSPECTIVE;
+	camera->perspective++;
+	if (camera->perspective > 2)
+		camera->perspective = PERSPECTIVE;
 	if ((projection =
-			scene->camera->perspective == PERSPECTIVE ?
-			ft_perspective_matrix(scene->camera->canvas) :
-			ft_orthographic_matrix(scene->camera->canvas)) == NULL)
+			camera->perspective == PERSPECTIVE ?
+			ft_perspective_matrix(camera->canvas) :
+			ft_orthographic_matrix(camera->canvas)) == NULL)
 		return (0);
-	ft_matrix_free(scene->camera->projection);
-	scene->camera->projection = projection;
-	set_transform(scene->camera);
+	ft_matrix_free(camera->projection);
+	camera->projection = projection;
+	set_transform(camera);
 	return (1);
 }

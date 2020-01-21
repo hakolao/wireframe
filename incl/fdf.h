@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 15:14:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/21 16:00:10 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,9 +208,9 @@ int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 /*
 ** Cam utils
 */
-int					turn_camera(t_scene *scene, double pitch, double yaw);
-int					move_camera(t_scene *scene, double x, double y, double z);
-int					zoom(t_scene *scene, int dir);
-int					loop_perspective(t_scene *scene);
+int					turn_camera(t_camera *camera, double pitch, double yaw);
+int					move_camera(t_camera *camera, double amount);
+int					zoom(t_camera *camera, int dir);
+int					loop_perspective(t_camera *camera);
 
 #endif
