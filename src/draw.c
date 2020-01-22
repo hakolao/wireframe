@@ -6,62 +6,60 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:30:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:37:39 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-t_vector			*screen_pt(t_vector *point, t_scene *scene)
+static t_vector		***axes(void)
 {
-	t_vector	*on_screen;
+	t_vector	***points;
+	int			i;
 
-	if ((on_screen = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(
-			scene->camera->transform, point, on_screen) == FALSE)
+	if ((points = (t_vector***)malloc(sizeof(**points) * 3)) == NULL)
 		return (NULL);
-	on_screen->v[0] /= on_screen->v[3];
-	on_screen->v[1] /= on_screen->v[3];
-	on_screen->v[2] /= on_screen->v[3];
-	on_screen->v[3] /= on_screen->v[3];
-	return (on_screen);
+	i = 0;
+	while (i < 3)
+		points[i++] = (t_vector**)malloc(sizeof(*points) * 100);
+	i = 0;
+	while (i < 100)
+	{
+		if ((points[0][i] = ft_vector4_new(-50 + i, 0, 0)) == NULL ||
+			(points[1][i] = ft_vector4_new(0, -50 + i, 0)) == NULL ||
+			(points[2][i] = ft_vector4_new(0, 0, -50 + i)) == NULL)
+			return (NULL);
+		i++;
+	}
+	return (points);
 }
 
-static int			in_front_of_camera(t_vector *p1, t_vector *p2,
-					t_camera *camera)
+static void			draw_axes(t_scene *scene)
 {
-	t_vector	*c1;
-	t_vector	*c2;
-	int			ret;
+	int			color;
+	t_vector	***points;
+	int			i;
 
-	if ((c1 = ft_vector_new(4)) == NULL ||
-		(c2 = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(camera->view, p1, c1) == FALSE ||
-		ft_matrix_mul_vector(camera->view, p2, c2) == FALSE)
-		return (0);
-	ret = c1->v[2] > 0.5 && c2->v[2] > 0.5;
-	ft_vector_free(c1);
-	ft_vector_free(c2);
-	return (ret);
-}
-
-static void			connect_points(t_vector *p1, t_vector *p2,
-					t_scene *scene, int color)
-{
-	t_vector	*s1;
-	t_vector	*s2;
-
-	if (!in_front_of_camera(p1, p2, scene->camera))
+	color = ((100 & 255) << 16) | ((100 & 255) << 8 | (100 & 255));
+	if ((points = axes()) == NULL)
 		return ;
-	if (((s1 = screen_pt(p1, scene)) == NULL ||
-		(s2 = screen_pt(p2, scene)) == NULL) &&
-		log_error("Something failed in point_to_screen.", ""))
-		exit(1);
-	s1->v[0] = (s1->v[0] * ASPECT_RATIO);
-	s2->v[0] = (s2->v[0] * ASPECT_RATIO);
-	draw_line(s1, s2, color, scene);
-	ft_vector_free(s1);
-	ft_vector_free(s2);
+	i = 0;
+	while (i < 100 - 1)
+	{
+		connect_points(points[0][i], points[0][i + 1], scene, color);
+		connect_points(points[1][i], points[1][i + 1], scene, color);
+		connect_points(points[2][i], points[2][i + 1], scene, color);
+		ft_vector_free(points[0][i]);
+		ft_vector_free(points[1][i]);
+		ft_vector_free(points[2][i]);
+		i++;
+	}
+	ft_vector_free(points[0][i]);
+	ft_vector_free(points[1][i]);
+	ft_vector_free(points[2][i]);
+	i = 0;
+	while (i < 3)
+		free(points[i++]);
 }
 
 static void			draw_map(t_scene *scene)
@@ -91,6 +89,7 @@ int					draw(t_scene *scene)
 {
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	draw_map(scene);
+	draw_axes(scene);
 	draw_ui(scene);
 	return (1);
 }

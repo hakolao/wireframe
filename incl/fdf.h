@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:41:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:36:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,5 +212,11 @@ int					move_camera_forward(t_camera *camera, double amount);
 int					strafe_camera(t_camera *camera, double amount);
 int					zoom(t_camera *camera, int dir);
 int					loop_perspective(t_camera *camera);
+
+/*
+** Screen pt
+*/
+void				connect_points(t_vector *p1, t_vector *p2,
+					t_scene *scene, int color);
 
 #endif
