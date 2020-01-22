@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:41:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 19:16:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct		s_map
 	size_t			y;
 	size_t			z;
 	t_matrix		*rotation;
+	t_matrix		*reset_rotation;
 	t_vector		*center;
 	t_rgb			*color;
 }					t_map;
@@ -143,6 +144,15 @@ typedef struct		s_line
 	int	xi;
 	int	p;
 }					t_line;
+
+typedef struct		s_line_connect
+{
+	t_vector		*point1;
+	t_vector		*point2;
+	int				color_start;
+	int				color_end;
+	t_scene			*scene;
+}					t_line_connect;
 
 /*
 ** Main.c
@@ -185,8 +195,7 @@ void				draw_ui(t_scene *scene);
 /*
 ** Line drawing
 */
-void				draw_line(t_vector *point1, t_vector *point2,
-					int color, t_scene *scene);
+void				draw_line(t_line_connect *line_connect);
 
 /*
 ** Scene related functions
@@ -216,7 +225,13 @@ int					loop_perspective(t_camera *camera);
 /*
 ** Screen pt
 */
-void				connect_points(t_vector *p1, t_vector *p2,
-					t_scene *scene, int color);
+void				connect_points(t_line_connect *line_connect);
+void				connect_map_pts_with_gradient(t_line_connect *line_connect,
+					t_vector *point1, t_vector *point2, t_vector *tmp);
+
+/*
+** Axes
+*/
+void				draw_axes(t_scene *scene);
 
 #endif

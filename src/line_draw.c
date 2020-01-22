@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:38:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:36:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,25 @@ static void			plot_pixel(int x, int y, int color, t_scene *scene)
 	color);
 }
 
-static void			plot_line_low(t_vector *point1, t_vector *point2,
-					int color, t_scene *scene)
+static void			plot_line_low(t_line_connect *line_connect)
 {
 	t_line	line;
 
 	line.yi = 1;
-	line.dx = point2->v[0] - point1->v[0];
-	line.dy = point2->v[1] - point1->v[1];
+	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
+	line.dy = line_connect->point2->v[1] - line_connect->point1->v[1];
 	if (line.dy < 0)
 	{
 		line.yi = -1;
 		line.dy = -line.dy;
 	}
 	line.p = 2 * line.dy - line.dx;
-	line.y = point1->v[1];
-	line.x = point1->v[0];
-	while (line.x < point2->v[0])
+	line.y = line_connect->point1->v[1];
+	line.x = line_connect->point1->v[0];
+	while (line.x < line_connect->point2->v[0])
 	{
-		plot_pixel(line.x, line.y, color, scene);
+		plot_pixel(line.x, line.y, line_connect->color_start,
+			line_connect->scene);
 		if (line.p > 0)
 		{
 			line.y += line.yi;
@@ -51,25 +51,25 @@ static void			plot_line_low(t_vector *point1, t_vector *point2,
 	}
 }
 
-static void			plot_line_high(t_vector *point1, t_vector *point2,
-					int color, t_scene *scene)
+static void			plot_line_high(t_line_connect *line_connect)
 {
 	t_line	line;
 
 	line.xi = 1;
-	line.dx = point2->v[0] - point1->v[0];
-	line.dy = point2->v[1] - point1->v[1];
+	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
+	line.dy = line_connect->point2->v[1] - line_connect->point1->v[1];
 	if (line.dx < 0)
 	{
 		line.xi = -1;
 		line.dx = -line.dx;
 	}
 	line.p = 2 * line.dx - line.dy;
-	line.y = point1->v[1];
-	line.x = point1->v[0];
-	while (line.y < point2->v[1])
+	line.y = line_connect->point1->v[1];
+	line.x = line_connect->point1->v[0];
+	while (line.y < line_connect->point2->v[1])
 	{
-		plot_pixel(line.x, line.y, color, scene);
+		plot_pixel(line.x, line.y, line_connect->color_start,
+			line_connect->scene);
 		if (line.p > 0)
 		{
 			line.x += line.xi;
@@ -84,30 +84,29 @@ static void			plot_line_high(t_vector *point1, t_vector *point2,
 ** https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#Optimization
 */
 
-void				draw_line(t_vector *point1, t_vector *point2, int color,
-					t_scene *scene)
+void				draw_line(t_line_connect *line_connect)
 {
 	int	x2;
 	int	x1;
 	int y2;
 	int	y1;
 
-	x2 = point2->v[0];
-	x1 = point1->v[0];
-	y2 = point2->v[1];
-	y1 = point1->v[1];
+	x2 = line_connect->point2->v[0];
+	x1 = line_connect->point1->v[0];
+	y2 = line_connect->point2->v[1];
+	y1 = line_connect->point1->v[1];
 	if (ft_abs(y2 - y1) < ft_abs(x2 - x1))
 	{
 		if (x1 > x2)
-			plot_line_low(point2, point1, color, scene);
+			plot_line_low(line_connect);
 		else
-			plot_line_low(point1, point2, color, scene);
+			plot_line_low(line_connect);
 	}
 	else
 	{
 		if (y1 > y2)
-			plot_line_high(point2, point1, color, scene);
+			plot_line_high(line_connect);
 		else
-			plot_line_high(point1, point2, color, scene);
+			plot_line_high(line_connect);
 	}
 }

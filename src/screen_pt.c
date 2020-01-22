@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:26:52 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:36:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 19:16:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,42 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 	return (ret);
 }
 
-void				connect_points(t_vector *p1, t_vector *p2,
-					t_scene *scene, int color)
+void				connect_points(t_line_connect *line_connect)
 {
 	t_vector	*s1;
 	t_vector	*s2;
 
-	if (!in_front_of_camera(p1, p2, scene->camera))
+	if (!in_front_of_camera(line_connect->point1,
+		line_connect->point2,
+		line_connect->scene->camera))
 		return ;
-	if (((s1 = screen_pt(p1, scene)) == NULL ||
-		(s2 = screen_pt(p2, scene)) == NULL) &&
+	if (((s1 = screen_pt(line_connect->point1, line_connect->scene)) == NULL ||
+		(s2 = screen_pt(line_connect->point2, line_connect->scene)) == NULL) &&
 		log_error("Something failed in point_to_screen.", ""))
 		exit(1);
 	s1->v[0] = (s1->v[0] * ASPECT_RATIO);
 	s2->v[0] = (s2->v[0] * ASPECT_RATIO);
-	draw_line(s1, s2, color, scene);
+	line_connect->point1 = s1;
+	line_connect->point2 = s2;
+	draw_line(line_connect);
 	ft_vector_free(s1);
 	ft_vector_free(s2);
+}
+
+void				connect_map_pts_with_gradient(t_line_connect *line_connect,
+					t_vector *point1, t_vector *point2, t_vector *tmp)
+{
+	line_connect->point1 = point1;
+	line_connect->point2 = point2;
+	if (ft_matrix_mul_vector(
+		line_connect->scene->map->reset_rotation,
+		line_connect->point1, tmp) == FALSE)
+		return ;
+	line_connect->color_start = ft_rgbtoi(255, 0, 42);
+	if (ft_matrix_mul_vector(
+		line_connect->scene->map->reset_rotation,
+		line_connect->point2, tmp) == FALSE)
+		return ;
+	line_connect->color_end = ft_rgbtoi(255, 0, 42);
+	connect_points(line_connect);
 }

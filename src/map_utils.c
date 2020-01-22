@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 14:47:30 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:36:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,20 @@ int				rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 {
 	t_matrix	*rotation;
 	t_matrix	*map_rotation;
+	t_matrix	*reset_rotation;
 
 	if ((map_rotation = ft_matrix_new(4, 4)) == NULL ||
 		(rotation = ft_rotation_matrix(amount_x, amount_y, amount_z)) == NULL ||
 		ft_matrix_mul(rotation, map->rotation, map_rotation) == FALSE ||
 		ft_matrix_mul_vector_lst(rotation, map->vertices,
-			map->vertex_count) == FALSE)
+			map->vertex_count) == FALSE ||
+		(reset_rotation = ft_matrix_inverse_4x4(map_rotation)) == NULL)
 		return (0);
 	ft_matrix_free(rotation);
 	ft_matrix_free(map->rotation);
+	ft_matrix_free(map->reset_rotation);
 	map->rotation = map_rotation;
+	map->reset_rotation = reset_rotation;
 	return (1);
 }
 
@@ -81,12 +85,10 @@ int				scale_map_z(t_map *map, double amount)
 {
 	t_vector	*scale;
 	t_matrix	*scale_m;
-	t_matrix	*reset_rotation;
 
 	if ((scale = ft_vector4_new(1, 1, amount)) == NULL ||
 		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
-		(reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-		ft_matrix_mul_vector_lst(reset_rotation, map->vertices,
+		ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
 			map->vertex_count) == FALSE ||
 		ft_matrix_mul_vector_lst(scale_m, map->vertices,
 			map->vertex_count) == FALSE ||
@@ -95,6 +97,5 @@ int				scale_map_z(t_map *map, double amount)
 		return (0);
 	ft_vector_free(scale);
 	ft_matrix_free(scale_m);
-	ft_matrix_free(reset_rotation);
 	return (1);
 }

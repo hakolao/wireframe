@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:14:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:35:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 static int		reset_map(t_map *map)
 {
-	t_matrix	*reset_rotation;
-
-	if ((reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-		ft_matrix_mul_vector_lst(reset_rotation, map->vertices,
+	if (ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
 			map->vertex_count) == FALSE)
 		return (0);
 	ft_matrix_free(map->rotation);

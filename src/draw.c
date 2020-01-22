@@ -6,83 +6,35 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:41:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 19:10:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-static t_vector		***axes(void)
-{
-	t_vector	***points;
-	int			i;
-
-	if ((points = (t_vector***)malloc(sizeof(**points) * 3)) == NULL)
-		return (NULL);
-	i = 0;
-	while (i < 3)
-		points[i++] = (t_vector**)malloc(sizeof(*points) * 100);
-	i = 0;
-	while (i < 100)
-	{
-		if ((points[0][i] = ft_vector4_new(-50 + i, 0, 0)) == NULL ||
-			(points[1][i] = ft_vector4_new(0, -50 + i, 0)) == NULL ||
-			(points[2][i] = ft_vector4_new(0, 0, -50 + i)) == NULL)
-			return (NULL);
-		i++;
-	}
-	return (points);
-}
-
-static void			draw_axes(t_scene *scene)
-{
-	int			color;
-	t_vector	***points;
-	int			i;
-
-	color = ((100 & 255) << 16) | ((100 & 255) << 8 | (100 & 255));
-	if ((points = axes()) == NULL)
-		return ;
-	i = 0;
-	while (i < 100 - 1)
-	{
-		connect_points(points[0][i], points[0][i + 1], scene, color);
-		connect_points(points[1][i], points[1][i + 1], scene, color);
-		connect_points(points[2][i], points[2][i + 1], scene, color);
-		ft_vector_free(points[0][i]);
-		ft_vector_free(points[1][i]);
-		ft_vector_free(points[2][i]);
-		i++;
-	}
-	ft_vector_free(points[0][i]);
-	ft_vector_free(points[1][i]);
-	ft_vector_free(points[2][i]);
-	i = 0;
-	while (i < 3)
-		free(points[i++]);
-}
-
 static void			draw_map(t_scene *scene)
 {
-	int			color;
-	size_t		i;
+	t_line_connect	*line_connect;
+	t_vector		*tmp;
+	size_t			i;
 
-	color = ft_rgbtoi(*(scene->map->color));
+	if ((line_connect = malloc(sizeof(t_line_connect))) == NULL ||
+		(tmp = ft_vector_new(4)) == NULL)
+		return ;
+	line_connect->scene = scene;
 	i = -1;
 	while (++i < scene->map->vertex_count - 1)
 	{
 		if ((i + 1) % (scene->map->x + 1) != 0)
-			connect_points(
+			connect_map_pts_with_gradient(line_connect,
 				scene->map->vertices[i],
-				scene->map->vertices[i + 1],
-				scene,
-				color);
+					scene->map->vertices[i + 1], tmp);
 		if (i < scene->map->vertex_count - scene->map->x - 1)
-			connect_points(scene->map->vertices[i],
-				scene->map->vertices[i + 1 + scene->map->x],
-				scene,
-				color);
+			connect_map_pts_with_gradient(line_connect,
+				scene->map->vertices[i],
+					scene->map->vertices[i + 1 + scene->map->x], tmp);
 	}
+	free(line_connect);
 }
 
 int					draw(t_scene *scene)
