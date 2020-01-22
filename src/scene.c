@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:23:15 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:41:23 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 	if (position == NULL || map->center == NULL || up == NULL ||
 		(camera = (t_camera*)malloc(sizeof(*camera))) == NULL ||
 		(camera->canvas = new_canvas()) == NULL ||
-		(camera->color = ft_itorgb(MAP_COLOR)) == NULL ||
 		(camera->view = ft_fps_cam(position, pitch, yaw)) == NULL ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->unit_scale =

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:36:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:41:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct		s_map
 	size_t			z;
 	t_matrix		*rotation;
 	t_vector		*center;
+	t_rgb			*color;
 }					t_map;
 
 typedef struct		s_camera
@@ -114,7 +115,6 @@ typedef struct		s_camera
 	t_matrix		*projection;
 	t_matrix		*transform;
 	t_canvas		*canvas;
-	t_rgb			*color;
 	double			pitch;
 	double			yaw;
 	int				perspective;

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 16:37:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:41:50 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void			draw_map(t_scene *scene)
 	int			color;
 	size_t		i;
 
-	color = ft_rgbtoi(*(scene->camera->color));
+	color = ft_rgbtoi(*(scene->map->color));
 	i = -1;
 	while (++i < scene->map->vertex_count - 1)
 	{
