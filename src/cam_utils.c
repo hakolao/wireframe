@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:32:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 15:28:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int				turn_camera(t_camera *camera, double pitch, double yaw)
 	new_pitch = camera->pitch;
 	new_yaw = camera->yaw;
 	new_yaw += yaw;
-	if (new_yaw > 360)
+	if (new_yaw >= 359)
 		new_yaw = 1;
 	new_pitch += pitch;
-	if (new_pitch > 90)
-		new_pitch = 90;
-	if (new_pitch < -90)
-		new_pitch = -90;
+	if (new_pitch > 89)
+		new_pitch = 89;
+	if (new_pitch < -89)
+		new_pitch = -89;
 	if ((view =
 		ft_fps_cam(camera->position, new_pitch, new_yaw)) == NULL)
 		return (0);
@@ -60,8 +60,8 @@ int				move_camera(t_camera *camera, double amount)
 			-sin(camera->pitch),
 			cos(camera->pitch) * cos(camera->yaw))) == NULL ||
 		(new_pos = ft_vector_new(4)) == NULL ||
-		(amount > 0 ? ft_vector_sub(camera->position, forward, new_pos) :
-			ft_vector_add(camera->position, forward, new_pos)) == FALSE ||
+		(amount > 0 ? ft_vector_add(camera->position, forward, new_pos) :
+			ft_vector_sub(camera->position, forward, new_pos)) == FALSE ||
 		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
 		return (0);
 	ft_vector_free(forward);

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:40:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 15:18:25 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 # define MOUSE_BUTTON_RIGHT 2
+# define MOUSE_BUTTON_LEFT 1
 # define KEY_R 15
 
 /*
@@ -80,15 +81,10 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-# define MOVE_SPEED 0.1
-
 # define MAP_COLOR ((255 & 255) << 16) | ((0 & 255) << 8 | (42 & 255))
 # define UI_COLOR ((255 & 255) << 16) | ((255 & 255) << 8 | (255 & 255))
 
-/*
-** Don't allow zero to prevent division by zero (in pos 0,0,0);
-*/
-# define Z_POS_INIT 0.1
+# define Z_POS_INIT 0
 
 # define ORTHOGRAPHIC 2
 # define PERSPECTIVE 1
@@ -132,6 +128,7 @@ typedef struct		s_scene
 	void			*mlx;
 	void			*mlx_wdw;
 	int				mouse_right_pressed;
+	int				mouse_left_pressed;
 	int				mouse_x;
 	int				mouse_y;
 }					t_scene;
@@ -178,7 +175,7 @@ int					handle_mouse_move(int x, int y, void *param);
 /*
 ** Draw graphics
 */
-void				draw(t_scene *scene);
+int					draw(t_scene *scene);
 
 /*
 ** UI

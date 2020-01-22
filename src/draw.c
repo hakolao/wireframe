@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:42:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 15:30:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 		ft_matrix_mul_vector(camera->view, p1, c1) == FALSE ||
 		ft_matrix_mul_vector(camera->view, p2, c2) == FALSE)
 		return (0);
-	ret = c1->v[2] > 0 && c2->v[2] > 0;
+	ret = c1->v[2] > 0.5 && c2->v[2] > 0.5;
 	ft_vector_free(c1);
 	ft_vector_free(c2);
 	return (ret);
@@ -87,9 +87,10 @@ static void			draw_map(t_scene *scene)
 	}
 }
 
-void				draw(t_scene *scene)
+int					draw(t_scene *scene)
 {
 	mlx_clear_window(scene->mlx, scene->mlx_wdw);
 	draw_map(scene);
 	draw_ui(scene);
+	return (1);
 }
