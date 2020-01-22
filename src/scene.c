@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:06:41 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 15:41:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ static t_canvas		*new_canvas(void)
 	c->far = 10;
 	c->angle = 70;
 	return (c);
+}
+
+void				set_transform(t_camera *camera)
+{
+	t_matrix	*transform;
+
+	if ((transform = cam_transform(camera)) == NULL)
+		return ;
+	ft_matrix_free(camera->transform);
+	camera->transform = transform;
 }
 
 t_matrix			*cam_transform(t_camera *camera)

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:18:25 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 15:41:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void				draw_line(t_vector *point1, t_vector *point2,
 t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
 t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map);
 t_matrix			*cam_transform(t_camera *camera);
+void				set_transform(t_camera *camera);
 
 /*
 ** Map utils
@@ -207,7 +208,8 @@ int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 ** Cam utils
 */
 int					turn_camera(t_camera *camera, double pitch, double yaw);
-int					move_camera(t_camera *camera, double amount);
+int					move_camera_forward(t_camera *camera, double amount);
+int					strafe_camera(t_camera *camera, double amount);
 int					zoom(t_camera *camera, int dir);
 int					loop_perspective(t_camera *camera);
 

@@ -6,21 +6,11 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:28:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 15:43:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static void		set_transform(t_camera *camera)
-{
-	t_matrix	*transform;
-
-	if ((transform = cam_transform(camera)) == NULL)
-		return ;
-	ft_matrix_free(camera->transform);
-	camera->transform = transform;
-}
 
 int				turn_camera(t_camera *camera, double pitch, double yaw)
 {
@@ -49,22 +39,45 @@ int				turn_camera(t_camera *camera, double pitch, double yaw)
 	return (1);
 }
 
-int				move_camera(t_camera *camera, double amount)
+int				move_camera_forward(t_camera *camera, double amount)
 {
 	t_matrix	*view;
 	t_vector	*forward;
 	t_vector	*new_pos;
 
 	if ((forward = ft_vector4_new(
-			sin(camera->yaw) * cos(camera->pitch),
-			-sin(camera->pitch),
-			cos(camera->pitch) * cos(camera->yaw))) == NULL ||
+			VALUE_AT(camera->view, 2, 0),
+			VALUE_AT(camera->view, 2, 1),
+			VALUE_AT(camera->view, 2, 2))) == NULL ||
 		(new_pos = ft_vector_new(4)) == NULL ||
 		(amount > 0 ? ft_vector_add(camera->position, forward, new_pos) :
 			ft_vector_sub(camera->position, forward, new_pos)) == FALSE ||
 		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
 		return (0);
 	ft_vector_free(forward);
+	camera->position = new_pos;
+	ft_matrix_free(camera->view);
+	camera->view = view;
+	set_transform(camera);
+	return (1);
+}
+
+int				strafe_camera(t_camera *camera, double amount)
+{
+	t_matrix	*view;
+	t_vector	*sideways;
+	t_vector	*new_pos;
+
+	if ((sideways = ft_vector4_new(
+			VALUE_AT(camera->view, 0, 0),
+			VALUE_AT(camera->view, 0, 1),
+			VALUE_AT(camera->view, 0, 2))) == NULL ||
+		(new_pos = ft_vector_new(4)) == NULL ||
+		(amount > 0 ? ft_vector_add(camera->position, sideways, new_pos) :
+			ft_vector_sub(camera->position, sideways, new_pos)) == FALSE ||
+		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
+		return (0);
+	ft_vector_free(sideways);
 	camera->position = new_pos;
 	ft_matrix_free(camera->view);
 	camera->view = view;
