@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 18:36:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 20:23:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,25 @@ static void			plot_line_high(t_line_connect *line_connect)
 	}
 }
 
+static void			good_old_swap(t_line_connect *line_connect)
+{
+	t_vector	*tmp;
+
+	tmp = line_connect->point2;
+	line_connect->point2 = line_connect->point1;
+	line_connect->point1 = tmp;
+}
+
 /*
 ** https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#Optimization
 */
 
 void				draw_line(t_line_connect *line_connect)
 {
-	int	x2;
-	int	x1;
-	int y2;
-	int	y1;
+	int			x2;
+	int			x1;
+	int			y2;
+	int			y1;
 
 	x2 = line_connect->point2->v[0];
 	x1 = line_connect->point1->v[0];
@@ -98,15 +107,13 @@ void				draw_line(t_line_connect *line_connect)
 	if (ft_abs(y2 - y1) < ft_abs(x2 - x1))
 	{
 		if (x1 > x2)
-			plot_line_low(line_connect);
-		else
-			plot_line_low(line_connect);
+			good_old_swap(line_connect);
+		plot_line_low(line_connect);
 	}
 	else
 	{
 		if (y1 > y2)
-			plot_line_high(line_connect);
-		else
-			plot_line_high(line_connect);
+			good_old_swap(line_connect);
+		plot_line_high(line_connect);
 	}
 }
