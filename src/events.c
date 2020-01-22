@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:42:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:00:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ static int		check_key_events(int key, t_scene *scene)
 		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
 	}
-	return ((key == KEY_W && rotate_map(scene->map, 3, 0, 0)) ||
-		(key == KEY_S && rotate_map(scene->map, -3, 0, 0)) ||
-		(key == KEY_A && rotate_map(scene->map, 0, 3, 0)) ||
-		(key == KEY_D && rotate_map(scene->map, 0, -3, 0)) ||
+	return ((key == KEY_UP && rotate_map(scene->map, 3, 0, 0)) ||
+		(key == KEY_DOWN && rotate_map(scene->map, -3, 0, 0)) ||
+		(key == KEY_LEFT && rotate_map(scene->map, 0, 3, 0)) ||
+		(key == KEY_RIGHT && rotate_map(scene->map, 0, -3, 0)) ||
 		(key == KEY_Q && rotate_map(scene->map, 0, 0, -3)) ||
 		(key == KEY_E && rotate_map(scene->map, 0, 0, 3)) ||
-		(key == KEY_UP && move_camera_forward(scene->camera, 1.5)) ||
-		(key == KEY_DOWN && move_camera_forward(scene->camera, -1.5)) ||
-		(key == KEY_RIGHT && strafe_camera(scene->camera, 1.5)) ||
-		(key == KEY_LEFT && strafe_camera(scene->camera, -1.5)) ||
+		(key == KEY_W && move_camera_forward(scene->camera, 1.5)) ||
+		(key == KEY_S && move_camera_forward(scene->camera, -1.5)) ||
+		(key == KEY_D && strafe_camera(scene->camera, 1.5)) ||
+		(key == KEY_A && strafe_camera(scene->camera, -1.5)) ||
 		(key == KEY_NUM_4 && turn_camera(scene->camera, 0, 2)) ||
 		(key == KEY_NUM_6 && turn_camera(scene->camera, 0, -2)) ||
 		(key == KEY_NUM_8 && turn_camera(scene->camera, -2, 0)) ||
