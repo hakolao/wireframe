@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:26:52 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:29:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:32:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,6 @@ void				connect_points(t_line_connect *line_connect)
 	draw_line(line_connect);
 	ft_vector_free(s1);
 	ft_vector_free(s2);
-}
-
-double				set_gradient_multiplier(double *in_minmax, double *out_minmax,
-					t_vector *point, t_map *map)
-{
-	in_minmax[0] = map->z_min;
-	in_minmax[1] = map->z_max;
-	out_minmax[0] = 0.2;
-	out_minmax[1] = 1.2;
-	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
 }
 
 void				connect_map_pts_with_gradient(t_line_connect *line_connect,
