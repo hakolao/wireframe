@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:41:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 18:33:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,10 @@
 # include "../libmatrix/libmatrix.h"
 
 # define CLAMP_255(color) (color > 255 ? 255 : color)
-# define RED(rgb) ((rgb >> 16) & 255)
-# define BLUE(rgb) ((rgb >> 8) & 255)
-# define GREEN(rgb) (rgb & 255)
+# define RED(r) ((r >> 16) & 255)
+# define GREEN(g) ((g >> 8) & 255)
+# define BLUE(b) (b & 255)
 # define COLOR(r, g, b) ((CLAMP_255(r) & 255) << 16) | ((CLAMP_255(g) & 255) << 8 | (CLAMP_255(b) & 255))
-# define MAP_R 255
-# define MAP_G 255
-# define MAP_B 255
-# define MAP_COLOR COLOR(MAP_R, MAP_G, MAP_B)
 # define UI_COLOR COLOR(255, 255, 255)
 
 # define Z_POS_INIT 0
@@ -204,8 +200,9 @@ void				draw_ui(t_scene *scene);
 void				draw_line(t_line_connect *line_connect);
 int					grad_color(int start, int end, double gradient_mul);
 void				swap_points_in_line_connect(t_line_connect *line_connect);
-double				set_gradient_multiplier(double *in_minmax, double *out_minmax,
+double				gradient_multiplier(double *in_minmax, double *out_minmax,
 					t_vector *point, t_map *map);
+int					map_color(double mul);
 
 /*
 ** Scene related functions

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 17:05:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 18:36:37 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,19 @@ void			swap_points_in_line_connect(t_line_connect *line_connect)
 	line_connect->color_end = tmp_color;
 }
 
-double			set_gradient_multiplier(double *in_minmax, double *out_minmax,
+double			gradient_multiplier(double *in_minmax, double *out_minmax,
 				t_vector *point, t_map *map)
 {
 	in_minmax[0] = map->z_min;
 	in_minmax[1] = map->z_max;
-	out_minmax[0] = 0.3;
-	out_minmax[1] = 1.3;
+	out_minmax[0] = -M_PI / 2;
+	out_minmax[1] = M_PI / 2;
 	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
+}
+
+int				map_color(double mul)
+{
+	return (COLOR((int)(0.5 * (1 + sin(mul)) * 255 + (mul > 1 ? 255 : 0)),
+			(int)(cos(mul) * 255 + (mul > 1 ? 255 : 0)),
+			(int)(sin(mul) * sin(mul) * 255 + (mul > 1 ? 255 : 0))));
 }
