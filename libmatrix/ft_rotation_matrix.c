@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:30:23 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 18:11:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:13:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static t_matrix		*rotation_around_y(int amount)
 	if ((rotation = ft_matrix_id(4, 4)) == NULL)
 		return (NULL);
 	VALUE_AT(rotation, 0, 0) = cos(angle);
-	VALUE_AT(rotation, 2, 0) = sin(angle);
-	VALUE_AT(rotation, 0, 2) = -sin(angle);
+	VALUE_AT(rotation, 2, 0) = -sin(angle);
+	VALUE_AT(rotation, 0, 2) = sin(angle);
 	VALUE_AT(rotation, 2, 2) = cos(angle);
 	return (rotation);
 }
