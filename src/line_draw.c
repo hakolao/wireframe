@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 12:16:21 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:27:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,23 @@ static void			plot_pixel(int x, int y, int color, t_scene *scene)
 	color);
 }
 
-static double			calculate_steps(int	x_or_y, int end)
+static int			grad_color(int start, int end, double gradient_mul)
 {
-	double	steps;
-	
-	steps = 0;
-	while (x_or_y < end)
-	{
-		x_or_y++;
-		steps++;
-	}
-	return (steps);
+	int r_diff;
+	int	g_diff;
+	int	b_diff;
+
+	r_diff = RED(start) - RED(end);
+	g_diff = GREEN(start) - GREEN(end);
+	b_diff = BLUE(start) - BLUE(end);
+	return (COLOR(
+			r_diff > 0 ? RED(start) - (int)(gradient_mul * ft_abs(r_diff)) :
+				RED(start) + (int)(gradient_mul * ft_abs(r_diff)),
+			g_diff > 0 ? GREEN(start) - (int)(gradient_mul * ft_abs(g_diff)) :
+				GREEN(start) + (int)(gradient_mul * ft_abs(g_diff)),
+			b_diff > 0 ? BLUE(start) - (int)(gradient_mul * ft_abs(b_diff)) :
+				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff))
+		));
 }
 
 static void			plot_line_low(t_line_connect *line_connect)
@@ -40,6 +46,7 @@ static void			plot_line_low(t_line_connect *line_connect)
 	t_line		line;
 	double		steps;
 	double		step;
+	double		gradient_mul;
 
 	line.yi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
@@ -52,16 +59,14 @@ static void			plot_line_low(t_line_connect *line_connect)
 	line.p = 2 * line.dy - line.dx;
 	line.y = line_connect->point1->v[1];
 	line.x = line_connect->point1->v[0];
-	steps = calculate_steps(line.x, line_connect->point2->v[0]);
+	steps = line_connect->point2->v[0] - line.x;
 	step = 0;
 	while (line.x < line_connect->point2->v[0])
 	{
+		gradient_mul = line_connect->direction > 0 ? step / step : 1 - step / step;
 		plot_pixel(line.x, line.y,
-			COLOR(
-				RED(line_connect->color_start) + (int)((1 - step / steps) * (RED(line_connect->color_start) - RED(line_connect->color_end))),
-				GREEN(line_connect->color_start) + (int)((1 - step / steps) * (GREEN(line_connect->color_start) - GREEN(line_connect->color_end))),
-				BLUE(line_connect->color_start) + (int)((1 - step / steps) * (BLUE(line_connect->color_start) - BLUE(line_connect->color_end)))
-			),
+			grad_color(line_connect->color_start,
+				line_connect->color_end, gradient_mul),
 			line_connect->scene);
 		if (line.p > 0)
 		{
@@ -79,6 +84,7 @@ static void			plot_line_high(t_line_connect *line_connect)
 	t_line		line;
 	double		steps;
 	double		step;
+	double		gradient_mul;
 
 	line.xi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
@@ -91,16 +97,14 @@ static void			plot_line_high(t_line_connect *line_connect)
 	line.p = 2 * line.dx - line.dy;
 	line.y = line_connect->point1->v[1];
 	line.x = line_connect->point1->v[0];
-	steps = calculate_steps(line.y, line_connect->point2->v[1]);
+	steps = line_connect->point2->v[1] - line.y;
 	step = 0;
 	while (line.y < line_connect->point2->v[1])
 	{
+		gradient_mul = line_connect->direction > 0 ? step / step : 1 - step / step;
 		plot_pixel(line.x, line.y,
-			COLOR(
-				RED(line_connect->color_start) + (int)((1 - step / steps) * (RED(line_connect->color_start) - RED(line_connect->color_end))),
-				GREEN(line_connect->color_start) + (int)((1 - step / steps) * (GREEN(line_connect->color_start) - GREEN(line_connect->color_end))),
-				BLUE(line_connect->color_start) + (int)((1 - step / steps) * (BLUE(line_connect->color_start) - BLUE(line_connect->color_end)))
-			),
+			grad_color(line_connect->color_start,
+				line_connect->color_end, gradient_mul),
 			line_connect->scene);
 		if (line.p > 0)
 		{
@@ -113,13 +117,18 @@ static void			plot_line_high(t_line_connect *line_connect)
 	}
 }
 
-static void			good_old_swap(t_line_connect *line_connect)
+void			swap_points_in_line_connect(t_line_connect *line_connect)
 {
 	t_vector	*tmp;
+	int			tmp_color;
 
 	tmp = line_connect->point2;
 	line_connect->point2 = line_connect->point1;
 	line_connect->point1 = tmp;
+	tmp_color = line_connect->color_start;
+	line_connect->color_start = line_connect->color_end;
+	line_connect->color_end = tmp_color;
+	line_connect->direction = -1;
 }
 
 /*
@@ -137,16 +146,17 @@ void				draw_line(t_line_connect *line_connect)
 	x1 = line_connect->point1->v[0];
 	y2 = line_connect->point2->v[1];
 	y1 = line_connect->point1->v[1];
+	line_connect->direction = 1;
 	if (ft_abs(y2 - y1) < ft_abs(x2 - x1))
 	{
 		if (x1 > x2)
-			good_old_swap(line_connect);
+			swap_points_in_line_connect(line_connect);
 		plot_line_low(line_connect);
 	}
 	else
 	{
 		if (y1 > y2)
-			good_old_swap(line_connect);
+			swap_points_in_line_connect(line_connect);
 		plot_line_high(line_connect);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 12:40:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:27:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,14 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
+# define CLAMP_255(color) (color > 255 ? 255 : color)
 # define RED(rgb) ((rgb >> 16) & 255)
 # define BLUE(rgb) ((rgb >> 8) & 255)
 # define GREEN(rgb) (rgb & 255)
-# define COLOR(r, g, b) ((r & 255) << 16) | ((g & 255) << 8 | (b & 255))
+# define COLOR(r, g, b) ((CLAMP_255(r) & 255) << 16) | ((CLAMP_255(g) & 255) << 8 | (CLAMP_255(b) & 255))
 # define MAP_R 255
-# define MAP_G 0
-# define MAP_B 42
+# define MAP_G 255
+# define MAP_B 255
 # define MAP_COLOR COLOR(MAP_R, MAP_G, MAP_B)
 # define UI_COLOR COLOR(255, 255, 255)
 
@@ -155,6 +156,7 @@ typedef struct		s_line_connect
 {
 	t_vector		*point1;
 	t_vector		*point2;
+	int				direction;
 	int				color_start;
 	int				color_end;
 	t_scene			*scene;
@@ -202,6 +204,7 @@ void				draw_ui(t_scene *scene);
 ** Line drawing
 */
 void				draw_line(t_line_connect *line_connect);
+void				swap_points_in_line_connect(t_line_connect *line_connect);
 
 /*
 ** Scene related functions

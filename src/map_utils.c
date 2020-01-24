@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 12:37:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 15:14:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void		set_vertex_limits(t_map *map, t_vector *vertex)
 	map->y_min = map->y_min <= vertex->v[1] ? map->y_min : vertex->v[1];
 	map->z_max = map->z_max >= vertex->v[2] ? map->z_max : vertex->v[2];
 	map->z_min = map->z_min <= vertex->v[2] ? map->z_min : vertex->v[2];
+	map->z = map->z_max - map->z_min;
 }
 
 static void		reset_xyz_minmaxes(t_map *map)
@@ -85,14 +86,20 @@ int				scale_map_z(t_map *map, double amount)
 {
 	t_vector	*scale;
 	t_matrix	*scale_m;
+	size_t		i;
 
 	if ((scale = ft_vector4_new(1, 1, amount)) == NULL ||
 		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
 		ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
 			map->vertex_count) == FALSE ||
 		ft_matrix_mul_vector_lst(scale_m, map->vertices,
-			map->vertex_count) == FALSE ||
-		ft_matrix_mul_vector_lst(map->rotation, map->vertices,
+			map->vertex_count) == FALSE)
+		return (0);
+	i = 0;
+	reset_xyz_minmaxes(map);
+	while (i < map->vertex_count)
+		set_vertex_limits(map, map->vertices[i++]);
+	if (ft_matrix_mul_vector_lst(map->rotation, map->vertices,
 			map->vertex_count) == FALSE)
 		return (0);
 	ft_vector_free(scale);

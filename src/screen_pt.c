@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:26:52 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 12:49:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:29:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,40 +67,42 @@ void				connect_points(t_line_connect *line_connect)
 	ft_vector_free(s2);
 }
 
+double				set_gradient_multiplier(double *in_minmax, double *out_minmax,
+					t_vector *point, t_map *map)
+{
+	in_minmax[0] = map->z_min;
+	in_minmax[1] = map->z_max;
+	out_minmax[0] = 0.2;
+	out_minmax[1] = 1.2;
+	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
+}
+
 void				connect_map_pts_with_gradient(t_line_connect *line_connect,
 					t_vector *point1, t_vector *point2)
 {
-	t_map		*map;
 	t_vector	*reset_p1;
 	t_vector	*reset_p2;
+	double		in_minmax[2];
+	double		out_minmax[2];
 	double		mul;
 	
-	map = line_connect->scene->map;
 	line_connect->point1 = point1;
 	line_connect->point2 = point2;
-	if ((reset_p1 = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(
-		line_connect->scene->map->reset_rotation,
-		point1, reset_p1) == FALSE)
+	if ((reset_p1 = ft_vector_new(4)) == NULL || ft_matrix_mul_vector(
+		line_connect->scene->map->reset_rotation, point1, reset_p1) == FALSE)
 		return ;
-	mul = 1 * (1 + sin(reset_p1->v[2] / map->z_max));
-	line_connect->color_start = COLOR(
-		(int)(mul * MAP_R), 
-		(int)(mul * MAP_G), 
-		(int)(mul * MAP_B)
-	);
-	printf("point1: tmp->z: %f, p->z: %f, z_min: %f, map-z_max: %d, mul: %f, start: %d\n", reset_p1->v[2], point1->v[2], map->z_min, (int)map->z, mul, line_connect->color_start);
-	if ((reset_p2 = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(
-		line_connect->scene->map->reset_rotation,
-		line_connect->point2, reset_p2) == FALSE)
+	mul = set_gradient_multiplier(in_minmax, out_minmax, reset_p1, line_connect->scene->map);
+	line_connect->color_start =
+		COLOR((int)(mul * MAP_R),(int)(mul * MAP_G),(int)(mul * MAP_B));
+	if ((reset_p2 = ft_vector_new(4)) == NULL || ft_matrix_mul_vector(
+		line_connect->scene->map->reset_rotation, line_connect->point2, reset_p2) == FALSE)
 		return ;
-	mul = 1 * (1 + sin(reset_p2->v[2] / map->z_max));
-	line_connect->color_end = COLOR(
-		(int)(mul * MAP_R), 
-		(int)(mul * MAP_G), 
-		(int)(mul * MAP_B)
-	);
-	printf("point1: tmp->z: %f, p->z: %f, z_min: %f, map-z_max: %d, mul: %f, end: %d\n", reset_p2->v[2], point2->v[2], map->z_min, (int)map->z, mul, line_connect->color_end);
+	mul = set_gradient_multiplier(in_minmax, out_minmax, reset_p2, line_connect->scene->map);
+	line_connect->color_end =
+		COLOR((int)(mul * MAP_R),(int)(mul * MAP_G),(int)(mul * MAP_B));
+	if (reset_p1->v[2] < reset_p2->v[2])
+		swap_points_in_line_connect(line_connect);
+	ft_vector_free(reset_p1);
+	ft_vector_free(reset_p2);
 	connect_points(line_connect);
 }
