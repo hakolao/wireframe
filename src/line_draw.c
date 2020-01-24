@@ -6,20 +6,21 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:41:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:51:38 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-static void			plot_pixel(int x, int y, int color, t_scene *scene)
+static void			plot_pixel(int x, int y, t_line_connect *line_connect,
+					double grad_mul)
 {
 	mlx_pixel_put(
-		scene->mlx,
-		scene->mlx_wdw,
+		line_connect->scene->mlx,
+		line_connect->scene->mlx_wdw,
 		x + WINDOW_WIDTH / 2,
 		y + WINDOW_HEIGHT / 2,
-	color);
+		grad_color(line_connect->color_start, line_connect->color_end, grad_mul));
 }
 
 static void			plot_line_low(t_line_connect *line_connect)
@@ -27,7 +28,6 @@ static void			plot_line_low(t_line_connect *line_connect)
 	t_line		line;
 	double		steps;
 	double		step;
-	double		gradient_mul;
 
 	line.yi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
@@ -44,11 +44,7 @@ static void			plot_line_low(t_line_connect *line_connect)
 	step = 0;
 	while (line.x < line_connect->point2->v[0])
 	{
-		gradient_mul = step / steps;
-		plot_pixel(line.x, line.y,
-			grad_color(line_connect->color_start,
-				line_connect->color_end, gradient_mul),
-			line_connect->scene);
+		plot_pixel(line.x, line.y, line_connect, step / steps);
 		if (line.p > 0)
 		{
 			line.y += line.yi;
@@ -65,7 +61,6 @@ static void			plot_line_high(t_line_connect *line_connect)
 	t_line		line;
 	double		steps;
 	double		step;
-	double		gradient_mul;
 
 	line.xi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
@@ -82,11 +77,7 @@ static void			plot_line_high(t_line_connect *line_connect)
 	step = 0;
 	while (line.y < line_connect->point2->v[1])
 	{
-		gradient_mul = step / steps;
-		plot_pixel(line.x, line.y,
-			grad_color(line_connect->color_start,
-				line_connect->color_end, gradient_mul),
-			line_connect->scene);
+		plot_pixel(line.x, line.y, line_connect, step / steps);
 		if (line.p > 0)
 		{
 			line.x += line.xi;
@@ -113,7 +104,6 @@ void				draw_line(t_line_connect *line_connect)
 	x1 = line_connect->point1->v[0];
 	y2 = line_connect->point2->v[1];
 	y1 = line_connect->point1->v[1];
-	line_connect->direction = 1;
 	if (ft_abs(y2 - y1) < ft_abs(x2 - x1))
 	{
 		if (x1 > x2)

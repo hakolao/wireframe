@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:38:32 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:41:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ typedef struct		s_line_connect
 {
 	t_vector		*point1;
 	t_vector		*point2;
-	int				direction;
 	int				color_start;
 	int				color_end;
 	t_scene			*scene;

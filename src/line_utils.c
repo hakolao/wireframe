@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:39:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:41:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void			swap_points_in_line_connect(t_line_connect *line_connect)
 	tmp_color = line_connect->color_start;
 	line_connect->color_start = line_connect->color_end;
 	line_connect->color_end = tmp_color;
-	// line_connect->direction = -1;
 }
 
 double			set_gradient_multiplier(double *in_minmax, double *out_minmax,
