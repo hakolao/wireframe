@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:26:52 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:37:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:55:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,24 @@ void				connect_map_pts_with_gradient(t_line_connect *line_connect,
 {
 	t_vector	*reset_p1;
 	t_vector	*reset_p2;
-	double		in_minmax[2];
-	double		out_minmax[2];
+	double		in[2];
+	double		out[2];
 	double		mul;
-	
+
 	line_connect->point1 = point1;
 	line_connect->point2 = point2;
 	if ((reset_p1 = ft_vector_new(4)) == NULL || ft_matrix_mul_vector(
 		line_connect->scene->map->reset_rotation, point1, reset_p1) == FALSE)
 		return ;
-	mul = set_gradient_multiplier(in_minmax, out_minmax, reset_p1, line_connect->scene->map);
+	mul = set_gradient_multiplier(in, out, reset_p1, line_connect->scene->map);
 	line_connect->color_start =
-		COLOR((int)(mul * MAP_R),(int)(mul * MAP_G),(int)(mul * MAP_B));
+		COLOR((int)(mul * MAP_R), (int)(mul * MAP_G), (int)(mul * MAP_B));
 	if ((reset_p2 = ft_vector_new(4)) == NULL || ft_matrix_mul_vector(
-		line_connect->scene->map->reset_rotation, line_connect->point2, reset_p2) == FALSE)
+		line_connect->scene->map->reset_rotation, point2, reset_p2) == FALSE)
 		return ;
-	mul = set_gradient_multiplier(in_minmax, out_minmax, reset_p2, line_connect->scene->map);
+	mul = set_gradient_multiplier(in, out, reset_p2, line_connect->scene->map);
 	line_connect->color_end =
-		COLOR((int)(mul * MAP_R),(int)(mul * MAP_G),(int)(mul * MAP_B));
+		COLOR((int)(mul * MAP_R), (int)(mul * MAP_G), (int)(mul * MAP_B));
 	if (reset_p1->v[2] < reset_p2->v[2])
 		swap_points_in_line_connect(line_connect);
 	ft_vector_free(reset_p1);

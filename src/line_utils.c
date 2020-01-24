@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:41:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 17:05:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int				grad_color(int start, int end, double gradient_mul)
 			g_diff > 0 ? GREEN(start) - (int)(gradient_mul * ft_abs(g_diff)) :
 				GREEN(start) + (int)(gradient_mul * ft_abs(g_diff)),
 			b_diff > 0 ? BLUE(start) - (int)(gradient_mul * ft_abs(b_diff)) :
-				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff))
-		));
+				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff))));
 }
 
 void			swap_points_in_line_connect(t_line_connect *line_connect)
@@ -49,7 +48,7 @@ double			set_gradient_multiplier(double *in_minmax, double *out_minmax,
 {
 	in_minmax[0] = map->z_min;
 	in_minmax[1] = map->z_max;
-	out_minmax[0] = 0.0;
-	out_minmax[1] = 1;
+	out_minmax[0] = 0.3;
+	out_minmax[1] = 1.3;
 	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
 }

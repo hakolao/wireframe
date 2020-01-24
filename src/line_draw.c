@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:51:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 17:02:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void			plot_pixel(int x, int y, t_line_connect *line_connect,
 		line_connect->scene->mlx_wdw,
 		x + WINDOW_WIDTH / 2,
 		y + WINDOW_HEIGHT / 2,
-		grad_color(line_connect->color_start, line_connect->color_end, grad_mul));
+		grad_color(line_connect->color_start,
+			line_connect->color_end, grad_mul));
 }
 
 static void			plot_line_low(t_line_connect *line_connect)
@@ -29,14 +30,10 @@ static void			plot_line_low(t_line_connect *line_connect)
 	double		steps;
 	double		step;
 
-	line.yi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
 	line.dy = line_connect->point2->v[1] - line_connect->point1->v[1];
-	if (line.dy < 0)
-	{
-		line.yi = -1;
-		line.dy = -line.dy;
-	}
+	line.yi = line.dy < 0 ? -1 : 1;
+	line.dy = line.dy < 0 ? -line.dy : line.dy;
 	line.p = 2 * line.dy - line.dx;
 	line.y = line_connect->point1->v[1];
 	line.x = line_connect->point1->v[0];
@@ -62,14 +59,10 @@ static void			plot_line_high(t_line_connect *line_connect)
 	double		steps;
 	double		step;
 
-	line.xi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
 	line.dy = line_connect->point2->v[1] - line_connect->point1->v[1];
-	if (line.dx < 0)
-	{
-		line.xi = -1;
-		line.dx = -line.dx;
-	}
+	line.xi = line.dx < 0 ? -1 : 1;
+	line.dx = line.dx < 0 ? -line.dx : line.dx;
 	line.p = 2 * line.dx - line.dy;
 	line.y = line_connect->point1->v[1];
 	line.x = line_connect->point1->v[0];
