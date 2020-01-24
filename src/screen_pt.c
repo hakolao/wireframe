@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:26:52 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:32:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:37:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void				connect_points(t_line_connect *line_connect)
 		(s2 = screen_pt(line_connect->point2, line_connect->scene)) == NULL) &&
 		log_error("Something failed in point_to_screen.", ""))
 		exit(1);
-	s1->v[0] = (s1->v[0] * ASPECT_RATIO);
-	s2->v[0] = (s2->v[0] * ASPECT_RATIO);
 	line_connect->point1 = s1;
 	line_connect->point2 = s2;
 	draw_line(line_connect);

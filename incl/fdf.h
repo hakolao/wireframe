@@ -6,17 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:33:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:38:32 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define WINDOW_WIDTH 960
-# define WINDOW_HEIGHT 540
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
-# define VIEW_SIZE 500
 
 /*
 ** A world unit in map data is one pixel, let's scale them by

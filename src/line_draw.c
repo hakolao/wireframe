@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 16:32:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 16:41:05 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void			plot_line_low(t_line_connect *line_connect)
 	step = 0;
 	while (line.x < line_connect->point2->v[0])
 	{
-		gradient_mul = line_connect->direction > 0 ? step / step : 1 - step / step;
+		gradient_mul = step / steps;
 		plot_pixel(line.x, line.y,
 			grad_color(line_connect->color_start,
 				line_connect->color_end, gradient_mul),
@@ -82,7 +82,7 @@ static void			plot_line_high(t_line_connect *line_connect)
 	step = 0;
 	while (line.y < line_connect->point2->v[1])
 	{
-		gradient_mul = line_connect->direction > 0 ? step / step : 1 - step / step;
+		gradient_mul = step / steps;
 		plot_pixel(line.x, line.y,
 			grad_color(line_connect->color_start,
 				line_connect->color_end, gradient_mul),
