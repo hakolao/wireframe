@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 18:36:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:37:39 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
 	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL ||
 		(shift = ft_vector4_new(
 			-map->x_max / 2, -map->y_max / 2,
-			-(map->z_max - map->z_min) / 2)) == NULL)
+			0)) == NULL)
 		return (0);
 	reset_xyz_minmaxes(map);
 	i = 0;

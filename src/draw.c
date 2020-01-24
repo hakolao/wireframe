@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 19:10:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:10:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 static void			draw_map(t_scene *scene)
 {
 	t_line_connect	*line_connect;
-	t_vector		*tmp;
 	size_t			i;
 
-	if ((line_connect = malloc(sizeof(t_line_connect))) == NULL ||
-		(tmp = ft_vector_new(4)) == NULL)
+	if ((line_connect = malloc(sizeof(t_line_connect))) == NULL)
 		return ;
 	line_connect->scene = scene;
 	i = -1;
@@ -28,11 +26,11 @@ static void			draw_map(t_scene *scene)
 		if ((i + 1) % (scene->map->x + 1) != 0)
 			connect_map_pts_with_gradient(line_connect,
 				scene->map->vertices[i],
-					scene->map->vertices[i + 1], tmp);
+					scene->map->vertices[i + 1]);
 		if (i < scene->map->vertex_count - scene->map->x - 1)
 			connect_map_pts_with_gradient(line_connect,
 				scene->map->vertices[i],
-					scene->map->vertices[i + 1 + scene->map->x], tmp);
+					scene->map->vertices[i + 1 + scene->map->x]);
 	}
 	free(line_connect);
 }

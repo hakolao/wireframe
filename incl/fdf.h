@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 19:16:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:40:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@
 # define KEY_NUM_6 88
 # define KEY_NUM_8 91
 # define KEY_NUM_2 84
-# define SCROLL_UP 4
-# define SCROLL_DOWN 5
+# define SCROLL_UP 5
+# define SCROLL_DOWN 4
 # define MOUSE_BUTTON_RIGHT 2
 # define MOUSE_BUTTON_LEFT 1
 # define KEY_R 15
@@ -81,8 +81,15 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-# define MAP_COLOR ((255 & 255) << 16) | ((0 & 255) << 8 | (42 & 255))
-# define UI_COLOR ((255 & 255) << 16) | ((255 & 255) << 8 | (255 & 255))
+# define RED(rgb) ((rgb >> 16) & 255)
+# define BLUE(rgb) ((rgb >> 8) & 255)
+# define GREEN(rgb) (rgb & 255)
+# define COLOR(r, g, b) ((r & 255) << 16) | ((g & 255) << 8 | (b & 255))
+# define MAP_R 255
+# define MAP_G 0
+# define MAP_B 42
+# define MAP_COLOR COLOR(MAP_R, MAP_G, MAP_B)
+# define UI_COLOR COLOR(255, 255, 255)
 
 # define Z_POS_INIT 0
 
@@ -105,7 +112,6 @@ typedef struct		s_map
 	t_matrix		*rotation;
 	t_matrix		*reset_rotation;
 	t_vector		*center;
-	t_rgb			*color;
 }					t_map;
 
 typedef struct		s_camera
@@ -227,7 +233,7 @@ int					loop_perspective(t_camera *camera);
 */
 void				connect_points(t_line_connect *line_connect);
 void				connect_map_pts_with_gradient(t_line_connect *line_connect,
-					t_vector *point1, t_vector *point2, t_vector *tmp);
+					t_vector *point1, t_vector *point2);
 
 /*
 ** Axes

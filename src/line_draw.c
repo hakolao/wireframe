@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 20:23:21 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:16:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,24 @@ static void			plot_pixel(int x, int y, int color, t_scene *scene)
 	color);
 }
 
+static double			calculate_steps(int	x_or_y, int end)
+{
+	double	steps;
+	
+	steps = 0;
+	while (x_or_y < end)
+	{
+		x_or_y++;
+		steps++;
+	}
+	return (steps);
+}
+
 static void			plot_line_low(t_line_connect *line_connect)
 {
-	t_line	line;
+	t_line		line;
+	double		steps;
+	double		step;
 
 	line.yi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
@@ -37,9 +52,16 @@ static void			plot_line_low(t_line_connect *line_connect)
 	line.p = 2 * line.dy - line.dx;
 	line.y = line_connect->point1->v[1];
 	line.x = line_connect->point1->v[0];
+	steps = calculate_steps(line.x, line_connect->point2->v[0]);
+	step = 0;
 	while (line.x < line_connect->point2->v[0])
 	{
-		plot_pixel(line.x, line.y, line_connect->color_start,
+		plot_pixel(line.x, line.y,
+			COLOR(
+				RED(line_connect->color_start) + (int)((1 - step / steps) * (RED(line_connect->color_start) - RED(line_connect->color_end))),
+				GREEN(line_connect->color_start) + (int)((1 - step / steps) * (GREEN(line_connect->color_start) - GREEN(line_connect->color_end))),
+				BLUE(line_connect->color_start) + (int)((1 - step / steps) * (BLUE(line_connect->color_start) - BLUE(line_connect->color_end)))
+			),
 			line_connect->scene);
 		if (line.p > 0)
 		{
@@ -48,12 +70,15 @@ static void			plot_line_low(t_line_connect *line_connect)
 		}
 		line.p += 2 * line.dy;
 		line.x += 1;
+		step++;
 	}
 }
 
 static void			plot_line_high(t_line_connect *line_connect)
 {
-	t_line	line;
+	t_line		line;
+	double		steps;
+	double		step;
 
 	line.xi = 1;
 	line.dx = line_connect->point2->v[0] - line_connect->point1->v[0];
@@ -66,9 +91,16 @@ static void			plot_line_high(t_line_connect *line_connect)
 	line.p = 2 * line.dx - line.dy;
 	line.y = line_connect->point1->v[1];
 	line.x = line_connect->point1->v[0];
+	steps = calculate_steps(line.y, line_connect->point2->v[1]);
+	step = 0;
 	while (line.y < line_connect->point2->v[1])
 	{
-		plot_pixel(line.x, line.y, line_connect->color_start,
+		plot_pixel(line.x, line.y,
+			COLOR(
+				RED(line_connect->color_start) + (int)((1 - step / steps) * (RED(line_connect->color_start) - RED(line_connect->color_end))),
+				GREEN(line_connect->color_start) + (int)((1 - step / steps) * (GREEN(line_connect->color_start) - GREEN(line_connect->color_end))),
+				BLUE(line_connect->color_start) + (int)((1 - step / steps) * (BLUE(line_connect->color_start) - BLUE(line_connect->color_end)))
+			),
 			line_connect->scene);
 		if (line.p > 0)
 		{
@@ -77,6 +109,7 @@ static void			plot_line_high(t_line_connect *line_connect)
 		}
 		line.p += 2 * line.dx;
 		line.y += 1;
+		step++;
 	}
 }
 

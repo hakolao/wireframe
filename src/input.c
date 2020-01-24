@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 18:36:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:58:17 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ static int			read_z_from_digit(char **line)
 	int	z;
 
 	z = ft_atoi(*line);
+	while (*line && **line == '-')
+		(*line)++;
 	while (**line && ft_isdigit(**line))
 		(*line)++;
-	while (**line && !ft_isdigit(**line))
+	while (**line && !(ft_isdigit(**line) || **line == '-'))
 		(*line)++;
 	return (z);
 }
@@ -55,7 +57,7 @@ static t_list		*read_map_line(t_list *vertices, char *line, int y,
 		if (!(*line == ' ' || *line == '-' || ft_isdigit(*line)) &&
 			log_error(ERR_INVALID_INPUT, strerror(ERRNO_INVALID_INPUT)))
 			return (NULL);
-		if (ft_isdigit(*line))
+		if (ft_isdigit(*line) || *line == '-')
 		{
 			z = read_z_from_digit(&line);
 			if ((vertices = add_to_list(vertices, x, y, z)) == NULL)
@@ -114,8 +116,7 @@ t_map				*serialize(char *filename)
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
 		(map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL ||
 		(map->reset_rotation =
-			ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-		(map->color = ft_itorgb(MAP_COLOR)) == NULL)
+			ft_matrix_inverse_4x4(map->rotation)) == NULL)
 		return (NULL);
 	close(fd);
 	return (map);

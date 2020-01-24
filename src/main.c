@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 18:35:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/24 12:59:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static int		reset_map(t_map *map)
 			map->vertex_count) == FALSE)
 		return (0);
 	ft_matrix_free(map->rotation);
-	if ((map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL)
+	ft_matrix_free(map->reset_rotation);
+	if ((map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL ||
+		(map->reset_rotation = ft_matrix_inverse_4x4(map->rotation)) == NULL)
 		return (0);
 	return (1);
 }
