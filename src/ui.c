@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 17:09:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 17:39:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,42 @@ static void			vector_to_ui(t_scene *scene, t_vector *v,
 	ft_strdel(&z);
 }
 
-static void			draw_map_info(t_scene *scene, int xpos, int ypos, int y_sep)
+static void			map_info(t_scene *scene, t_map_info *map,
+					int xpos, int ypos)
+{
+	void	*mlx;
+	void	*mlx_wdw;
+
+	mlx = scene->mlx;
+	mlx_wdw = scene->mlx_wdw;
+	mlx_string_put(mlx, mlx_wdw, xpos + 100, ypos, UI_COLOR, map->vertices);
+	mlx_string_put(mlx, mlx_wdw, xpos, ypos + 20, UI_COLOR, "x_min: ");
+	mlx_string_put(mlx, mlx_wdw, xpos + 70, ypos + 20, UI_COLOR, map->x_min);
+	mlx_string_put(mlx, mlx_wdw, xpos, ypos + 40, UI_COLOR, "x_max: ");
+	mlx_string_put(mlx, mlx_wdw, xpos + 70, ypos + 40, UI_COLOR, map->x_max);
+	mlx_string_put(mlx, mlx_wdw, xpos, ypos + 60, UI_COLOR, "y_min: ");
+	mlx_string_put(mlx, mlx_wdw, xpos + 70, ypos + 60, UI_COLOR, map->y_min);
+	mlx_string_put(mlx, mlx_wdw, xpos, ypos + 80, UI_COLOR, "y_max: ");
+	mlx_string_put(mlx, mlx_wdw, xpos + 70, ypos + 80, UI_COLOR, map->y_max);
+	mlx_string_put(mlx, mlx_wdw, xpos, ypos + 100, UI_COLOR, "z_min: ");
+	mlx_string_put(mlx, mlx_wdw, xpos + 70, ypos + 100, UI_COLOR, map->z_min);
+	mlx_string_put(mlx, mlx_wdw, xpos, ypos + 120, UI_COLOR, "z_max: ");
+	mlx_string_put(mlx, mlx_wdw, xpos + 70, ypos + 120, UI_COLOR, map->z_max);
+	ft_strdel(&map->vertices);
+	ft_strdel(&map->x_min);
+	ft_strdel(&map->x_max);
+	ft_strdel(&map->y_min);
+	ft_strdel(&map->y_max);
+	ft_strdel(&map->z_min);
+	ft_strdel(&map->z_max);
+}
+
+static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 {
 	t_map_info	map;
 
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos, UI_COLOR, "Vertices:");
+	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos,
+		UI_COLOR, "Vertices:");
 	if ((map.vertices = ft_itoa(scene->map->vertex_count)) == NULL ||
 		(map.x_min = ft_itoa(scene->map->x_min)) == NULL ||
 		(map.x_max = ft_itoa(scene->map->x_max)) == NULL ||
@@ -51,31 +82,12 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos, int y_sep)
 		(map.z_min = ft_itoa(scene->map->z_min)) == NULL ||
 		(map.z_max = ft_itoa(scene->map->z_max)) == NULL)
 		return ;
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 100, ypos + 0 * y_sep, UI_COLOR, map.vertices);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 1 * y_sep, UI_COLOR, "x_min: ");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 70, ypos + 1 * y_sep, UI_COLOR, map.x_min);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 2 * y_sep, UI_COLOR, "x_max: ");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 70, ypos + 2 * y_sep, UI_COLOR, map.x_max);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 3 * y_sep, UI_COLOR, "y_min: ");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 70, ypos + 3 * y_sep, UI_COLOR, map.y_min);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 4 * y_sep, UI_COLOR, "y_max: ");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 70, ypos + 4 * y_sep, UI_COLOR, map.y_max);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 5 * y_sep, UI_COLOR, "z_min: ");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 70, ypos + 5 * y_sep, UI_COLOR, map.z_min);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos, ypos + 6 * y_sep, UI_COLOR, "z_max: ");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, xpos + 70, ypos + 6 * y_sep, UI_COLOR, map.z_max);
-	ft_strdel(&map.vertices);
-	ft_strdel(&map.x_min);
-	ft_strdel(&map.x_max);
-	ft_strdel(&map.y_min);
-	ft_strdel(&map.y_max);
-	ft_strdel(&map.z_min);
-	ft_strdel(&map.z_max);
+	map_info(scene, &map, xpos, ypos);
 }
 
 void				draw_ui(t_scene *scene)
 {
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	vector_to_ui(scene, scene->camera->position, 130, 20);
-	draw_map_info(scene, 10, 60, 20);
+	draw_map_info(scene, 10, 60);
 }

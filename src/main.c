@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 17:29:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 17:34:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		camera_free(t_camera *camera)
 int				fdf(t_scene *scene)
 {
 	t_camera	*camera;
-	
+
 	if (reset_map(scene->map) == FALSE ||
 		rotate_map(scene->map, 45, 0, 0) == FALSE)
 		return (0);
