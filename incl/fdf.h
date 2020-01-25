@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 18:33:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 16:57:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,14 @@ typedef struct		s_map
 typedef struct		s_camera
 {
 	t_vector		*position;
-	t_matrix		*world;
+	t_vector		*init_position;
 	t_matrix		*view;
 	t_matrix		*projection;
 	t_matrix		*transform;
 	t_canvas		*canvas;
 	double			pitch;
 	double			yaw;
+	t_vector		*up;
 	int				perspective;
 	t_matrix		*unit_scale;
 }					t_camera;
@@ -156,10 +157,21 @@ typedef struct		s_line_connect
 	t_scene			*scene;
 }					t_line_connect;
 
+typedef struct		s_map_info
+{
+	char			*vertices;
+	char			*x_min;
+	char			*x_max;
+	char			*y_min;
+	char			*y_max;
+	char			*z_min;
+	char			*z_max;
+}					t_map_info;
+
 /*
 ** Main.c
 */
-int					reset_fdf(t_scene *scene);
+int					fdf(t_scene *scene);
 
 /*
 ** Input functions & serialization

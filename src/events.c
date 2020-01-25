@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 12:15:15 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 16:50:36 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		check_key_events(int key, t_scene *scene)
 		(key == KEY_NUM_8 && turn_camera(scene->camera, -2, 0)) ||
 		(key == KEY_NUM_2 && turn_camera(scene->camera, 2, 0)) ||
 		(key == KEY_P && loop_perspective(scene->camera)) ||
-		(key == KEY_R && reset_fdf(scene)) ||
+		(key == KEY_R && fdf(scene)) ||
 		(key == KEY_1 && zoom(scene->camera, 1)) ||
 		(key == KEY_2 && zoom(scene->camera, -1)));
 }

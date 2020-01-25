@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 12:59:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 17:29:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,31 @@ static int		reset_map(t_map *map)
 	return (1);
 }
 
-int				reset_fdf(t_scene *scene)
+static void		camera_free(t_camera *camera)
 {
+	ft_matrix_free(camera->projection);
+	ft_matrix_free(camera->view);
+	ft_matrix_free(camera->transform);
+	ft_matrix_free(camera->unit_scale);
+	ft_vector_free(camera->position);
+	ft_vector_free(camera->init_position);
+	ft_vector_free(camera->up);
+	free(camera->canvas);
+	free(camera);
+}
+
+int				fdf(t_scene *scene)
+{
+	t_camera	*camera;
+	
 	if (reset_map(scene->map) == FALSE ||
 		rotate_map(scene->map, 45, 0, 0) == FALSE)
 		return (0);
+	if ((camera = new_camera(scene->camera->init_position,
+		scene->camera->up, scene->map)) == NULL)
+		return (0);
+	camera_free(scene->camera);
+	scene->camera = camera;
 	draw(scene);
 	return (1);
 }
@@ -44,7 +64,7 @@ int				init_fdf(t_map *map)
 	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 		"Wireframe - ohakola");
 	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL ||
-		reset_fdf(scene) == 0)
+		fdf(scene) == 0)
 		return (0);
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);

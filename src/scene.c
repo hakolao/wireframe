@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 18:08:18 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 17:28:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,16 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->unit_scale =
 			ft_scale_matrix_xyz(SCALE, SCALE, SCALE)) == NULL ||
-		(camera->transform = cam_transform(camera)) == NULL)
+		(camera->transform = cam_transform(camera)) == NULL ||
+		(camera->init_position = ft_vector4_new(position->v[0],
+			position->v[1], position->v[2])) == NULL ||
+		(camera->position = ft_vector4_new(position->v[0],
+			position->v[1], position->v[2])) == NULL ||
+		(camera->up = ft_vector4_new(up->v[0], up->v[1], up->v[2])) == NULL)
 		return (NULL);
 	camera->pitch = pitch;
 	camera->yaw = yaw;
 	camera->perspective = PERSPECTIVE;
-	camera->position = position;
 	return (camera);
 }
 
@@ -93,6 +97,8 @@ t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 		(camera = new_camera(cam_pos, cam_up, map)) == NULL ||
 		(scene = (t_scene*)malloc(sizeof(*scene))) == NULL)
 		return (NULL);
+	ft_vector_free(cam_pos);
+	ft_vector_free(cam_up);
 	scene->camera = camera;
 	scene->map = map;
 	scene->mlx = mlx;
