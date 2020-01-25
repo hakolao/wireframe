@@ -6,11 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:26:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:04:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "fdf.h"
+
+/*
+** Resets map rotation & scale to original values. May
+** have some rounding diffrences.
+*/
 
 static int		reset_map(t_map *map)
 {
@@ -34,6 +39,10 @@ static int		reset_map(t_map *map)
 	return (1);
 }
 
+/*
+** Frees camera struct so camera can be reset
+*/
+
 static void		camera_free(t_camera *camera)
 {
 	ft_matrix_free(camera->projection);
@@ -47,7 +56,11 @@ static void		camera_free(t_camera *camera)
 	free(camera);
 }
 
-int				fdf(t_scene *scene)
+/*
+** Initializes the scene
+*/
+
+int				init(t_scene *scene)
 {
 	t_camera	*camera;
 
@@ -63,6 +76,10 @@ int				fdf(t_scene *scene)
 	return (1);
 }
 
+/*
+** Initializes fdf app creating new scene
+*/
+
 int				init_fdf(t_map *map)
 {
 	t_scene		*scene;
@@ -73,7 +90,7 @@ int				init_fdf(t_map *map)
 	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 		"Wireframe - ohakola");
 	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL ||
-		fdf(scene) == 0)
+		init(scene) == 0)
 		return (0);
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);
@@ -89,13 +106,8 @@ int				main(int argc, char **argv)
 
 	map = NULL;
 	if (argc > 1)
-	{
-		if ((map = serialize(argv[1])) == NULL)
-		{
-			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT));
+		if ((map = serialize(argv[1])) == NULL &&
+			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT)))
 			return (0);
-		}
-		log_map(map);
-	}
 	return (init_fdf(map));
 }

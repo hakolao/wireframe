@@ -6,11 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:17:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:04:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "fdf.h"
+
+/*
+** Adds x y z vertex (vector) posiion to a linked list of vertices.
+*/
 
 static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 {
@@ -31,6 +35,10 @@ static t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 	return (vertices);
 }
 
+/*
+** Reads z from digit line using ft_atoi.
+*/
+
 static int			read_z_from_digit(char **line)
 {
 	int	z;
@@ -44,6 +52,12 @@ static int			read_z_from_digit(char **line)
 		(*line)++;
 	return (z);
 }
+
+/*
+** Reads one line of map data and appends it to a linked list.
+** x and x information is read here. Vertex count is calculated
+** here as well.
+*/
 
 static t_list		*read_map_line(t_list *vertices, char *line, int y,
 					t_map *map)
@@ -74,6 +88,12 @@ static t_list		*read_map_line(t_list *vertices, char *line, int y,
 	return (vertices);
 }
 
+/*
+** Reads map data with get_next_line and transforms it into a
+** linked list. This linked list is then transformed to an
+** array of vectors. y information is read here.
+*/
+
 static t_map		*file_to_map(int fd, t_map *map)
 {
 	char	*line;
@@ -102,6 +122,10 @@ static t_map		*file_to_map(int fd, t_map *map)
 	ft_strdel(&line);
 	return (map);
 }
+
+/*
+** Serializes read data into map struct
+*/
 
 t_map				*serialize(char *filename)
 {

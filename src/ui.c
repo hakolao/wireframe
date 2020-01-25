@@ -6,11 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:10:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:06:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+** Renders a vector to UI to given position.
+*/
 
 static void			vector_to_ui(t_scene *scene, t_vector *v,
 					int xpos, int ypos)
@@ -37,6 +41,10 @@ static void			vector_to_ui(t_scene *scene, t_vector *v,
 	ft_strdel(&y);
 	ft_strdel(&z);
 }
+
+/*
+** Renders map information to the screen
+*/
 
 static void			map_info(t_scene *scene, t_map_info *map,
 					int xpos, int ypos)
@@ -68,6 +76,10 @@ static void			map_info(t_scene *scene, t_map_info *map,
 	ft_strdel(&map->z_max);
 }
 
+/*
+** Generates map information struct and renders that information to UI
+*/
+
 static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 {
 	t_map_info	map;
@@ -85,10 +97,18 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 	map_info(scene, &map, xpos, ypos);
 }
 
-// static void			draw_guide(t_scene, int xpos, int ypos)
-// {
-	
-// }
+/*
+** Draws a guide of usage into screen
+*/
+
+static void			draw_guide(t_scene, int xpos, int ypos)
+{
+
+}
+
+/*
+** Draw UI content to the window
+*/
 
 void				draw_ui(t_scene *scene)
 {

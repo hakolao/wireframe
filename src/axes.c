@@ -6,11 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 19:10:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 19:16:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:03:29 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+** Creates axes array of axis pairs to be used to draw them on screen
+*/
 
 static t_vector		***axes(void)
 {
@@ -34,6 +38,10 @@ static t_vector		***axes(void)
 	return (points);
 }
 
+/*
+** Frees axes data from memory
+*/
+
 static void			free_axes(t_vector ***points)
 {
 	int				i;
@@ -49,6 +57,10 @@ static void			free_axes(t_vector ***points)
 	}
 }
 
+/*
+** Connects axis points using connect_points
+*/
+
 static void			connect_axis(t_line_connect *line_connect,
 					t_vector *point1, t_vector *point2)
 {
@@ -56,6 +68,10 @@ static void			connect_axis(t_line_connect *line_connect,
 	line_connect->point2 = point2;
 	connect_points(line_connect);
 }
+
+/*
+** Draws axes using connect_points (connect_axis)
+*/
 
 void				draw_axes(t_scene *scene)
 {

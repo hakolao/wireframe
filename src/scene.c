@@ -6,11 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 17:28:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:06:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "fdf.h"
+
+/*
+** Creates a canvas used for camera's projection matrices
+*/
 
 static t_canvas		*new_canvas(void)
 {
@@ -26,6 +30,11 @@ static t_canvas		*new_canvas(void)
 	return (c);
 }
 
+/*
+** Sets camera transform (usually when projection or view
+** matrices have changed)
+*/
+
 void				set_transform(t_camera *camera)
 {
 	t_matrix	*transform;
@@ -35,6 +44,10 @@ void				set_transform(t_camera *camera)
 	ft_matrix_free(camera->transform);
 	camera->transform = transform;
 }
+
+/*
+** Calculates camera's transform
+*/
 
 t_matrix			*cam_transform(t_camera *camera)
 {
@@ -51,6 +64,10 @@ t_matrix			*cam_transform(t_camera *camera)
 	ft_matrix_free(tmp);
 	return (transform);
 }
+
+/*
+** Creates a new fps camera
+*/
 
 t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 {
@@ -79,6 +96,11 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 	camera->perspective = PERSPECTIVE;
 	return (camera);
 }
+
+/*
+** Creates a new scene containing all needed information. Set's
+** camera's position based on map's size
+*/
 
 t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 {

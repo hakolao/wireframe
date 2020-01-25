@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:29:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:36:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,25 +176,23 @@ typedef struct		s_map_info
 }					t_map_info;
 
 /*
-** Main.c. fdf function can be used to reset the application state.
+** Main.c. init function can be used to reset the application state.
 */
-int					fdf(t_scene *scene);
+int					init(t_scene *scene);
 
 /*
-** Input functions & serialization
+** Input functions & serialization of map data into map struct
 */
 t_map				*serialize(char *filename);
 
 /*
-** Logging functions
+** Logging functions mostly for errors
 */
-int					log_map(t_map *map);
 int					log_error(char *str, char *strerror);
 int					log_perror(char *str);
 
 /*
 ** Event handling
-** add int handle_key_events_home(int key, void *param), when working home;
 */
 int					handle_key_events(int key, void *param);
 int					handle_mouse_button_press(int key, int x, int y,
@@ -209,12 +207,12 @@ int					handle_mouse_move(int x, int y, void *param);
 int					draw(t_scene *scene);
 
 /*
-** UI
+** Draw UI
 */
 void				draw_ui(t_scene *scene);
 
 /*
-** Line drawing
+** Line drawing helper functions
 */
 void				draw_line(t_line_connect *line_connect);
 int					grad_color(int start, int end, double gradient_mul);
@@ -232,7 +230,7 @@ t_matrix			*cam_transform(t_camera *camera);
 void				set_transform(t_camera *camera);
 
 /*
-** Map utils
+** Map utils to handle manipulations to the map
 */
 int					rotate_map(t_map *map, int amount_x,
 					int amount_y, int amount_z);
@@ -241,7 +239,7 @@ int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 int					set_map_info(t_map *map);
 
 /*
-** Cam utils
+** Cam utils to handle camera manipulations
 */
 int					turn_camera(t_camera *camera, double pitch, double yaw);
 int					move_camera_forward(t_camera *camera, double amount);
@@ -250,14 +248,14 @@ int					zoom(t_camera *camera, int dir);
 int					loop_perspective(t_camera *camera);
 
 /*
-** Screen pt
+** Screen pt to bring vertices into screen space
 */
 void				connect_points(t_line_connect *line_connect);
 void				connect_map_pts_with_gradient(t_line_connect *line_connect,
 					t_vector *point1, t_vector *point2);
 
 /*
-** Axes
+** Axes to draw x, y and z axis to the screen
 */
 void				draw_axes(t_scene *scene);
 

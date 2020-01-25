@@ -6,11 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 16:26:52 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 18:37:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:05:09 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+** Transforms vertex into screen space
+*/
 
 t_vector			*screen_pt(t_vector *point, t_scene *scene)
 {
@@ -26,6 +30,11 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 	on_screen->v[3] /= on_screen->v[3];
 	return (on_screen);
 }
+
+/*
+** Checks if given point is in front of camera, if not, it should
+** not be drawn.
+*/
 
 static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 					t_camera *camera)
@@ -44,6 +53,13 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 	ft_vector_free(c2);
 	return (ret);
 }
+
+/*
+** Connects given points from line_connect struct by drawing a line
+** between those points in screen space.
+** Points are first validated by in_front_of_camera and then brought
+** to screen space before passing to draw_line.
+*/
 
 void				connect_points(t_line_connect *line_connect)
 {
@@ -64,6 +80,11 @@ void				connect_points(t_line_connect *line_connect)
 	ft_vector_free(s1);
 	ft_vector_free(s2);
 }
+
+/*
+** Helper function which exposes line connecting for map including color for
+** map's gradient.
+*/
 
 void				connect_map_pts_with_gradient(t_line_connect *line_connect,
 					t_vector *point1, t_vector *point2)

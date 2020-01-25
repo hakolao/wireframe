@@ -6,11 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 17:02:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:04:11 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "fdf.h"
+
+/*
+** Renders pixel to screen to x y position including a dynamically
+** calculated gradient color
+*/
 
 static void			plot_pixel(int x, int y, t_line_connect *line_connect,
 					double grad_mul)
@@ -23,6 +28,10 @@ static void			plot_pixel(int x, int y, t_line_connect *line_connect,
 		grad_color(line_connect->color_start,
 			line_connect->color_end, grad_mul));
 }
+
+/*
+** Plots line from p1 to p2
+*/
 
 static void			plot_line_low(t_line_connect *line_connect)
 {
@@ -52,6 +61,10 @@ static void			plot_line_low(t_line_connect *line_connect)
 		step++;
 	}
 }
+
+/*
+** Plots line from p1 to p2
+*/
 
 static void			plot_line_high(t_line_connect *line_connect)
 {
@@ -83,6 +96,7 @@ static void			plot_line_high(t_line_connect *line_connect)
 }
 
 /*
+** Bresenham's line drawing algorithm including gradient calculations
 ** https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#Optimization
 */
 

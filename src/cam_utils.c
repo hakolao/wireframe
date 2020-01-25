@@ -6,11 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/22 15:43:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:03:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+** Turn camera by pitch & yaw (angles). Pitch is vertical angle movement.
+** Yaw is horizontal angle movement
+*/
 
 int				turn_camera(t_camera *camera, double pitch, double yaw)
 {
@@ -39,6 +44,10 @@ int				turn_camera(t_camera *camera, double pitch, double yaw)
 	return (1);
 }
 
+/*
+** Forward camera movement by given amount (speed)
+*/
+
 int				move_camera_forward(t_camera *camera, double amount)
 {
 	t_matrix	*view;
@@ -61,6 +70,10 @@ int				move_camera_forward(t_camera *camera, double amount)
 	set_transform(camera);
 	return (1);
 }
+
+/*
+** Sideways camera movement by given amount (speed)
+*/
 
 int				strafe_camera(t_camera *camera, double amount)
 {
@@ -85,6 +98,11 @@ int				strafe_camera(t_camera *camera, double amount)
 	return (1);
 }
 
+/*
+** Zoom changes camera's canvas' angles (field of view)
+** to bring viewed data closer (appears closer)
+*/
+
 int				zoom(t_camera *camera, int dir)
 {
 	t_matrix	*projection;
@@ -104,6 +122,10 @@ int				zoom(t_camera *camera, int dir)
 	set_transform(camera);
 	return (1);
 }
+
+/*
+** Utility function to loop camera perspective
+*/
 
 int				loop_perspective(t_camera *camera)
 {

@@ -6,11 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:03:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:03:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
+
+/*
+** Function containing key event checks for producing
+** intended app behavior
+*/
 
 static int		check_key_events(int key, t_scene *scene)
 {
@@ -34,12 +39,16 @@ static int		check_key_events(int key, t_scene *scene)
 		(key == KEY_NUM_8 && turn_camera(scene->camera, -2, 0)) ||
 		(key == KEY_NUM_2 && turn_camera(scene->camera, 2, 0)) ||
 		(key == KEY_P && loop_perspective(scene->camera)) ||
-		(key == KEY_R && fdf(scene)) ||
+		(key == KEY_R && init(scene)) ||
 		(key == KEY_1 && zoom(scene->camera, 1)) ||
 		(key == KEY_2 && zoom(scene->camera, -1)) ||
 		(key == KEY_NUM_PLUS && scale_map(scene->map, 1.1, 1.1, 1.1)) ||
 		(key == KEY_NUM_MINUS && scale_map(scene->map, 0.9, 0.9, 0.9)));
 }
+
+/*
+** Key event handling
+*/
 
 int				handle_key_events(int key, void *param)
 {
@@ -51,6 +60,10 @@ int				handle_key_events(int key, void *param)
 	draw(scene);
 	return (ret);
 }
+
+/*
+** Mouse button presses
+*/
 
 int				handle_mouse_button_press(int button, int x, int y, void *param)
 {
@@ -76,6 +89,10 @@ int				handle_mouse_button_press(int button, int x, int y, void *param)
 	return (ret);
 }
 
+/*
+** Mouse button releases
+*/
+
 int				handle_mouse_button_release(int button, int x, int y,
 				void *param)
 {
@@ -90,6 +107,10 @@ int				handle_mouse_button_release(int button, int x, int y,
 		scene->mouse_left_pressed = FALSE;
 	return (1);
 }
+
+/*
+** Mouse movement
+*/
 
 int				handle_mouse_move(int x, int y, void *param)
 {

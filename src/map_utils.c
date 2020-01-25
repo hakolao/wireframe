@@ -6,11 +6,15 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:29:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:04:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+** Set's vertex limits for map information
+*/
 
 static void		set_vertex_limits(t_map *map, t_vector *vertex)
 {
@@ -22,6 +26,11 @@ static void		set_vertex_limits(t_map *map, t_vector *vertex)
 	map->z_min = map->z_min <= vertex->v[2] ? map->z_min : vertex->v[2];
 	map->z = map->z_max - map->z_min;
 }
+
+/*
+** Sets map information. This is used after map data has been
+** manipulated.
+*/
 
 int				set_map_info(t_map *map)
 {
@@ -38,6 +47,11 @@ int				set_map_info(t_map *map)
 		set_vertex_limits(map, map->vertices[i++]);
 	return (0);
 }
+
+/*
+** Tranforms map from read linked list into array of vertices, in addition
+** it shifts map's pivot to it's center in 0, 0, 0.
+*/
 
 int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
 {
@@ -66,6 +80,10 @@ int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
 	return (1);
 }
 
+/*
+** Rotates map by given x, y, z angles
+*/
+
 int				rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 {
 	t_matrix	*rotation;
@@ -86,6 +104,10 @@ int				rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 	map->reset_rotation = reset_rotation;
 	return (1);
 }
+
+/*
+** Scales map by given x y z scale amounts
+*/
 
 int				scale_map(t_map *map, double x, double y, double z)
 {

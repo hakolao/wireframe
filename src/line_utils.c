@@ -6,11 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 17:51:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:05:50 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+** Returns a gradient color based on linear step between screen point1
+** and screen point 2 (used in line drawing)
+*/
 
 int				grad_color(int start, int end, double gradient_mul)
 {
@@ -30,6 +35,10 @@ int				grad_color(int start, int end, double gradient_mul)
 				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff))));
 }
 
+/*
+** Swaps points, start & end color in line drawing special case
+*/
+
 void			swap_points_in_line_connect(t_line_connect *line_connect)
 {
 	t_vector	*tmp;
@@ -43,6 +52,10 @@ void			swap_points_in_line_connect(t_line_connect *line_connect)
 	line_connect->color_end = tmp_color;
 }
 
+/*
+** Maps height value between out_minmax values linearly.
+*/
+
 double			gradient_multiplier(double *in_minmax, double *out_minmax,
 				t_vector *point, t_map *map)
 {
@@ -52,6 +65,12 @@ double			gradient_multiplier(double *in_minmax, double *out_minmax,
 	out_minmax[1] = M_PI / 2;
 	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
 }
+
+/*
+** Calculates map's gradient color based on multiplier.
+** Multiplier is a clamped value (a result from gradient_multiplier
+** function)
+*/
 
 int				map_color(double mul)
 {
