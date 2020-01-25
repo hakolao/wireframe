@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:02:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:29:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,20 @@ static void		set_vertex_limits(t_map *map, t_vector *vertex)
 	map->z = map->z_max - map->z_min;
 }
 
-static void		reset_xyz_minmaxes(t_map *map)
+int				set_map_info(t_map *map)
 {
+	size_t	i;
+
+	i = 0;
 	map->x_max = 0;
 	map->x_min = 0;
 	map->y_max = 0;
 	map->y_min = 0;
 	map->z_max = 0;
 	map->z_min = 0;
+	while (i < map->vertex_count)
+		set_vertex_limits(map, map->vertices[i++]);
+	return (0);
 }
 
 int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
@@ -44,20 +50,19 @@ int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
 			-map->x_max / 2, -map->y_max / 2,
 			-map->z_max / 2 - map->z_min / 2)) == NULL)
 		return (0);
-	reset_xyz_minmaxes(map);
 	i = 0;
 	while (vtx_lst)
 	{
 		vs[i] = (t_vector*)(vtx_lst->content);
 		if (ft_vector_add(vs[i], shift, vs[i]) == FALSE)
 			return (0);
-		set_vertex_limits(map, vs[i]);
 		vs[i++]->v[3] = 1;
 		vtx_lst = vtx_lst->next;
 	}
 	map->vertices = vs;
 	ft_vector_free(shift);
 	free(vtx_lst);
+	set_map_info(map);
 	return (1);
 }
 
@@ -86,23 +91,27 @@ int				scale_map(t_map *map, double x, double y, double z)
 {
 	t_vector	*scale;
 	t_matrix	*scale_m;
-	size_t		i;
+	t_matrix	*map_scale;
+	t_matrix	*reset_scale;
 
-	if ((scale = ft_vector4_new(x, y, z)) == NULL ||
+	if ((map_scale = ft_matrix_new(4, 4)) == NULL ||
+		(scale = ft_vector4_new(x, y, z)) == NULL ||
 		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
+		ft_matrix_mul(map->scale, scale_m, map_scale) == FALSE ||
+		(reset_scale = ft_matrix_inverse_4x4(map_scale)) == NULL ||
 		ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
 			map->vertex_count) == FALSE ||
 		ft_matrix_mul_vector_lst(scale_m, map->vertices,
+			map->vertex_count) == FALSE ||
+		set_map_info(map) ||
+		ft_matrix_mul_vector_lst(map->rotation, map->vertices,
 			map->vertex_count) == FALSE)
 		return (0);
-	i = 0;
-	reset_xyz_minmaxes(map);
-	while (i < map->vertex_count)
-		set_vertex_limits(map, map->vertices[i++]);
-	if (ft_matrix_mul_vector_lst(map->rotation, map->vertices,
-			map->vertex_count) == FALSE)
-		return (0);
+	ft_matrix_free(map->scale);
+	ft_matrix_free(map->reset_scale);
 	ft_vector_free(scale);
 	ft_matrix_free(scale_m);
+	map->scale = map_scale;
+	map->reset_scale = reset_scale;
 	return (1);
 }

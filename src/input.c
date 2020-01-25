@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 14:15:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:17:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ t_map				*serialize(char *filename)
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
 		(map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL ||
 		(map->reset_rotation =
-			ft_matrix_inverse_4x4(map->rotation)) == NULL)
+			ft_matrix_inverse_4x4(map->rotation)) == NULL ||
+		(map->scale = ft_matrix_id(4, 4)) == NULL ||
+		(map->reset_scale =
+			ft_matrix_inverse_4x4(map->scale)) == NULL)
 		return (NULL);
 	close(fd);
 	return (map);

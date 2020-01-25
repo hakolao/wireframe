@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/21 17:40:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:11:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int					ft_matrix_add_double(const t_matrix *m1,
 					const double d, t_matrix *res);
 int					ft_matrix_add(const t_matrix *m1,
 					const t_matrix *m2, t_matrix *res);
-int					ft_matrix_inv(t_matrix *mat, t_matrix *res);
 int					ft_matrix_sub_double(const t_matrix *m1,
 					const double d, t_matrix *res);
 int					ft_matrix_sub(const t_matrix *m1, const t_matrix *m2,

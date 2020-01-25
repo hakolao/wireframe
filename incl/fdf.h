@@ -6,25 +6,29 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:02:12 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:29:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
-# define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
+# include <mlx.h>
+# include <stdio.h>
+# include <math.h>
+# include "../libft/libft.h"
+# include "../libmatrix/libmatrix.h"
 
 /*
-** A world unit in map data is one pixel, let's scale them by
+** Input reading errors
 */
-# define SCALE 200
 # define ERR_INVALID_INPUT "Lines must consist of spaces & numbers."
 # define ERR_SERIALIZATION "Input serialization failed."
 # define ERRNO_INVALID_INPUT 5
 
+/*
+** Key codes for event listening
+*/
 # define KEY_ESC 53
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
@@ -51,12 +55,9 @@
 # define KEY_NUM_PLUS 69
 # define KEY_NUM_MINUS 78
 
-# include <mlx.h>
-# include <stdio.h>
-# include <math.h>
-# include "../libft/libft.h"
-# include "../libmatrix/libmatrix.h"
-
+/*
+** Color helpers
+*/
 # define RED(r) ((r >> 16) & 255)
 # define GREEN(g) ((g >> 8) & 255)
 # define BLUE(b) (b & 255)
@@ -64,11 +65,21 @@
 # define COLOR(r, g, b) (C(r) & 255) << 16 | (C(g) & 255) << 8 | C(b) & 255
 # define UI_COLOR COLOR(255, 255, 255)
 
+/*
+** Initial settings & enums.
+** A world unit in map data is one pixel, let's scale them SCALE
+*/
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
+# define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
+# define SCALE 200
 # define Z_POS_INIT 0
-
 # define ORTHOGRAPHIC 2
 # define PERSPECTIVE 1
 
+/*
+** Map holds all necessary information of the input data
+*/
 typedef struct		s_map
 {
 	t_vector		**vertices;
@@ -84,9 +95,15 @@ typedef struct		s_map
 	size_t			z;
 	t_matrix		*rotation;
 	t_matrix		*reset_rotation;
+	t_matrix		*scale;
+	t_matrix		*reset_scale;
 	t_vector		*center;
 }					t_map;
 
+/*
+** Camera contains information of camera & movement related
+** matrices & vertices & other information.
+*/
 typedef struct		s_camera
 {
 	t_vector		*position;
@@ -102,6 +119,9 @@ typedef struct		s_camera
 	t_matrix		*unit_scale;
 }					t_camera;
 
+/*
+** Scene contains all data the application needs inside its loop
+*/
 typedef struct		s_scene
 {
 	t_camera		*camera;
@@ -114,6 +134,9 @@ typedef struct		s_scene
 	int				mouse_y;
 }					t_scene;
 
+/*
+** A Helper struct to contain line drawing calculation data.
+*/
 typedef struct		s_line
 {
 	int	dx;
@@ -125,6 +148,10 @@ typedef struct		s_line
 	int	p;
 }					t_line;
 
+/*
+** A Helper struct to contain start & end colors for gradient
+** calculations in line drawing.
+*/
 typedef struct		s_line_connect
 {
 	t_vector		*point1;
@@ -134,6 +161,9 @@ typedef struct		s_line_connect
 	t_scene			*scene;
 }					t_line_connect;
 
+/*
+** A Helper struct for map information to be drawn on the UI
+*/
 typedef struct		s_map_info
 {
 	char			*vertices;
@@ -146,7 +176,7 @@ typedef struct		s_map_info
 }					t_map_info;
 
 /*
-** Main.c
+** Main.c. fdf function can be used to reset the application state.
 */
 int					fdf(t_scene *scene);
 
@@ -208,6 +238,7 @@ int					rotate_map(t_map *map, int amount_x,
 					int amount_y, int amount_z);
 int					scale_map(t_map *map, double x, double y, double z);
 int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
+int					set_map_info(t_map *map);
 
 /*
 ** Cam utils
