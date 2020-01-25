@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/24 16:34:10 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/25 19:46:29 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SOURCES = main.c \
 			map_utils.c \
 			cam_utils.c \
 			ui.c \
+			ui_utils.c \
 			screen_pt.c \
 			axes.c \
 			draw.c

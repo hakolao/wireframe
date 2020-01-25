@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:36:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 20:03:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,5 +258,13 @@ void				connect_map_pts_with_gradient(t_line_connect *line_connect,
 ** Axes to draw x, y and z axis to the screen
 */
 void				draw_axes(t_scene *scene);
+
+/*
+** UI utils
+*/
+char				*mouse_guide(void);
+char				*key_guide(void);
+void				draw_key_guide(t_scene *scene, int xpos, int ypos);
+void				draw_mouse_guide(t_scene *scene, int xpos, int ypos);
 
 #endif

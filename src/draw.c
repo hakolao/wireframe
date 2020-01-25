@@ -6,11 +6,11 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:03:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:14:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "fdf.h"
 
 /*
 ** Map vertex drawing algorithm to connect each vertex correctly

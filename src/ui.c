@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:06:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 20:03:11 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,6 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 }
 
 /*
-** Draws a guide of usage into screen
-*/
-
-static void			draw_guide(t_scene, int xpos, int ypos)
-{
-
-}
-
-/*
 ** Draw UI content to the window
 */
 
@@ -115,4 +106,6 @@ void				draw_ui(t_scene *scene)
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	vector_to_ui(scene, scene->camera->position, 130, 20);
 	draw_map_info(scene, 10, 60);
+	draw_key_guide(scene, 10, 230);
+	draw_mouse_guide(scene, 10, 710);
 }
