@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 16:30:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:02:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ int				rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 	return (1);
 }
 
-int				scale_map_z(t_map *map, double amount)
+int				scale_map(t_map *map, double x, double y, double z)
 {
 	t_vector	*scale;
 	t_matrix	*scale_m;
 	size_t		i;
 
-	if ((scale = ft_vector4_new(1, 1, amount)) == NULL ||
+	if ((scale = ft_vector4_new(x, y, z)) == NULL ||
 		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
 		ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
 			map->vertex_count) == FALSE ||

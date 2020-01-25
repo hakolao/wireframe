@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 17:57:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 17:58:09 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 		return ;
 	map_info(scene, &map, xpos, ypos);
 }
+
+// static void			draw_guide(t_scene, int xpos, int ypos)
+// {
+	
+// }
 
 void				draw_ui(t_scene *scene)
 {

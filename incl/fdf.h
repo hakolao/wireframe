@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 17:56:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 18:02:12 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 # define MOUSE_BUTTON_RIGHT 2
 # define MOUSE_BUTTON_LEFT 1
 # define KEY_R 15
+# define KEY_NUM_PLUS 69
+# define KEY_NUM_MINUS 78
 
 # include <mlx.h>
 # include <stdio.h>
@@ -204,7 +206,7 @@ void				set_transform(t_camera *camera);
 */
 int					rotate_map(t_map *map, int amount_x,
 					int amount_y, int amount_z);
-int					scale_map_z(t_map *map, double amount);
+int					scale_map(t_map *map, double x, double y, double z);
 int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 
 /*
