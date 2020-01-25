@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 16:57:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/25 17:56:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,42 +49,17 @@
 # define MOUSE_BUTTON_LEFT 1
 # define KEY_R 15
 
-/*
-** These are used only for working from home...
-** (different keycodes at school)
-** # define HOME_KEY_ESC 65307
-** # define HOME_KEY_LEFT 65361
-** # define HOME_KEY_RIGHT 65363
-** # define HOME_KEY_DOWN 65364
-** # define HOME_KEY_UP 65362
-** # define HOME_KEY_W 119
-** # define HOME_KEY_A 97
-** # define HOME_KEY_S 115
-** # define HOME_KEY_D 100
-** # define HOME_KEY_Q 113
-** # define HOME_KEY_E 101
-** # define HOME_KEY_P 112
-** # define HOME_KEY_1 49
-** # define HOME_KEY_2 50
-** # define HOME_KEY_J 106
-** # define HOME_KEY_K 107
-** # define HOME_KEY_I 105
-** # define HOME_KEY_M 109
-** # define HOME_MINUS 45
-** # define HOME_PLUS 61
-*/
-
 # include <mlx.h>
 # include <stdio.h>
 # include <math.h>
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-# define CLAMP_255(color) (color > 255 ? 255 : color)
 # define RED(r) ((r >> 16) & 255)
 # define GREEN(g) ((g >> 8) & 255)
 # define BLUE(b) (b & 255)
-# define COLOR(r, g, b) ((CLAMP_255(r) & 255) << 16) | ((CLAMP_255(g) & 255) << 8 | (CLAMP_255(b) & 255))
+# define C(color) (color > 255 ? 255 : color)
+# define COLOR(r, g, b) (C(r) & 255) << 16 | (C(g) & 255) << 8 | C(b) & 255
 # define UI_COLOR COLOR(255, 255, 255)
 
 # define Z_POS_INIT 0
