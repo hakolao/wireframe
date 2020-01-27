@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:25:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:35:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@
 /*
 ** Color helpers
 */
-# define ALPHA(r) (r >> 24)
+# define CLAMP_0_255(color) (color > 255 ? 255 : color < 0 ? 0 : color)
+# define ALPHA(a) (a >> 24)
 # define RED(r) ((r >> 16) & 255)
 # define GREEN(g) ((g >> 8) & 255)
 # define BLUE(b) (b & 255)
-# define C(color) (color > 255 ? 255 : color)
-# define R(r) (C(r) & 255) << 16
-# define G(g) (C(g) & 255) << 8
-# define B(b) C(b) & 255
-# define A(a) (C(a) & 255) << 24
+# define R(r) (CLAMP_0_255(r) & 255) << 16
+# define G(g) (CLAMP_0_255(g) & 255) << 8
+# define B(b) CLAMP_0_255(b) & 255
+# define A(a) (CLAMP_0_255(a) & 255) << 24
 # define COLOR(r, g, b, a) A(a) | R(r) | G(g) | B(b)
 # define UI_COLOR COLOR(255, 255, 0, 255)
 # define BACKGROUND_COLOR COLOR(0, 0, 0, 0)
