@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axes.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 19:10:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:49:14 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void			connect_axis(t_line_connect *line_connect,
 ** Draws axes using connect_points (connect_axis)
 */
 
-void				draw_axes(t_scene *scene)
+void				draw_axes_on_frame(t_scene *scene)
 {
 	int				color;
 	t_vector		***points;

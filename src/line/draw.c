@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 14:31:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:05:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@
 static void			plot_pixel(int x, int y, t_line_connect *line_connect,
 					double grad_mul)
 {
-	mlx_pixel_put(
-		line_connect->scene->mlx,
-		line_connect->scene->mlx_wdw,
-		x + WINDOW_WIDTH / 2,
-		y + WINDOW_HEIGHT / 2,
-		grad_color(line_connect->color_start,
-			line_connect->color_end, grad_mul));
+	int	color;
+	int	pixel;
+
+	color = grad_color(line_connect->color_start,
+			line_connect->color_end, grad_mul);
+	pixel = (y * line_connect->scene->line_bytes) + (x * 4);
+	if (pixel > 0 && pixel < WINDOW_HEIGHT * WINDOW_WIDTH * 4)
+	{
+		line_connect->scene->frame_buf[pixel + 0] = BLUE(color);
+		line_connect->scene->frame_buf[pixel + 1] = GREEN(color);
+		line_connect->scene->frame_buf[pixel + 2] = RED(color);
+		line_connect->scene->frame_buf[pixel + 3] = ALPHA(color);
+	}
 }
 
 /*

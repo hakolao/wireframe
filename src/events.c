@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:56:37 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 14:52:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:04:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static int		check_key_events(int key, t_scene *scene)
 		(key == KEY_RIGHT && rotate_map(scene->map, 0, -3, 0)) ||
 		(key == KEY_Q && rotate_map(scene->map, 0, 0, -3)) ||
 		(key == KEY_E && rotate_map(scene->map, 0, 0, 3)) ||
-		(key == KEY_W && move_camera_forward(scene->camera, 0.5)) ||
-		(key == KEY_S && move_camera_forward(scene->camera, -0.5)) ||
-		(key == KEY_D && strafe_camera(scene->camera, 0.5)) ||
-		(key == KEY_A && strafe_camera(scene->camera, -0.5)) ||
+		(key == KEY_W && move_camera_forward(scene->camera, 0.2)) ||
+		(key == KEY_S && move_camera_forward(scene->camera, -0.2)) ||
+		(key == KEY_D && strafe_camera(scene->camera, 0.2)) ||
+		(key == KEY_A && strafe_camera(scene->camera, -0.2)) ||
 		(key == KEY_NUM_4 && turn_camera(scene->camera, 0, 2)) ||
 		(key == KEY_NUM_6 && turn_camera(scene->camera, 0, -2)) ||
 		(key == KEY_NUM_8 && turn_camera(scene->camera, -2, 0)) ||

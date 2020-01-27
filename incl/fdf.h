@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 15:18:52 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:04:52 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 /*
 ** Color helpers
 */
-# define ALPHA(r) ((r >> 24) & 255)
+# define ALPHA(r) (r >> 24)
 # define RED(r) ((r >> 16) & 255)
 # define GREEN(g) ((g >> 8) & 255)
 # define BLUE(b) (b & 255)
@@ -69,14 +69,15 @@
 # define B(b) C(b) & 255
 # define A(a) (C(a) & 255) << 24
 # define COLOR(r, g, b, a) A(a) | R(r) | G(g) | B(b)
-# define UI_COLOR COLOR(255, 255, 0, 0)
+# define UI_COLOR COLOR(255, 255, 0, 255)
+# define BACKGROUND_COLOR COLOR(0, 0, 0, 0)
 
 /*
 ** Initial settings & enums.
 ** A world unit in map data is one pixel, let's scale them SCALE
 */
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
 # define UI_WIDTH 300
 # define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
 # define SCALE 200
@@ -135,6 +136,11 @@ typedef struct		s_scene
 	t_map			*map;
 	void			*mlx;
 	void			*mlx_wdw;
+	void			*frame;
+	char			*frame_buf;
+	int				pixel_bits;
+	int				line_bytes;
+	int				pixel_endian;
 	int				mouse_right_pressed;
 	int				mouse_left_pressed;
 	int				mouse_x;
@@ -199,10 +205,11 @@ void				camera_free(t_camera *camera);
 /*
 ** Scene
 */
-void				draw_axes(t_scene *scene);
-void				draw_map(t_scene *scene);
+void				draw_axes_on_frame(t_scene *scene);
+void				draw_map_on_frame(t_scene *scene);
 int					init(t_scene *scene);
-t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map);
+t_scene				*new_scene(void *mlx, void *mlx_wdw, void *frame,
+					t_map *map);
 
 /*
 ** Line drawing

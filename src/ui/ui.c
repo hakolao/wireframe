@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 15:15:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:06:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,14 @@ static char			*key_guide(t_scene *scene)
 			"Down: Rotate map around x-\n"
 			"W: Move forward\n"
 			"D: Move backwards\nA: Strafe left\n"
-			"D: Strafe right\n"
-			"Q: Rotate map around z-\n"
+			"D: Strafe right\nQ: Rotate map around z-\n"
 			"E: Rotate map around z+\n"
 			"P: Loop perspective\nR: Reset\n"
 			"1: zoom out by widening FoV\n"
 			"2: zoom in by narrowing FoV\n"
 			"Num 4: Turn camera left\n"
-			"Num 6: Turn camera right\n"
-			"Num 8: Turn camera up\n"
-			"Num 2: Turn camera down\n"
-			"Num +: Scale map up\n"
+			"Num 6: Turn camera right\nNum 8: Turn camera up\n"
+			"Num 2: Turn camera down\nNum +: Scale map up\n"
 			"Num -: Scale map down\n")) == NULL) ||
 		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
 			"----------\nESC: Exit\n"
@@ -112,9 +109,9 @@ void				draw_ui(t_scene *scene)
 		return ;
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	draw_vector(scene, scene->camera->position, 130, 20);
-	draw_map_info(scene, 10, 60);
-	draw_paragraph(scene, key_g, 10, 230);
-	draw_paragraph(scene, mouse_g, 10, 710);
+	draw_map_info(scene, WINDOW_WIDTH - 150, 20);
+	draw_paragraph(scene, key_g, 10, 60);
+	draw_paragraph(scene, mouse_g, 10, 550);
 	ft_strdel(&mouse_g);
 	ft_strdel(&key_g);
 }

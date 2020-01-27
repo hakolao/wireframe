@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 14:30:24 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:49:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@
 int				init_fdf(t_map *map)
 {
 	t_scene		*scene;
+	void		*frame;
 	void		*mlx;
 	void		*mlx_wdw;
 
-	mlx = mlx_init();
-	mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
-		"Wireframe - ohakola");
-	if ((scene = new_scene(mlx, mlx_wdw, map)) == NULL ||
+	if ((mlx = mlx_init()) == NULL ||
+		(mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
+		"Wireframe - ohakola")) == NULL ||
+		(frame = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT))
+			== NULL ||
+		(scene = new_scene(mlx, mlx_wdw, frame, map)) == NULL ||
 		init(scene) == 0)
 		return (0);
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
