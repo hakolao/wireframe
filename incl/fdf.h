@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 14:35:49 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:14:05 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,18 @@
 /*
 ** Color helpers
 */
+# define ALPHA(r) ((r >> 24) & 255)
 # define RED(r) ((r >> 16) & 255)
 # define GREEN(g) ((g >> 8) & 255)
 # define BLUE(b) (b & 255)
 # define C(color) (color > 255 ? 255 : color)
-# define COLOR(r, g, b) (C(r) & 255) << 16 | (C(g) & 255) << 8 | C(b) & 255
-# define UI_COLOR COLOR(255, 255, 255)
+# define R(r) (C(r) & 255) << 16
+# define G(g) (C(g) & 255) << 8
+# define B(b) C(b) & 255
+# define A(a) (C(a) & 255) << 24
+# define COLOR(r, g, b, a) A(a) | R(r) | G(g) | B(b)
+# define UI_COLOR COLOR(255, 255, 255, 0)
+# define UI_BACKGROUND_COLOR COLOR(50, 115, 220, 0)
 
 /*
 ** Initial settings & enums.
@@ -72,6 +78,7 @@
 */
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+# define UI_WIDTH 300
 # define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
 # define SCALE 200
 # define Z_POS_INIT 0

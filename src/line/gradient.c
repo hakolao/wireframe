@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gradient.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:14:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int				grad_color(int start, int end, double gradient_mul)
 			g_diff > 0 ? GREEN(start) - (int)(gradient_mul * ft_abs(g_diff)) :
 				GREEN(start) + (int)(gradient_mul * ft_abs(g_diff)),
 			b_diff > 0 ? BLUE(start) - (int)(gradient_mul * ft_abs(b_diff)) :
-				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff))));
+				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff)), 0));
 }
 
 /*
@@ -59,7 +59,7 @@ int				map_color(double mul)
 {
 	return (COLOR((int)(0.5 * (1 + sin(mul)) * 255 + (mul > 1 ? 255 : 0)),
 			(int)(cos(mul) * 255 + (mul > 1 ? 255 : 0)),
-			(int)(sin(mul) * sin(mul) * 255 + (mul > 1 ? 255 : 0))));
+			(int)(sin(mul) * sin(mul) * 255 + (mul > 1 ? 255 : 0)), 0));
 }
 
 /*
