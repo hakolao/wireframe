@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:24:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:25:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@
 ** Initial settings & enums.
 ** A world unit in map data is one pixel, let's scale them SCALE
 */
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define UI_WIDTH 300
 # define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
 # define SCALE 200
