@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_utils.c                                       :+:      :+:    :+:   */
+/*   gradient.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:05:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 12:14:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,6 @@ int				grad_color(int start, int end, double gradient_mul)
 }
 
 /*
-** Swaps points, start & end color in line drawing special case
-*/
-
-void			swap_points_in_line_connect(t_line_connect *line_connect)
-{
-	t_vector	*tmp;
-	int			tmp_color;
-
-	tmp = line_connect->point2;
-	line_connect->point2 = line_connect->point1;
-	line_connect->point1 = tmp;
-	tmp_color = line_connect->color_start;
-	line_connect->color_start = line_connect->color_end;
-	line_connect->color_end = tmp_color;
-}
-
-/*
 ** Maps height value between out_minmax values linearly.
 */
 
@@ -77,4 +60,36 @@ int				map_color(double mul)
 	return (COLOR((int)(0.5 * (1 + sin(mul)) * 255 + (mul > 1 ? 255 : 0)),
 			(int)(cos(mul) * 255 + (mul > 1 ? 255 : 0)),
 			(int)(sin(mul) * sin(mul) * 255 + (mul > 1 ? 255 : 0))));
+}
+
+/*
+** Helper function which exposes line connecting for map including color for
+** map's gradient.
+*/
+
+void			connect_map_pts_with_gradient(t_line_connect *line_connect,
+				t_vector *point1, t_vector *point2)
+{
+	t_vector	*reset_p1;
+	t_vector	*reset_p2;
+	double		in[2];
+	double		out[2];
+
+	line_connect->point1 = point1;
+	line_connect->point2 = point2;
+	if ((reset_p1 = ft_vector_new(4)) == NULL || ft_matrix_mul_vector(
+		line_connect->scene->map->reset_rotation, point1, reset_p1) == FALSE)
+		return ;
+	line_connect->color_start = map_color(gradient_multiplier(in, out, reset_p1,
+		line_connect->scene->map));
+	if ((reset_p2 = ft_vector_new(4)) == NULL || ft_matrix_mul_vector(
+		line_connect->scene->map->reset_rotation, point2, reset_p2) == FALSE)
+		return ;
+	line_connect->color_end = map_color(gradient_multiplier(in, out, reset_p2,
+		line_connect->scene->map));
+	if (reset_p1->v[2] < reset_p2->v[2])
+		swap_points_in_line_connect(line_connect);
+	ft_vector_free(reset_p1);
+	ft_vector_free(reset_p2);
+	connect_points(line_connect);
 }

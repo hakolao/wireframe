@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.c                                            :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:06:13 by ohakola          ###   ########.fr       */
+/*   Created: 2020/01/27 11:54:35 by ohakola           #+#    #+#             */
+/*   Updated: 2020/01/27 12:14:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@ static t_canvas		*new_canvas(void)
 	c->far = 10;
 	c->angle = 70;
 	return (c);
+}
+
+/*
+** Frees camera struct so camera can be reset
+*/
+
+void				camera_free(t_camera *camera)
+{
+	ft_matrix_free(camera->projection);
+	ft_matrix_free(camera->view);
+	ft_matrix_free(camera->transform);
+	ft_matrix_free(camera->unit_scale);
+	ft_vector_free(camera->position);
+	ft_vector_free(camera->init_position);
+	ft_vector_free(camera->up);
+	free(camera->canvas);
+	free(camera);
 }
 
 /*
@@ -95,38 +112,4 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 	camera->yaw = yaw;
 	camera->perspective = PERSPECTIVE;
 	return (camera);
-}
-
-/*
-** Creates a new scene containing all needed information. Set's
-** camera's position based on map's size
-*/
-
-t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map)
-{
-	t_scene		*scene;
-	t_camera	*camera;
-	t_vector	*cam_pos;
-	t_vector	*cam_up;
-	double		arr[3];
-
-	arr[0] = map->x_max;
-	arr[1] = map->y_max;
-	arr[2] = map->z_max;
-	if ((cam_pos = ft_vector4_new(map->center->v[0], map->center->v[1],
-						Z_POS_INIT + ft_max_double(arr, 3) + 5.15)) == NULL ||
-		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
-		(camera = new_camera(cam_pos, cam_up, map)) == NULL ||
-		(scene = (t_scene*)malloc(sizeof(*scene))) == NULL)
-		return (NULL);
-	ft_vector_free(cam_pos);
-	ft_vector_free(cam_up);
-	scene->camera = camera;
-	scene->map = map;
-	scene->mlx = mlx;
-	scene->mlx_wdw = mlx_wdw;
-	scene->mouse_right_pressed = FALSE;
-	scene->mouse_x = 0;
-	scene->mouse_y = 0;
-	return (scene);
 }

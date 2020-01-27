@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
+#    By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/25 19:46:29 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/27 12:29:27 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,18 +24,20 @@ LIBMLXFLAGS = -L /usr/local/lib -lmlx -I/usr/local/X11/include -L/usr/X11/lib \
 LIBMATRIXFLAGS = -L $(LIBMATRIX) -lmatrix
 LIBFTFLAGS = -L $(LIBFT) -lft
 SOURCES = main.c \
-			input.c \
+			map/map.c \
+			map/reset.c \
+			map/utils.c \
+			camera/camera.c \
+			camera/utils.c \
+			line/draw.c \
+			line/gradient.c \
+			scene/axes.c \
+			scene/map.c \
+			scene/scene.c \
+			ui/ui.c \
+			ui/utils.c \
 			log.c \
 			events.c \
-			scene.c \
-			line_draw.c \
-			line_utils.c \
-			map_utils.c \
-			cam_utils.c \
-			ui.c \
-			ui_utils.c \
-			screen_pt.c \
-			axes.c \
 			draw.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
@@ -45,11 +47,16 @@ all: $(DIR_OBJ) $(NAME)
 $(NAME): $(OBJS)
 	@make -C ./libft
 	@make -C ./libmatrix
-	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
-	# $(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
+	# $(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
 
 $(DIR_OBJ):
 	@mkdir -p temp
+	@mkdir -p temp/map
+	@mkdir -p temp/camera
+	@mkdir -p temp/line
+	@mkdir -p temp/scene
+	@mkdir -p temp/ui
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/$(NAME).h
 	@$(CC) $(FLAGS) -I $(HEADERS) -c -o $@ $<

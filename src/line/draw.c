@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_draw.c                                        :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:04:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 12:14:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,23 @@ static void			plot_line_high(t_line_connect *line_connect)
 		line.y += 1;
 		step++;
 	}
+}
+
+/*
+** Swaps points, start & end color in line drawing special case
+*/
+
+void			swap_points_in_line_connect(t_line_connect *line_connect)
+{
+	t_vector	*tmp;
+	int			tmp_color;
+
+	tmp = line_connect->point2;
+	line_connect->point2 = line_connect->point1;
+	line_connect->point1 = tmp;
+	tmp_color = line_connect->color_start;
+	line_connect->color_start = line_connect->color_end;
+	line_connect->color_end = tmp_color;
 }
 
 /*

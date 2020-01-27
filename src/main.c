@@ -3,78 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:04:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 12:22:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Resets map rotation & scale to original values. May
-** have some rounding diffrences.
-*/
-
-static int		reset_map(t_map *map)
-{
-	if (ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
-			map->vertex_count) == FALSE ||
-		ft_matrix_mul_vector_lst(map->reset_scale, map->vertices,
-			map->vertex_count) == FALSE)
-		return (0);
-	ft_matrix_free(map->rotation);
-	ft_matrix_free(map->scale);
-	ft_matrix_free(map->reset_rotation);
-	ft_matrix_free(map->reset_scale);
-	if ((map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL ||
-		(map->reset_rotation =
-			ft_matrix_inverse_4x4(map->rotation)) == NULL ||
-		(map->scale = ft_matrix_id(4, 4)) == NULL ||
-		(map->reset_scale =
-			ft_matrix_inverse_4x4(map->scale)) == NULL)
-		return (0);
-	set_map_info(map);
-	return (1);
-}
-
-/*
-** Frees camera struct so camera can be reset
-*/
-
-static void		camera_free(t_camera *camera)
-{
-	ft_matrix_free(camera->projection);
-	ft_matrix_free(camera->view);
-	ft_matrix_free(camera->transform);
-	ft_matrix_free(camera->unit_scale);
-	ft_vector_free(camera->position);
-	ft_vector_free(camera->init_position);
-	ft_vector_free(camera->up);
-	free(camera->canvas);
-	free(camera);
-}
-
-/*
-** Initializes the scene
-*/
-
-int				init(t_scene *scene)
-{
-	t_camera	*camera;
-
-	if (reset_map(scene->map) == FALSE ||
-		rotate_map(scene->map, 45, 0, 0) == FALSE)
-		return (0);
-	if ((camera = new_camera(scene->camera->init_position,
-		scene->camera->up, scene->map)) == NULL)
-		return (0);
-	camera_free(scene->camera);
-	scene->camera = camera;
-	draw(scene);
-	return (1);
-}
 
 /*
 ** Initializes fdf app creating new scene
@@ -106,7 +42,7 @@ int				main(int argc, char **argv)
 
 	map = NULL;
 	if (argc > 1)
-		if ((map = serialize(argv[1])) == NULL &&
+		if ((map = serialize_map(argv[1])) == NULL &&
 			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT)))
 			return (0);
 	return (init_fdf(map));

@@ -3,46 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 19:14:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 12:15:04 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /*
-** Map vertex drawing algorithm to connect each vertex correctly
-** to screen. Each position is connected to their right and bottom
-** vertices:
-** *--->*
-** |
-** v
-** *
+** Transforms vertex into screen space
 */
 
-static void			draw_map(t_scene *scene)
+t_vector			*screen_pt(t_vector *point, t_scene *scene)
 {
-	t_line_connect	*line_connect;
-	size_t			i;
+	t_vector	*on_screen;
 
-	if ((line_connect = malloc(sizeof(t_line_connect))) == NULL)
+	if ((on_screen = ft_vector_new(4)) == NULL ||
+		ft_matrix_mul_vector(
+			scene->camera->transform, point, on_screen) == FALSE)
+		return (NULL);
+	on_screen->v[0] /= on_screen->v[3];
+	on_screen->v[1] /= on_screen->v[3];
+	on_screen->v[2] /= on_screen->v[3];
+	on_screen->v[3] /= on_screen->v[3];
+	return (on_screen);
+}
+
+/*
+** Checks if given point is in front of camera, if not, it should
+** not be drawn.
+*/
+
+static int			in_front_of_camera(t_vector *p1, t_vector *p2,
+					t_camera *camera)
+{
+	t_vector	*c1;
+	t_vector	*c2;
+	int			ret;
+
+	if ((c1 = ft_vector_new(4)) == NULL ||
+		(c2 = ft_vector_new(4)) == NULL ||
+		ft_matrix_mul_vector(camera->view, p1, c1) == FALSE ||
+		ft_matrix_mul_vector(camera->view, p2, c2) == FALSE)
+		return (0);
+	ret = c1->v[2] > 0.5 && c2->v[2] > 0.5;
+	ft_vector_free(c1);
+	ft_vector_free(c2);
+	return (ret);
+}
+
+/*
+** Connects given points from line_connect struct by drawing a line
+** between those points in screen space.
+** Points are first validated by in_front_of_camera and then brought
+** to screen space before passing to draw_line.
+*/
+
+void				connect_points(t_line_connect *line_connect)
+{
+	t_vector	*s1;
+	t_vector	*s2;
+
+	if (!in_front_of_camera(line_connect->point1,
+		line_connect->point2,
+		line_connect->scene->camera))
 		return ;
-	line_connect->scene = scene;
-	i = -1;
-	while (++i < scene->map->vertex_count - 1)
-	{
-		if ((i + 1) % (scene->map->x + 1) != 0)
-			connect_map_pts_with_gradient(line_connect,
-				scene->map->vertices[i],
-					scene->map->vertices[i + 1]);
-		if (i < scene->map->vertex_count - scene->map->x - 1)
-			connect_map_pts_with_gradient(line_connect,
-				scene->map->vertices[i],
-					scene->map->vertices[i + 1 + scene->map->x]);
-	}
-	free(line_connect);
+	if (((s1 = screen_pt(line_connect->point1, line_connect->scene)) == NULL ||
+		(s2 = screen_pt(line_connect->point2, line_connect->scene)) == NULL) &&
+		log_error("Something failed in point_to_screen.", ""))
+		exit(1);
+	line_connect->point1 = s1;
+	line_connect->point2 = s2;
+	draw_line(line_connect);
+	ft_vector_free(s1);
+	ft_vector_free(s2);
 }
 
 /*
