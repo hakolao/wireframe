@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:05:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:18:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,6 @@ int					draw(t_scene *scene)
 	draw_axes_on_frame(scene);
 	mlx_put_image_to_window(scene->mlx, scene->mlx_wdw, scene->frame, 0, 0);
 	draw_ui(scene);
+	scene->redraw = FALSE;
 	return (1);
 }

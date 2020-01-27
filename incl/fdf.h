@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:04:52 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:24:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct		s_scene
 	int				mouse_x;
 	int				mouse_y;
 	int				show_guide;
+	int				redraw;
 }					t_scene;
 
 /*
@@ -260,6 +261,7 @@ int					handle_mouse_button_press(int key, int x, int y,
 int					handle_mouse_button_release(int key, int x, int y,
 					void *param);
 int					handle_mouse_move(int x, int y, void *param);
+int					handle_loop(void *params);
 
 /*
 ** Logging
