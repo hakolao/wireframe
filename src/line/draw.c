@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:31:31 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void			plot_line_high(t_line_connect *line_connect)
 ** Swaps points, start & end color in line drawing special case
 */
 
-void			swap_points_in_line_connect(t_line_connect *line_connect)
+void				swap_points_in_line_connect(t_line_connect *line_connect)
 {
 	t_vector	*tmp;
 	int			tmp_color;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+         #
+#    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/27 12:29:27 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/27 14:28:26 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ all: $(DIR_OBJ) $(NAME)
 $(NAME): $(OBJS)
 	@make -C ./libft
 	@make -C ./libmatrix
-	# $(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
-	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
+	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+	# $(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
 
 $(DIR_OBJ):
 	@mkdir -p temp

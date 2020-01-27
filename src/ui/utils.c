@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 19:35:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:32:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_map_info				*map_info(t_scene *scene)
 ** Renders a vector to UI to given position.
 */
 
-void				draw_vector(t_scene *scene, t_vector *v,
-					int xpos, int ypos)
+void					draw_vector(t_scene *scene, t_vector *v,
+						int xpos, int ypos)
 {
 	char	*vectorstr;
 	char	*x;
@@ -80,10 +80,11 @@ void				draw_vector(t_scene *scene, t_vector *v,
 }
 
 /*
-** Draws a paragraph of key usage into screen
+** Draws a paragraph into screen
 */
 
-void			draw_paragraph(t_scene *scene, char *text, int xpos, int ypos)
+void					draw_paragraph(t_scene *scene, char *text, int xpos,
+						int ypos)
 {
 	char	**split_text;
 	int		i;
