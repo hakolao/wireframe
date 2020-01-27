@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:31:17 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:35:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 # define KEY_R 15
 # define KEY_NUM_PLUS 69
 # define KEY_NUM_MINUS 78
+# define KEY_G 5
 
 /*
 ** Color helpers
@@ -132,6 +133,7 @@ typedef struct		s_scene
 	int				mouse_left_pressed;
 	int				mouse_x;
 	int				mouse_y;
+	int				show_guide;
 }					t_scene;
 
 /*

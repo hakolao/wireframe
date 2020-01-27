@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:52 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:36:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ t_scene				*new_scene(void *mlx, void *mlx_wdw, t_map *map)
 	scene->mouse_right_pressed = FALSE;
 	scene->mouse_x = 0;
 	scene->mouse_y = 0;
+	scene->show_guide = 0;
 	return (scene);
 }

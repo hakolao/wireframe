@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:31:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:49:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 ** Returns key usage guide
 */
 
-static char			*key_guide(void)
+static char			*key_guide(t_scene *scene)
 {
 	char	*guide;
 
-	if ((guide = ft_strdup("USAGE Keys:\n"\
+	if ((scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"\
 			"----------\nESC: Exit\n"
+			"G: Toggle guide\n"
 			"Left: Rotate map around y-\n"\
 			"Right: Rotate map around y+\n"
 			"Up: Rotate map around x+\n"
@@ -70,7 +71,10 @@ static char			*key_guide(void)
 			"Num 8: Turn camera up\n"
 			"Num 2: Turn camera down\n"
 			"Num +: Scale map up\n"
-			"Num -: Scale map down\n")) == NULL)
+			"Num -: Scale map down\n")) == NULL) ||
+		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
+			"----------\nESC: Exit\n"
+			"G: Toggle guide")) == NULL))
 		return (NULL);
 	return (guide);
 }
@@ -79,16 +83,17 @@ static char			*key_guide(void)
 ** Returns mouse usage guide
 */
 
-static char			*mouse_guide(void)
+static char			*mouse_guide(t_scene *scene)
 {
 	char	*guide;
 
-	if ((guide = ft_strdup("USAGE Mouse:\n"
+	if ((scene->show_guide && (guide = ft_strdup("USAGE Mouse:\n"
 			"----------\n"
 			"Scroll up: Scale map z up\n"
 			"Scroll down: Scale map z down\n"
 			"Hold left mouse & move: Rotate camera\n"
-			"Hold right mouse & move: Rotate map")) == NULL)
+			"Hold right mouse & move: Rotate map")) == NULL) ||
+		(!scene->show_guide && (guide = ft_strdup("")) == NULL))
 		return (NULL);
 	return (guide);
 }
@@ -102,8 +107,8 @@ void				draw_ui(t_scene *scene)
 	char	*mouse_g;
 	char	*key_g;
 
-	if ((mouse_g = mouse_guide()) == NULL ||
-		(key_g = key_guide()) == NULL)
+	if ((mouse_g = mouse_guide(scene)) == NULL ||
+		(key_g = key_guide(scene)) == NULL)
 		return ;
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	draw_vector(scene, scene->camera->position, 130, 20);
