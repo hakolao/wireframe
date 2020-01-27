@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 15:14:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/27 15:18:52 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@
 # define B(b) C(b) & 255
 # define A(a) (C(a) & 255) << 24
 # define COLOR(r, g, b, a) A(a) | R(r) | G(g) | B(b)
-# define UI_COLOR COLOR(255, 255, 255, 0)
-# define UI_BACKGROUND_COLOR COLOR(50, 115, 220, 0)
+# define UI_COLOR COLOR(255, 255, 0, 0)
 
 /*
 ** Initial settings & enums.
