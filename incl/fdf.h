@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:14:30 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:55:35 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-/*
-** Input reading errors
-*/
-# define ERR_INVALID_INPUT "Lines must consist of spaces & numbers."
-# define ERR_SERIALIZATION "Input serialization failed."
 # define ERRNO_INVALID_INPUT 5
+# define ERR_CENTER "Failed to center map & set vertices"
+# define ERR_READ "Lines must consist of spaces & (+/-)numbers"
 
 /*
 ** Key codes for event listening

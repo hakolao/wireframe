@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 13:41:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:42:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int				init_fdf(t_map **maps, int map_count)
 		(mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 		"Wireframe - ohakola")) == NULL ||
 		(scene = new_scene(mlx, mlx_wdw, maps)) == NULL)
+	{
+		log_error("Failed to create scene.", strerror(ERRNO_INVALID_INPUT));
 		return (0);
+	}
 	scene->map_count = map_count;
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);
@@ -49,8 +52,7 @@ int				main(int argc, char **argv)
 		i = 1;
 		while (i < argc)
 		{
-			if ((maps[i - 1] = serialize_map(argv[i])) == NULL &&
-				log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT)))
+			if ((maps[i - 1] = serialize_map(argv[i])) == NULL)
 				return (0);
 			i++;
 		}

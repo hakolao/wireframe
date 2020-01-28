@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:19:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:58:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ static t_list		*read_map_line(t_list *vertices, char *line, int y,
 	while (*line)
 	{
 		if (!(*line == ' ' || *line == '-' || ft_isdigit(*line)) &&
-			log_error(ERR_INVALID_INPUT, strerror(ERRNO_INVALID_INPUT)))
+			log_error(ERR_READ, strerror(ERRNO_INVALID_INPUT)))
 			return (NULL);
 		if (ft_isdigit(*line) || *line == '-')
 		{
 			z = read_z_from_digit(&line);
-			if ((vertices = add_to_list(vertices, x, y, z)) == NULL)
+			if ((vertices = add_to_list(vertices, x, y, z)) == NULL &&
+				log_error("Failed t_list", strerror(ERRNO_INVALID_INPUT)))
 				return (NULL);
 			map->z_max = map->z_max >= z ? map->z_max : z;
 			map->z_min = map->z_min <= z ? map->z_min : z;
@@ -113,11 +114,11 @@ static t_map		*file_to_map(int fd, t_map *map)
 	}
 	if (ret == FALSE)
 		map->y_max = y - 1;
-	map->x = map->x_max;
-	map->y = map->y_max;
 	map->z = map->z_max - map->z_min;
-	if ((ret == -1 && log_perror("")) ||
-		center_and_set_map_vertices(vertex_list, map) == FALSE)
+	if ((map->x = map->x_max) == 0 ||
+		(map->y = map->y_max) == 0 || (ret == -1 && log_perror("")) ||
+		(!center_and_set_map_vertices(vertex_list, map) &&
+			log_error(ERR_CENTER, strerror(ERRNO_INVALID_INPUT))))
 		return (NULL);
 	ft_strdel(&line);
 	return (map);
@@ -131,12 +132,11 @@ t_map				*serialize_map(char *filename)
 {
 	t_map		*map;
 	int			fd;
+	char		*error;
 
-	if ((map = (t_map*)malloc(sizeof(*map))) == NULL)
-		return (NULL);
-	if ((fd = open(filename, O_RDONLY)) == -1 && log_perror(""))
-		return (NULL);
-	if ((map = file_to_map(fd, map)) == NULL ||
+	if ((map = (t_map*)malloc(sizeof(*map))) == NULL ||
+		((fd = open(filename, O_RDONLY)) == -1 && log_perror("")) ||
+		(map = file_to_map(fd, map)) == NULL ||
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
 		(map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL ||
 		(map->reset_rotation =
@@ -144,8 +144,15 @@ t_map				*serialize_map(char *filename)
 		(map->scale = ft_matrix_id(4, 4)) == NULL ||
 		(map->reset_scale =
 			ft_matrix_inverse_4x4(map->scale)) == NULL)
+	{
+		if ((error = ft_strjoin("Error reading map: ", filename)) == NULL)
+			return (NULL);
+		log_error(error, strerror(ERRNO_INVALID_INPUT));
+		ft_strdel(&error);
 		return (NULL);
+	}
 	map->name = filename;
-	close(fd);
+	if (close(fd) == -1 && log_perror(""))
+		return (NULL);
 	return (map);
 }
