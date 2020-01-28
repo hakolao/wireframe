@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 12:02:09 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 18:34:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 }
 
 /*
-** Connects given points from line_connect struct by drawing a line
+** Connects given points from edge struct by drawing a line
 ** between those points in screen space.
 ** Points are first validated by in_front_of_camera and then brought
 ** to screen space before passing to draw_line.
@@ -63,21 +63,21 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 ** Line is drawn only if point lies within window.
 */
 
-void				connect_points(t_line_connect *line_connect)
+void				connect_points(t_edge *edge)
 {
 	t_vector	*s1;
 	t_vector	*s2;
 
-	if (!in_front_of_camera(line_connect->point1,
-		line_connect->point2,
-		line_connect->scene->camera))
+	if (!in_front_of_camera(edge->point1,
+		edge->point2,
+		edge->scene->camera))
 		return ;
-	if (((s1 = screen_pt(line_connect->point1, line_connect->scene)) == NULL ||
-		(s2 = screen_pt(line_connect->point2, line_connect->scene)) == NULL) &&
+	if (((s1 = screen_pt(edge->point1, edge->scene)) == NULL ||
+		(s2 = screen_pt(edge->point2, edge->scene)) == NULL) &&
 		log_error("Something failed in point_to_screen.", ""))
 		exit(1);
-	line_connect->point1 = s1;
-	line_connect->point2 = s2;
+	edge->point1 = s1;
+	edge->point2 = s2;
 	s1->v[0] += WINDOW_WIDTH / 2;
 	s1->v[1] += WINDOW_HEIGHT / 2;
 	s2->v[0] += WINDOW_WIDTH / 2;
@@ -86,7 +86,7 @@ void				connect_points(t_line_connect *line_connect)
 		s1->v[1] >= 0 && s1->v[1] <= WINDOW_HEIGHT &&
 		s2->v[0] >= 0 && s2->v[0] <= WINDOW_WIDTH &&
 		s2->v[1] >= 0 && s2->v[1] <= WINDOW_HEIGHT)
-		draw_line(line_connect);
+		draw_line(edge);
 	ft_vector_free(s1);
 	ft_vector_free(s2);
 }

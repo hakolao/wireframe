@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:15:30 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 18:34:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,14 +173,14 @@ typedef struct		s_line
 ** A Helper struct to contain start & end colors for gradient
 ** calculations in line drawing.
 */
-typedef struct		s_line_connect
+typedef struct		s_edge
 {
 	t_vector		*point1;
 	t_vector		*point2;
 	int				color_start;
 	int				color_end;
 	t_scene			*scene;
-}					t_line_connect;
+}					t_edge;
 
 /*
 ** A Helper struct for map information to be drawn on the UI
@@ -221,12 +221,12 @@ t_scene				*new_scene(void *mlx, void *mlx_wdw,
 /*
 ** Line drawing
 */
-void				connect_points(t_line_connect *line_connect);
-void				connect_map_pts_with_gradient(t_line_connect *line_connect,
+void				connect_points(t_edge *edge);
+void				connect_map_pts_with_gradient(t_edge *edge,
 					t_vector *point1, t_vector *point2);
-void				draw_line(t_line_connect *line_connect);
+void				draw_line(t_edge *edge);
 int					grad_color(int start, int end, double gradient_mul);
-void				swap_points_in_line_connect(t_line_connect *line_connect);
+void				swap_points_in_edge(t_edge *edge);
 double				gradient_multiplier(double *in_minmax, double *out_minmax,
 					t_vector *point, t_map *map);
 

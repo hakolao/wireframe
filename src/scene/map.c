@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 12:04:00 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:20:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 18:33:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@
 
 void			draw_map_on_frame(t_scene *scene)
 {
-	t_line_connect	*line_connect;
+	t_edge			*edge;
 	size_t			i;
 
-	if ((line_connect = malloc(sizeof(t_line_connect))) == NULL)
+	if ((edge = malloc(sizeof(t_edge))) == NULL)
 		return ;
-	line_connect->scene = scene;
+	edge->scene = scene;
 	i = -1;
 	while (++i < scene->maps[scene->map_index]->vertex_count - 1)
 	{
 		if ((i + 1) % (scene->maps[scene->map_index]->x + 1) != 0)
-			connect_map_pts_with_gradient(line_connect,
+			connect_map_pts_with_gradient(edge,
 				scene->maps[scene->map_index]->vertices[i],
 					scene->maps[scene->map_index]->vertices[i + 1]);
 		if (i < scene->maps[scene->map_index]->vertex_count -
 			scene->maps[scene->map_index]->x - 1)
-			connect_map_pts_with_gradient(line_connect,
+			connect_map_pts_with_gradient(edge,
 				scene->maps[scene->map_index]->vertices[i],
 					scene->maps[scene->map_index]->vertices[
 						i + 1 + scene->maps[scene->map_index]->x]);
 	}
-	free(line_connect);
+	free(edge);
 }

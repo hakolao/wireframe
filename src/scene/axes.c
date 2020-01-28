@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 19:10:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 15:49:14 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 18:35:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ static void			free_axes(t_vector ***points)
 ** Connects axis points using connect_points
 */
 
-static void			connect_axis(t_line_connect *line_connect,
+static void			connect_axis(t_edge *edge,
 					t_vector *point1, t_vector *point2)
 {
-	line_connect->point1 = point1;
-	line_connect->point2 = point2;
-	connect_points(line_connect);
+	edge->point1 = point1;
+	edge->point2 = point2;
+	connect_points(edge);
 }
 
 /*
@@ -77,24 +77,24 @@ void				draw_axes_on_frame(t_scene *scene)
 {
 	int				color;
 	t_vector		***points;
-	t_line_connect	*line_connect;
+	t_edge			*edge;
 	int				i;
 
 	color = ((100 & 255) << 16) | ((100 & 255) << 8 | (100 & 255));
 	if ((points = axes()) == NULL ||
-		(line_connect = malloc(sizeof(t_line_connect))) == NULL)
+		(edge = malloc(sizeof(t_edge))) == NULL)
 		return ;
-	line_connect->scene = scene;
-	line_connect->color_start = color;
-	line_connect->color_end = color;
+	edge->scene = scene;
+	edge->color_start = color;
+	edge->color_end = color;
 	i = 0;
 	while (i < 100 - 1)
 	{
-		connect_axis(line_connect, points[0][i], points[0][i + 1]);
-		connect_axis(line_connect, points[1][i], points[1][i + 1]);
-		connect_axis(line_connect, points[2][i], points[2][i + 1]);
+		connect_axis(edge, points[0][i], points[0][i + 1]);
+		connect_axis(edge, points[1][i], points[1][i + 1]);
+		connect_axis(edge, points[2][i], points[2][i + 1]);
 		i++;
 	}
 	free_axes(points);
-	free(line_connect);
+	free(edge);
 }
