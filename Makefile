@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/27 18:24:35 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/28 14:24:39 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBMLXFLAGS = -L /usr/local/lib -lmlx -I/usr/local/X11/include -L/usr/X11/lib \
 LIBMATRIXFLAGS = -L $(LIBMATRIX) -lmatrix
 LIBFTFLAGS = -L $(LIBFT) -lft
 SOURCES = main.c \
-			map/map.c \
+			map/read.c \
 			map/reset.c \
 			map/utils.c \
 			camera/camera.c \
