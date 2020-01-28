@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 10:42:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 12:01:41 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int					scene_render_params(t_scene *scene,
 	scene->col_r = 255;
 	scene->col_g = 255;
 	scene->col_b = 255;
+	scene->col_a = 255;
 	return (TRUE);
 }
 

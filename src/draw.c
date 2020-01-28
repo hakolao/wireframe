@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:18:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 12:02:09 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void			clear_frame(t_scene *scene)
 	int		pixel;
 	int		color;
 
-	color = BACKGROUND_COLOR;
+	color = COLOR(scene->col_r, scene->col_g, scene->col_b, scene->col_a);
 	y = 0;
 	while (y < WINDOW_HEIGHT)
 	{

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 11:07:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 12:03:57 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int				handle_key_events(int key, void *param)
 		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
 	}
-	ft_putnbr(key);
 	if (key == KEY_G)
 		scene->show_guide = !(scene->show_guide);
 	if (key == KEY_C)
@@ -67,6 +66,8 @@ int				handle_key_events(int key, void *param)
 			0 + scene->col_g + 105 - 255 : scene->col_g + 105;
 		scene->col_b = scene->col_b + 159 >= 255 ?
 			0 + scene->col_b + 159 - 255 : scene->col_b + 159;
+		scene->col_a = scene->col_a + 36 >= 255 ?
+			0 + scene->col_a + 36 - 255 : scene->col_a + 36;
 	}
 	ret = check_rest_of_events(key, scene);
 	scene->redraw = TRUE;
