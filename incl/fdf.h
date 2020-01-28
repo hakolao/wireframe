@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:35:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 10:48:17 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define KEY_NUM_PLUS 69
 # define KEY_NUM_MINUS 78
 # define KEY_G 5
+# define KEY_C 8
 
 /*
 ** Color helpers
@@ -147,6 +148,9 @@ typedef struct		s_scene
 	int				mouse_y;
 	int				show_guide;
 	int				redraw;
+	int				col_r;
+	int				col_g;
+	int				col_b;
 }					t_scene;
 
 /*
@@ -223,7 +227,6 @@ int					grad_color(int start, int end, double gradient_mul);
 void				swap_points_in_line_connect(t_line_connect *line_connect);
 double				gradient_multiplier(double *in_minmax, double *out_minmax,
 					t_vector *point, t_map *map);
-int					map_color(double mul);
 
 /*
 ** Map (Input reading, serialization & map functionality)

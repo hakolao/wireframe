@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:24:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:07:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** intended app behavior
 */
 
-static int		check_key_events(int key, t_scene *scene)
+static int		check_rest_of_events(int key, t_scene *scene)
 {
 	return ((key == KEY_UP && rotate_map(scene->map, 3, 0, 0)) ||
 		(key == KEY_DOWN && rotate_map(scene->map, -3, 0, 0)) ||
@@ -56,9 +56,19 @@ int				handle_key_events(int key, void *param)
 		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
 	}
+	ft_putnbr(key);
 	if (key == KEY_G)
 		scene->show_guide = !(scene->show_guide);
-	ret = check_key_events(key, scene);
+	if (key == KEY_C)
+	{
+		scene->col_r = scene->col_r + 52 >= 255 ?
+			0 + scene->col_r + 52 - 255 : scene->col_r + 52;
+		scene->col_g = scene->col_g + 105 >= 255 ?
+			0 + scene->col_g + 105 - 255 : scene->col_g + 105;
+		scene->col_b = scene->col_b + 159 >= 255 ?
+			0 + scene->col_b + 159 - 255 : scene->col_b + 159;
+	}
+	ret = check_rest_of_events(key, scene);
 	scene->redraw = TRUE;
 	return (ret);
 }

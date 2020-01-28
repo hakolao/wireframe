@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:06:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:08:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static char			*key_guide(t_scene *scene)
 			"Up: Rotate map around x+\n"
 			"Down: Rotate map around x-\n"
 			"W: Move forward\n"
-			"D: Move backwards\nA: Strafe left\n"
+			"S: Move backwards\nA: Strafe left\n"
 			"D: Strafe right\nQ: Rotate map around z-\n"
-			"E: Rotate map around z+\n"
+			"E: Rotate map around z+\nC: Loop colors\n"
 			"P: Loop perspective\nR: Reset\n"
 			"1: zoom out by widening FoV\n"
 			"2: zoom in by narrowing FoV\n"
@@ -109,7 +109,7 @@ void				draw_ui(t_scene *scene)
 		return ;
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	draw_vector(scene, scene->camera->position, 130, 20);
-	draw_map_info(scene, WINDOW_WIDTH - 150, 20);
+	draw_map_info(scene, WINDOW_WIDTH - 160, 20);
 	draw_paragraph(scene, key_g, 10, 60);
 	draw_paragraph(scene, mouse_g, 10, 550);
 	ft_strdel(&mouse_g);
