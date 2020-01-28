@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:18:45 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 17:49:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int				handle_key_events(int key, void *param)
 	if (key == KEY_G)
 		scene->show_guide = !(scene->show_guide);
 	if ((key == KEY_C && increment_scene_colors(scene)) ||
-		(key == KEY_TAB && switch_map(scene)) ||
+		(key == KEY_TAB && scene->map_count > 1 && switch_map(scene)) ||
 		(key == KEY_P && loop_perspective(scene->camera)) ||
 		(key == KEY_R && init_scene(scene, scene->map_index)) ||
 		(key == KEY_1 && zoom(scene->camera, 1)) ||

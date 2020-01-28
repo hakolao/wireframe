@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 17:28:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 18:15:30 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int					set_map_info(t_map *map);
 t_map				*serialize_map(char *filename);
 int					reset_map(t_map *map);
 int					switch_map(t_scene *scene);
+double				z_shift(t_list *vtx_lst);
 
 /*
 ** UI

@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/28 17:35:48 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/28 18:16:23 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES = main.c \
 			map/read.c \
 			map/reset.c \
 			map/utils.c \
+			map/shift.c \
 			camera/camera.c \
 			camera/utils.c \
 			line/draw.c \
