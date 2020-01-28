@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:48 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:22:57 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:09:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int				handle_mouse_button_press(int button, int x, int y, void *param)
 	int			ret;
 
 	scene = (t_scene *)param;
-	ret = ((button == SCROLL_UP && scale_map(scene->map, 1, 1, 1.1)) ||
-			(button == SCROLL_DOWN && scale_map(scene->map, 1, 1, 0.9)));
+	ret = ((button == SCROLL_UP &&
+				scale_map(scene->maps[scene->map_index], 1, 1, 1.1)) ||
+			(button == SCROLL_DOWN &&
+				scale_map(scene->maps[scene->map_index], 1, 1, 0.9)));
 	if (button == MOUSE_BUTTON_RIGHT)
 	{
 		scene->mouse_right_pressed = TRUE;
@@ -76,10 +78,10 @@ int				handle_mouse_move(int x, int y, void *param)
 	y_diff = y - scene->mouse_y;
 	diff_lim = 5;
 	if (scene->mouse_right_pressed == TRUE && ft_abs(x_diff) > diff_lim &&
-		rotate_map(scene->map, 0, x_diff > 0 ? 1 : -1, 0))
+		rotate_map(scene->maps[scene->map_index], 0, x_diff > 0 ? 1 : -1, 0))
 		scene->mouse_x = x;
 	else if (scene->mouse_right_pressed == TRUE && ft_abs(y_diff) > diff_lim &&
-		rotate_map(scene->map, y_diff > 0 ? -1 : 1, 0, 0))
+		rotate_map(scene->maps[scene->map_index], y_diff > 0 ? -1 : 1, 0, 0))
 		scene->mouse_y = y;
 	else if (scene->mouse_left_pressed == TRUE && ft_abs(x_diff) > diff_lim &&
 		turn_camera(scene->camera, 0, x_diff > 0 ? -1 : 1))

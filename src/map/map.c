@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:47 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:19:20 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ t_map				*serialize_map(char *filename)
 		(map->reset_scale =
 			ft_matrix_inverse_4x4(map->scale)) == NULL)
 		return (NULL);
+	map->name = filename;
 	close(fd);
 	return (map);
 }

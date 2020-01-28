@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 19:35:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 14:32:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:20:56 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,20 @@ t_map_info				*map_info(t_scene *scene)
 
 	if ((map_info =
 			(t_map_info*)malloc(sizeof(t_map_info))) == NULL ||
-			(map_info->vertices = ft_itoa(scene->map->vertex_count)) == NULL ||
-			(map_info->x_min = ft_itoa(scene->map->x_min)) == NULL ||
-			(map_info->x_max = ft_itoa(scene->map->x_max)) == NULL ||
-			(map_info->y_min = ft_itoa(scene->map->y_min)) == NULL ||
-			(map_info->y_max = ft_itoa(scene->map->y_max)) == NULL ||
-			(map_info->z_min = ft_itoa(scene->map->z_min)) == NULL ||
-			(map_info->z_max = ft_itoa(scene->map->z_max)) == NULL)
+			(map_info->vertices =
+				ft_itoa(scene->maps[scene->map_index]->vertex_count)) == NULL ||
+			(map_info->x_min =
+				ft_itoa(scene->maps[scene->map_index]->x_min)) == NULL ||
+			(map_info->x_max =
+				ft_itoa(scene->maps[scene->map_index]->x_max)) == NULL ||
+			(map_info->y_min =
+				ft_itoa(scene->maps[scene->map_index]->y_min)) == NULL ||
+			(map_info->y_max =
+				ft_itoa(scene->maps[scene->map_index]->y_max)) == NULL ||
+			(map_info->z_min =
+				ft_itoa(scene->maps[scene->map_index]->z_min)) == NULL ||
+			(map_info->z_max =
+				ft_itoa(scene->maps[scene->map_index]->z_max)) == NULL)
 		return (NULL);
 	return (map_info);
 }

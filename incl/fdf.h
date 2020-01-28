@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 12:01:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:14:30 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define KEY_NUM_MINUS 78
 # define KEY_G 5
 # define KEY_C 8
+# define KEY_TAB 48
 
 /*
 ** Color helpers
@@ -82,7 +83,6 @@
 # define UI_WIDTH 300
 # define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
 # define SCALE 200
-# define Z_POS_INIT 0
 # define ORTHOGRAPHIC 2
 # define PERSPECTIVE 1
 
@@ -107,6 +107,7 @@ typedef struct		s_map
 	t_matrix		*scale;
 	t_matrix		*reset_scale;
 	t_vector		*center;
+	char			*name;
 }					t_map;
 
 /*
@@ -134,7 +135,9 @@ typedef struct		s_camera
 typedef struct		s_scene
 {
 	t_camera		*camera;
-	t_map			*map;
+	t_map			**maps;
+	int				map_index;
+	int				map_count;
 	void			*mlx;
 	void			*mlx_wdw;
 	void			*frame;
@@ -213,9 +216,9 @@ void				camera_free(t_camera *camera);
 */
 void				draw_axes_on_frame(t_scene *scene);
 void				draw_map_on_frame(t_scene *scene);
-int					init(t_scene *scene);
-t_scene				*new_scene(void *mlx, void *mlx_wdw, void *frame,
-					t_map *map);
+int					init_scene(t_scene *scene, int map_i);
+t_scene				*new_scene(void *mlx, void *mlx_wdw,
+					t_map **maps);
 
 /*
 ** Line drawing
@@ -239,6 +242,7 @@ int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
 int					set_map_info(t_map *map);
 t_map				*serialize_map(char *filename);
 int					reset_map(t_map *map);
+int					switch_map(t_scene *scene);
 
 /*
 ** UI

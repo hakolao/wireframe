@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 11:08:07 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 14:23:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,31 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 
 static char			*key_guide(t_scene *scene)
 {
+	char	*final_guide;
 	char	*guide;
+	char	*map_loop;
 
-	if ((scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"\
-			"----------\nESC: Exit\n"
-			"G: Toggle guide\n"
+	if ((scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
+			"----------\nESC: Exit\nG: Toggle guide\n"
 			"Left: Rotate map around y-\n"\
-			"Right: Rotate map around y+\n"
-			"Up: Rotate map around x+\n"
-			"Down: Rotate map around x-\n"
-			"W: Move forward\n"
-			"S: Move backwards\nA: Strafe left\n"
-			"D: Strafe right\nQ: Rotate map around z-\n"
-			"E: Rotate map around z+\nC: Loop colors\n"
-			"P: Loop perspective\nR: Reset\n"
-			"1: zoom out by widening FoV\n"
-			"2: zoom in by narrowing FoV\n"
-			"Num 4: Turn camera left\n"
-			"Num 6: Turn camera right\nNum 8: Turn camera up\n"
-			"Num 2: Turn camera down\nNum +: Scale map up\n"
-			"Num -: Scale map down\n")) == NULL) ||
+			"Right: Rotate map around y+\nUp: Rotate map around x+\n"
+			"Down: Rotate map around x-\nW: Move forward\n"
+			"S: Move backwards\nA: Strafe left\nD: Strafe right\n"
+			"Q: Rotate map around z-\nE: Rotate map around z+\nC: Loop colors\n"
+			"P: Loop perspective\nR: Reset\n1: zoom out\n2: zoom in\n"
+			"Num 4: Turn camera left\nNum 6: Turn camera right\n"
+			"Num 8: Turn camera up\nNum 2: Turn camera down\n"
+			"Num +: Scale map up\nNum -: Scale map down\n")) == NULL) ||
 		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
 			"----------\nESC: Exit\n"
-			"G: Toggle guide")) == NULL))
+			"G: Toggle guide")) == NULL) ||
+		(map_loop = (scene->map_count > 1 ?
+			ft_strdup("\nTab: Switch map") : ft_strdup(""))) == NULL ||
+		(final_guide = ft_strjoin(guide, map_loop)) == NULL)
 		return (NULL);
-	return (guide);
+	ft_strdel(&guide);
+	ft_strdel(&map_loop);
+	return (final_guide);
 }
 
 /*
@@ -103,15 +103,26 @@ void				draw_ui(t_scene *scene)
 {
 	char	*mouse_g;
 	char	*key_g;
+	char	*read_maps;
 
 	if ((mouse_g = mouse_guide(scene)) == NULL ||
-		(key_g = key_guide(scene)) == NULL)
+		(key_g = key_guide(scene)) == NULL ||
+		(read_maps = ft_itoa(scene->map_count)) == NULL)
 		return ;
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	draw_vector(scene, scene->camera->position, 130, 20);
 	draw_map_info(scene, WINDOW_WIDTH - 160, 20);
 	draw_paragraph(scene, key_g, 10, 60);
-	draw_paragraph(scene, mouse_g, 10, 550);
+	draw_paragraph(scene, mouse_g, 10, 600);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 10,
+		WINDOW_HEIGHT - 70, UI_COLOR, "Total maps:");
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 130,
+		WINDOW_HEIGHT - 70, UI_COLOR, read_maps);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 10,
+		WINDOW_HEIGHT - 50, UI_COLOR, "Map:");
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 60,
+		WINDOW_HEIGHT - 50, UI_COLOR, scene->maps[scene->map_index]->name);
 	ft_strdel(&mouse_g);
 	ft_strdel(&key_g);
+	ft_strdel(&read_maps);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 18:23:32 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 13:41:31 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,18 @@
 ** Initializes fdf app
 */
 
-int				init_fdf(t_map *map)
+int				init_fdf(t_map **maps, int map_count)
 {
 	t_scene		*scene;
-	void		*frame;
 	void		*mlx;
 	void		*mlx_wdw;
 
 	if ((mlx = mlx_init()) == NULL ||
 		(mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 		"Wireframe - ohakola")) == NULL ||
-		(frame = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT))
-			== NULL ||
-		(scene = new_scene(mlx, mlx_wdw, frame, map)) == NULL ||
-		init(scene) == 0)
+		(scene = new_scene(mlx, mlx_wdw, maps)) == NULL)
 		return (0);
+	scene->map_count = map_count;
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);
 	mlx_hook(mlx_wdw, 5, 0, handle_mouse_button_release, scene);
@@ -42,12 +39,22 @@ int				init_fdf(t_map *map)
 
 int				main(int argc, char **argv)
 {
-	t_map		*map;
+	t_map		**maps;
+	int			i;
 
-	map = NULL;
 	if (argc > 1)
-		if ((map = serialize_map(argv[1])) == NULL &&
-			log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT)))
+	{
+		if ((maps = (t_map**)malloc(sizeof(t_map*) * (argc - 1))) == NULL)
 			return (0);
-	return (init_fdf(map));
+		i = 1;
+		while (i < argc)
+		{
+			if ((maps[i - 1] = serialize_map(argv[i])) == NULL &&
+				log_error(ERR_SERIALIZATION, strerror(ERRNO_INVALID_INPUT)))
+				return (0);
+			i++;
+		}
+		init_fdf(maps, argc - 1);
+	}
+	return (0);
 }
