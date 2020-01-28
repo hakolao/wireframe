@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:11:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 16:28:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int				grad_color(int start, int end, double gradient_mul)
 double			gradient_multiplier(double *in_minmax, double *out_minmax,
 				t_vector *point, t_map *map)
 {
-	in_minmax[0] = map->z_min;
-	in_minmax[1] = map->z_max;
+	in_minmax[0] = map->z_min - 0.2;
+	in_minmax[1] = map->z_max + 0.2;
 	out_minmax[0] = -M_PI / 2;
 	out_minmax[1] = M_PI / 2;
 	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
