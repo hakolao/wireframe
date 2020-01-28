@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 15:11:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 15:59:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int			read_z_from_digit(char **line)
 		(*line)++;
 	while (**line && ft_isdigit(**line))
 		(*line)++;
-	while (**line && !(ft_isdigit(**line) || **line == '-'))
+	while (**line && **line == ' ')
 		(*line)++;
 	return (z);
 }
@@ -106,6 +106,7 @@ static t_map		*file_to_map(int fd, t_map *map)
 	map->vertex_count = 0;
 	map->x_max = 0;
 	map->z_max = 0;
+	map->z_min = 0;
 	while ((ret = get_next_line(fd, &line)) == TRUE)
 	{
 		if ((vtx = read_map_line(vtx, line, y++, map)) == NULL)
@@ -114,7 +115,6 @@ static t_map		*file_to_map(int fd, t_map *map)
 	}
 	if (ret == FALSE)
 		map->y_max = y - 1;
-	map->z = map->z_max - map->z_min;
 	if ((((map->x = map->x_max) == 0 ||
 			(map->y = map->y_max) == 0) && log_error(ERR_MAP, strerror(5))) ||
 		(ret == -1 && log_perror("")) || (set_map_vertices(vtx, map) == FALSE &&
