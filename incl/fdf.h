@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:55:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 15:10:41 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 # define ERRNO_INVALID_INPUT 5
 # define ERR_CENTER "Failed to center map & set vertices"
-# define ERR_READ "Lines must consist of spaces & (+/-)numbers"
+# define ERR_READ "Lines must consist of spaces & (+/-)numbers""Empty x or y"
+# define ERR_MAP "Empty x or y in map data"
 
 /*
 ** Key codes for event listening
@@ -235,7 +236,7 @@ double				gradient_multiplier(double *in_minmax, double *out_minmax,
 int					rotate_map(t_map *map, int amount_x,
 					int amount_y, int amount_z);
 int					scale_map(t_map *map, double x, double y, double z);
-int					center_and_set_map_vertices(t_list *vtx_lst, t_map *map);
+int					set_map_vertices(t_list *vtx_lst, t_map *map);
 int					set_map_info(t_map *map);
 t_map				*serialize_map(char *filename);
 int					reset_map(t_map *map);

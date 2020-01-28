@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:54:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 15:10:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int				set_map_info(t_map *map)
 ** it shifts map's pivot to it's center in 0, 0, 0.
 */
 
-int				center_and_set_map_vertices(t_list *vtx_lst, t_map *map)
+int				set_map_vertices(t_list *vtx_lst, t_map *map)
 {
 	t_vector	**vs;
 	t_vector	*shift;

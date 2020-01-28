@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:58:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 15:11:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static t_map		*file_to_map(int fd, t_map *map)
 	char	*line;
 	int		ret;
 	int		y;
-	t_list	*vertex_list;
+	t_list	*vtx;
 
 	y = 0;
 	map->vertex_count = 0;
@@ -108,17 +108,17 @@ static t_map		*file_to_map(int fd, t_map *map)
 	map->z_max = 0;
 	while ((ret = get_next_line(fd, &line)) == TRUE)
 	{
-		if ((vertex_list = read_map_line(vertex_list, line, y++, map)) == NULL)
+		if ((vtx = read_map_line(vtx, line, y++, map)) == NULL)
 			return (NULL);
 		ft_strdel(&line);
 	}
 	if (ret == FALSE)
 		map->y_max = y - 1;
 	map->z = map->z_max - map->z_min;
-	if ((map->x = map->x_max) == 0 ||
-		(map->y = map->y_max) == 0 || (ret == -1 && log_perror("")) ||
-		(!center_and_set_map_vertices(vertex_list, map) &&
-			log_error(ERR_CENTER, strerror(ERRNO_INVALID_INPUT))))
+	if ((((map->x = map->x_max) == 0 ||
+			(map->y = map->y_max) == 0) && log_error(ERR_MAP, strerror(5))) ||
+		(ret == -1 && log_perror("")) || (set_map_vertices(vtx, map) == FALSE &&
+				log_error(ERR_CENTER, strerror(ERRNO_INVALID_INPUT))))
 		return (NULL);
 	ft_strdel(&line);
 	return (map);
