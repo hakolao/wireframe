@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 10:48:17 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:58:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 ** Color helpers
 */
 # define CLAMP_0_255(color) (color > 255 ? 255 : color < 0 ? 0 : color)
-# define ALPHA(a) (a >> 24)
+# define ALPHA(a) ((a >> 24) & 255)
 # define RED(r) ((r >> 16) & 255)
 # define GREEN(g) ((g >> 8) & 255)
 # define BLUE(b) (b & 255)
