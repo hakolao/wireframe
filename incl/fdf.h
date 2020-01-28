@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 15:10:41 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/28 17:28:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ int					handle_mouse_button_release(int key, int x, int y,
 					void *param);
 int					handle_mouse_move(int x, int y, void *param);
 int					handle_loop(void *params);
+int					handle_exit_event(void);
 
 /*
 ** Logging

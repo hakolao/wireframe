@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/28 14:24:39 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/28 17:29:09 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SOURCES = main.c \
 			events/keys.c \
 			events/mouse.c \
 			events/loop.c \
+			events/exit.c \
 			ui/ui.c \
 			ui/utils.c \
 			log.c \
