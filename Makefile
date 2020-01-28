@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/28 17:29:09 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/28 17:30:47 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
 FLAGS = -Wall -Wextra -Werror
-LIBMLXFLAGS = -L /usr/local/lib -lmlx -I/usr/local/X11/include -L/usr/X11/lib \
+LIBMLXFLAGS = -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit
+				# -L /usr/local/lib -lmlx -I/usr/local/X11/include -L/usr/X11/lib \
 				-lX11 -lXext -framework OpenGL -framework Appkit
 LIBMATRIXFLAGS = -L $(LIBMATRIX) -lmatrix
 LIBFTFLAGS = -L $(LIBFT) -lft
@@ -50,7 +51,7 @@ all: $(DIR_OBJ) $(NAME)
 $(NAME): $(OBJS)
 	@make -C ./libft
 	@make -C ./libmatrix
-	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit -o $@ $^
+	$(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
 	# $(CC) $(FLAGS) $(LIBFTFLAGS) $(LIBMATRIXFLAGS) $(LIBMLXFLAGS) -o $@ $^
 
 $(DIR_OBJ):
