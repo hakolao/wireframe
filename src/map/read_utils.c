@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 12:26:05 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 12:28:57 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:08:16 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 	t_list		*node;
 	t_vector	*vertex;
 
-	if (((vertex = ft_vector4_new(x, y, z)) == NULL || vertices == NULL))
+	if ((vertex = ft_vector4_new(x, y, z)) == NULL)
+		return (NULL);
+	if (vertices == NULL)
 	{
 		if ((vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
 			return (NULL);
