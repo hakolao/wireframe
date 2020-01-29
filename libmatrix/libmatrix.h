@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/25 18:11:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 13:46:57 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # define FALSE 0
 
 # include <math.h>
-# include <stdlib.h>
 # include <stdio.h>
-# include <unistd.h>
+# include "../libft/libft.h"
 
 typedef struct		s_matrix
 {
@@ -75,11 +74,8 @@ int					ft_matrix_set_vals(t_matrix *mat, double *arr,
 					size_t arr_size);
 int					ft_dimensions_equal(const t_matrix *m1, const t_matrix *m2);
 void				ft_putint_fd(int nb, int fd);
-void				ft_putstr_fd(char const *str, int fd);
 void				ft_puterror(char *err);
-void				ft_putstr(char const *str);
 void				ft_putint(int nb);
-size_t				ft_strlen(const char *str);
 void				ft_putmatrix(t_matrix *mat);
 int					ft_matrix_set_all(t_matrix *mat, double nb);
 void				ft_matrix_free(t_matrix *mat);
@@ -101,5 +97,6 @@ t_matrix			*ft_matrix_inverse_4x4(t_matrix *m1);
 t_matrix			*ft_scale_matrix_xyz(double x, double y, double z);
 int					ft_matrix_mul_vector_lst(t_matrix *m, t_vector **vecs,
 					size_t n);
+t_vector			*ft_vector_dup(t_vector *v);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:46:32 by ohakola           #+#    #+#             */
-/*   Updated: 2019/12/22 16:16:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 13:50:23 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void	ft_matrix_free(t_matrix *mat)
 		return ;
 	}
 	free(mat->m);
+	ft_memdel((void**)&mat);
 	free(mat);
 }

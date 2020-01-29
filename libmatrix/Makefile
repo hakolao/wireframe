@@ -6,12 +6,13 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/17 13:09:18 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/21 14:26:01 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/29 13:45:15 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = clang
 NAME = libmatrix.a
+LIBFT = ../libft
 DIR_SRC = ./
 DIR_OBJ = temp
 SOURCES = ft_matrix_new.c \
@@ -31,9 +32,6 @@ SOURCES = ft_matrix_new.c \
 			ft_putint_fd.c \
 			ft_putint.c \
 			ft_puterror.c \
-			ft_putstr_fd.c \
-			ft_putstr.c \
-			ft_strlen.c \
 			ft_matrix_free.c \
 			ft_vector_free.c \
 			ft_vector_new.c \
@@ -55,10 +53,12 @@ SOURCES = ft_matrix_new.c \
 			ft_rotation_matrix.c \
 			ft_matrix_inverse_4x4.c \
 			ft_matrix_mul_vector_lst.c \
+			ft_vector_dup.c \
 			ft_putmatrix.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_OBJ)/,$(SOURCES:.c=.o))
 HEADERS = ./
+LIBFTFLAGS = -L $(LIBFT) -lft
 FLAGS = -Wall -Wextra -Werror
 
 all: $(DIR_OBJ) $(NAME)
@@ -70,7 +70,7 @@ $(DIR_OBJ):
 	@mkdir -p temp
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)/libmatrix.h
-	@$(CC) $(FLAGS) -I $(HEADERS) -c -o $@ $<
+	@$(CC) $(FLAGS) $(LIBMATRIXFLAGS) -I $(HEADERS) -c -o $@ $<
 
 test:
 	@make -C ./
