@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 17:55:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 18:00:34 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,16 @@
 ** Transforms vertex into screen space
 */
 
-t_vector			*screen_pt(t_vector *point, t_scene *scene)
+static int			screen_pt(t_vector *point, t_scene *scene,
+					t_vector *on_screen)
 {
-	t_vector	*on_screen;
-
-	if ((on_screen = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(
-			scene->camera->transform, point, on_screen) == FALSE)
-		return (NULL);
+	if (!ft_matrix_mul_vector(scene->camera->transform, point, on_screen))
+		return (0);
 	on_screen->v[0] /= on_screen->v[3];
 	on_screen->v[1] /= on_screen->v[3];
 	on_screen->v[2] /= on_screen->v[3];
 	on_screen->v[3] /= on_screen->v[3];
-	return (on_screen);
+	return (1);
 }
 
 /*
@@ -66,12 +63,13 @@ void				connect_points(t_edge *edge)
 	t_vector	*s1;
 	t_vector	*s2;
 
-	if (!in_front_of_camera(edge->point1,
-		edge->point2,
-		edge->scene->camera))
+	if (!in_front_of_camera(edge->point1, edge->point2,
+			edge->scene->camera))
 		return ;
-	if (((s1 = screen_pt(edge->point1, edge->scene)) == NULL ||
-		(s2 = screen_pt(edge->point2, edge->scene)) == NULL) &&
+	if (((s1 = ft_vector_new(4)) == NULL ||
+		(s2 = ft_vector_new(4)) == NULL ||
+		!screen_pt(edge->point1, edge->scene, s1) ||
+		!screen_pt(edge->point2, edge->scene, s2)) &&
 		log_error("Something failed in point_to_screen.", ""))
 		exit(1);
 	edge->point1 = s1;
