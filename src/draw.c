@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 18:00:34 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 18:02:32 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,31 +60,29 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 
 void				connect_points(t_edge *edge)
 {
-	t_vector	*s1;
-	t_vector	*s2;
+	t_vector	s1;
+	t_vector	s2;
 
 	if (!in_front_of_camera(edge->point1, edge->point2,
 			edge->scene->camera))
 		return ;
-	if (((s1 = ft_vector_new(4)) == NULL ||
-		(s2 = ft_vector_new(4)) == NULL ||
-		!screen_pt(edge->point1, edge->scene, s1) ||
-		!screen_pt(edge->point2, edge->scene, s2)) &&
+	s1 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
+	s2 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
+	if ((!screen_pt(edge->point1, edge->scene, &s1) ||
+		!screen_pt(edge->point2, edge->scene, &s2)) &&
 		log_error("Something failed in point_to_screen.", ""))
 		exit(1);
-	edge->point1 = s1;
-	edge->point2 = s2;
-	s1->v[0] += WINDOW_WIDTH / 2;
-	s1->v[1] += WINDOW_HEIGHT / 2;
-	s2->v[0] += WINDOW_WIDTH / 2;
-	s2->v[1] += WINDOW_HEIGHT / 2;
-	if (s1->v[0] >= 0 && s1->v[0] <= WINDOW_WIDTH &&
-		s1->v[1] >= 0 && s1->v[1] <= WINDOW_HEIGHT &&
-		s2->v[0] >= 0 && s2->v[0] <= WINDOW_WIDTH &&
-		s2->v[1] >= 0 && s2->v[1] <= WINDOW_HEIGHT)
+	edge->point1 = &s1;
+	edge->point2 = &s2;
+	s1.v[0] += WINDOW_WIDTH / 2;
+	s1.v[1] += WINDOW_HEIGHT / 2;
+	s2.v[0] += WINDOW_WIDTH / 2;
+	s2.v[1] += WINDOW_HEIGHT / 2;
+	if (s1.v[0] >= 0 && s1.v[0] <= WINDOW_WIDTH &&
+		s1.v[1] >= 0 && s1.v[1] <= WINDOW_HEIGHT &&
+		s2.v[0] >= 0 && s2.v[0] <= WINDOW_WIDTH &&
+		s2.v[1] >= 0 && s2.v[1] <= WINDOW_HEIGHT)
 		draw_line(edge);
-	ft_vector_free(s1);
-	ft_vector_free(s2);
 }
 
 /*
