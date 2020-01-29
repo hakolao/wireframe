@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 19:10:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:35:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 16:15:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Creates axes array of axis pairs to be used to draw them on screen
 */
 
-static t_vector		***axes(void)
+t_vector			***axes(int axis_len)
 {
 	t_vector	***points;
 	int			i;
@@ -25,13 +25,13 @@ static t_vector		***axes(void)
 		return (NULL);
 	i = 0;
 	while (i < 3)
-		points[i++] = (t_vector**)malloc(sizeof(*points) * 100);
+		points[i++] = (t_vector**)malloc(sizeof(*points) * axis_len);
 	i = 0;
-	while (i < 100)
+	while (i < axis_len)
 	{
-		if ((points[0][i] = ft_vector4_new(-50 + i, 0, 0)) == NULL ||
-			(points[1][i] = ft_vector4_new(0, -50 + i, 0)) == NULL ||
-			(points[2][i] = ft_vector4_new(0, 0, -50 + i)) == NULL)
+		if (!(points[0][i] = ft_vector4_new(-(axis_len / 2) + i, 0, 0)) ||
+			!(points[1][i] = ft_vector4_new(0, -(axis_len / 2) + i, 0)) ||
+			!(points[2][i] = ft_vector4_new(0, 0, -(axis_len / 2) + i)))
 			return (NULL);
 		i++;
 	}
@@ -42,7 +42,7 @@ static t_vector		***axes(void)
 ** Frees axes data from memory
 */
 
-static void			free_axes(t_vector ***points)
+void				free_axes(t_vector ***axes, int len)
 {
 	int				i;
 	int				j;
@@ -51,10 +51,12 @@ static void			free_axes(t_vector ***points)
 	while (i < 3)
 	{
 		j = 0;
-		while (j < 100)
-			ft_vector_free(points[i][j++]);
-		free(points[i++]);
+		while (j < len)
+			ft_vector_free(axes[i][j++]);
+		free(axes[i++]);
 	}
+	free(axes);
+	axes = NULL;
 }
 
 /*
@@ -76,25 +78,23 @@ static void			connect_axis(t_edge *edge,
 void				draw_axes_on_frame(t_scene *scene)
 {
 	int				color;
-	t_vector		***points;
 	t_edge			*edge;
 	int				i;
 
-	color = ((100 & 255) << 16) | ((100 & 255) << 8 | (100 & 255));
-	if ((points = axes()) == NULL ||
-		(edge = malloc(sizeof(t_edge))) == NULL)
+	color = COLOR(scene->col_r / 4, scene->col_g / 4,
+		scene->col_b / 4, scene->col_a / 2);
+	if ((edge = (t_edge*)malloc(sizeof(t_edge))) == NULL)
 		return ;
 	edge->scene = scene;
 	edge->color_start = color;
 	edge->color_end = color;
 	i = 0;
-	while (i < 100 - 1)
+	while (i < scene->axis_len - 1)
 	{
-		connect_axis(edge, points[0][i], points[0][i + 1]);
-		connect_axis(edge, points[1][i], points[1][i + 1]);
-		connect_axis(edge, points[2][i], points[2][i + 1]);
+		connect_axis(edge, scene->axes[0][i], scene->axes[0][i + 1]);
+		connect_axis(edge, scene->axes[1][i], scene->axes[1][i + 1]);
+		connect_axis(edge, scene->axes[2][i], scene->axes[2][i + 1]);
 		i++;
 	}
-	free_axes(points);
 	free(edge);
 }

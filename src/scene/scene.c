@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:14:17 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 16:11:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int					switch_map(t_scene *scene)
 int					init_scene(t_scene *scene, int map_i)
 {
 	t_camera	*camera;
+	t_vector	***xyz;
 	t_vector	*cam_pos;
 	t_vector	*cam_up;
 	double		arr[3];
@@ -48,13 +49,18 @@ int					init_scene(t_scene *scene, int map_i)
 			scene->maps[map_i]->center->v[1],
 			ft_max_double(arr, 3) + 5.15)) == NULL ||
 		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
-		(camera = new_camera(cam_pos, cam_up, scene->maps[map_i])) == NULL)
+		(camera = new_camera(cam_pos, cam_up, scene->maps[map_i])) == NULL ||
+		(xyz = axes(ft_max_double(arr, 3) * 6)) == NULL)
 		return (0);
 	if (scene->camera != NULL)
 		camera_free(scene->camera);
+	if (scene->axes != NULL)
+		free_axes(scene->axes, scene->axis_len);
+	scene->axis_len = ft_max_double(arr, 3) * 6;
 	ft_vector_free(cam_pos);
 	ft_vector_free(cam_up);
 	scene->camera = camera;
+	scene->axes = xyz;
 	scene->redraw = TRUE;
 	return (1);
 }
@@ -99,6 +105,7 @@ t_scene				*new_scene(void *mlx, void *mlx_wdw,
 		return (NULL);
 	scene->maps = maps;
 	scene->camera = NULL;
+	scene->axes = NULL;
 	if (scene_render_params(scene, mlx, mlx_wdw) == FALSE ||
 		init_scene(scene, 0) == FALSE)
 		return (NULL);
