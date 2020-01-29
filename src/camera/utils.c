@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 17:03:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int				move_camera_forward(t_camera *camera, double amount)
 		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
 		return (0);
 	ft_vector_free(forward);
+	ft_vector_free(camera->position);
 	camera->position = new_pos;
 	ft_matrix_free(camera->view);
 	camera->view = view;
@@ -91,6 +92,7 @@ int				strafe_camera(t_camera *camera, double amount)
 		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
 		return (0);
 	ft_vector_free(sideways);
+	ft_vector_free(camera->position);
 	camera->position = new_pos;
 	ft_matrix_free(camera->view);
 	camera->view = view;
