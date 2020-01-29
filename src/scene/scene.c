@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 16:11:07 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 16:32:46 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ int					switch_map(t_scene *scene)
 }
 
 /*
+** Camera distance
+*/
+
+static double		cam_distance(t_map *map)
+{
+	double		arr[3];
+
+	arr[0] = map->x_max;
+	arr[1] = map->y_max;
+	arr[2] = map->z_max;
+	return (ft_max_double(arr, 3));
+}
+
+/*
 ** Initializes the scene
 */
 
@@ -37,26 +51,21 @@ int					init_scene(t_scene *scene, int map_i)
 	t_vector	***xyz;
 	t_vector	*cam_pos;
 	t_vector	*cam_up;
-	double		arr[3];
 
 	scene->map_index = map_i;
-	arr[0] = scene->maps[map_i]->x_max;
-	arr[1] = scene->maps[map_i]->y_max;
-	arr[2] = scene->maps[map_i]->z_max;
 	if (reset_map(scene->maps[map_i]) == FALSE ||
 		rotate_map(scene->maps[map_i], 45, 0, 0) == FALSE ||
-		(cam_pos = ft_vector4_new(scene->maps[map_i]->center->v[0],
-			scene->maps[map_i]->center->v[1],
-			ft_max_double(arr, 3) + 5.15)) == NULL ||
+		(cam_pos = ft_vector4_new(0, 0,
+			cam_distance(scene->maps[map_i]) + 5.15)) == NULL ||
 		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
 		(camera = new_camera(cam_pos, cam_up, scene->maps[map_i])) == NULL ||
-		(xyz = axes(ft_max_double(arr, 3) * 6)) == NULL)
+		(xyz = axes(cam_distance(scene->maps[map_i]) * 6)) == NULL)
 		return (0);
 	if (scene->camera != NULL)
 		camera_free(scene->camera);
 	if (scene->axes != NULL)
 		free_axes(scene->axes, scene->axis_len);
-	scene->axis_len = ft_max_double(arr, 3) * 6;
+	scene->axis_len = cam_distance(scene->maps[map_i]) * 6;
 	ft_vector_free(cam_pos);
 	ft_vector_free(cam_up);
 	scene->camera = camera;
