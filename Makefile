@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/28 18:16:23 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/29 12:29:20 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LIBMATRIXFLAGS = -L $(LIBMATRIX) -lmatrix
 LIBFTFLAGS = -L $(LIBFT) -lft
 SOURCES = main.c \
 			map/read.c \
+			map/read_utils.c \
 			map/reset.c \
 			map/utils.c \
 			map/shift.c \

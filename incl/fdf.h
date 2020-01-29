@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:34:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 12:36:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 
 # define ERRNO_INVALID_INPUT 5
 # define ERR_CENTER "Failed to center map & set vertices"
-# define ERR_READ "Lines must consist of spaces & (+/-)numbers""Empty x or y"
+# define ERR_READ "Lines must consist of spaces & (+/-)numbers"
 # define ERR_MAP "Empty x or y in map data"
+# define ERR_ROW_LEN "Length of row must be same on each row"
 
 /*
 ** Key codes for event listening
@@ -242,6 +243,8 @@ t_map				*serialize_map(char *filename);
 int					reset_map(t_map *map);
 int					switch_map(t_scene *scene);
 double				z_shift(t_list *vtx_lst);
+t_list				*add_to_list(t_list *vertices, int x, int y, int z);
+int					read_z_from_digit(char **line);
 
 /*
 ** UI
