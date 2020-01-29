@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 12:26:05 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 14:08:16 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:41:47 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ t_list		*add_to_list(t_list *vertices, int x, int y, int z)
 		return (NULL);
 	if (vertices == NULL)
 	{
-		if ((vertices = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
+		if ((vertices = ft_lstnew(NULL, 0)) == NULL)
 			return (NULL);
+		vertices->content = vertex;
+		vertices->content_size = sizeof(*vertex);
 	}
 	else
 	{
-		if ((node = ft_lstnew(vertex, sizeof(*vertex))) == NULL)
+		if ((node = ft_lstnew(NULL, 0)) == NULL)
 			return (NULL);
+		node->content = vertex;
+		node->content_size = sizeof(*vertex);
 		ft_lstappend(&vertices, node);
 	}
 	return (vertices);
