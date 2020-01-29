@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:34:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 15:16:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 		ft_matrix_mul_vector(camera->view, p1, c1) == FALSE ||
 		ft_matrix_mul_vector(camera->view, p2, c2) == FALSE)
 		return (0);
-	ret = c1->v[2] > 0.5 && c2->v[2] > 0.5;
+	ret = c1->v[2] > 0 && c2->v[2] > 0;
 	ft_vector_free(c1);
 	ft_vector_free(c2);
 	return (ret);
