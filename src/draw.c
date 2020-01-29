@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 15:47:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 17:55:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,16 @@ t_vector			*screen_pt(t_vector *point, t_scene *scene)
 static int			in_front_of_camera(t_vector *p1, t_vector *p2,
 					t_camera *camera)
 {
-	t_vector	*c1;
-	t_vector	*c2;
+	t_vector	c1;
+	t_vector	c2;
 	int			ret;
 
-	if ((c1 = ft_vector_new(4)) == NULL ||
-		(c2 = ft_vector_new(4)) == NULL ||
-		ft_matrix_mul_vector(camera->view, p1, c1) == FALSE ||
-		ft_matrix_mul_vector(camera->view, p2, c2) == FALSE)
+	c1 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
+	c2 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
+	if (ft_matrix_mul_vector(camera->view, p1, &c1) == FALSE ||
+		ft_matrix_mul_vector(camera->view, p2, &c2) == FALSE)
 		return (0);
-	ret = c1->v[2] > 0 && c2->v[2] > 0;
-	ft_vector_free(c1);
-	ft_vector_free(c2);
+	ret = c1.v[2] > 0 && c2.v[2] > 0;
 	return (ret);
 }
 

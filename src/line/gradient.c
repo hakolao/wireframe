@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:34:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 17:38:50 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,28 @@ static int		map_color(double mul, t_scene *scene)
 ** map's gradient.
 */
 
-void			connect_map_pts_with_gradient(t_edge *edge,
-				t_vector *point1, t_vector *point2)
+void			connect_map_pts_with_gradient(t_edge *edge)
 {
-	t_vector	*reset_p1;
-	t_vector	*reset_p2;
+	t_vector	reset_p1;
+	t_vector	reset_p2;
 	double		in[2];
 	double		out[2];
 	int			map_i;
 
-	edge->point1 = point1;
-	edge->point2 = point2;
 	map_i = edge->scene->map_index;
-	if ((reset_p1 = ft_vector_new(4)) == NULL || !ft_matrix_mul_vector(
-		edge->scene->maps[map_i]->reset_rotation, point1, reset_p1))
+	reset_p1 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
+	reset_p2 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
+	if (!ft_matrix_mul_vector(edge->scene->maps[map_i]->reset_rotation,
+		edge->point1, &reset_p1))
 		return ;
-	edge->color_start = map_color(gradient_multiplier(in, out, reset_p1,
+	edge->color_start = map_color(gradient_multiplier(in, out, &reset_p1,
 		edge->scene->maps[map_i]), edge->scene);
-	if ((reset_p2 = ft_vector_new(4)) == NULL || !ft_matrix_mul_vector(
-		edge->scene->maps[map_i]->reset_rotation, point2, reset_p2))
+	if (!ft_matrix_mul_vector(edge->scene->maps[map_i]->reset_rotation,
+		edge->point2, &reset_p2))
 		return ;
-	edge->color_end = map_color(gradient_multiplier(in, out, reset_p2,
+	edge->color_end = map_color(gradient_multiplier(in, out, &reset_p2,
 		edge->scene->maps[map_i]), edge->scene);
-	if (reset_p1->v[2] < reset_p2->v[2])
+	if (reset_p1.v[2] < reset_p2.v[2])
 		swap_points_in_edge(edge);
-	ft_vector_free(reset_p1);
-	ft_vector_free(reset_p2);
 	connect_points(edge);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 12:04:00 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:33:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 17:17:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,29 @@
 
 void			draw_map_on_frame(t_scene *scene)
 {
-	t_edge			*edge;
+	t_edge			edge;
 	size_t			i;
 
-	if ((edge = malloc(sizeof(t_edge))) == NULL)
-		return ;
-	edge->scene = scene;
 	i = -1;
 	while (++i < scene->maps[scene->map_index]->vertex_count - 1)
 	{
 		if ((i + 1) % (scene->maps[scene->map_index]->x + 1) != 0)
-			connect_map_pts_with_gradient(edge,
-				scene->maps[scene->map_index]->vertices[i],
-					scene->maps[scene->map_index]->vertices[i + 1]);
+		{
+			edge = (t_edge){.scene = scene,
+			.point1 = scene->maps[scene->map_index]->vertices[i],
+			.point2 = scene->maps[scene->map_index]->vertices[i + 1],
+			.color_start = 0, .color_end = 0};
+			connect_map_pts_with_gradient(&edge);
+		}
 		if (i < scene->maps[scene->map_index]->vertex_count -
 			scene->maps[scene->map_index]->x - 1)
-			connect_map_pts_with_gradient(edge,
-				scene->maps[scene->map_index]->vertices[i],
-					scene->maps[scene->map_index]->vertices[
-						i + 1 + scene->maps[scene->map_index]->x]);
+		{
+			edge = (t_edge){.scene = scene,
+			.point1 = scene->maps[scene->map_index]->vertices[i],
+			.point2 = scene->maps[scene->map_index]->vertices[
+						i + 1 + scene->maps[scene->map_index]->x],
+			.color_start = 0, .color_end = 0};
+			connect_map_pts_with_gradient(&edge);
+		}
 	}
-	free(edge);
 }

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 16:06:58 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/29 17:17:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,8 +227,7 @@ t_scene				*new_scene(void *mlx, void *mlx_wdw,
 ** Line drawing
 */
 void				connect_points(t_edge *edge);
-void				connect_map_pts_with_gradient(t_edge *edge,
-					t_vector *point1, t_vector *point2);
+void				connect_map_pts_with_gradient(t_edge *edge);
 void				draw_line(t_edge *edge);
 int					grad_color(int start, int end, double gradient_mul);
 void				swap_points_in_edge(t_edge *edge);
