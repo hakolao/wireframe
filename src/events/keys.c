@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 14:20:27 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 17:51:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int		increment_scene_colors(t_scene *scene)
 		0 + scene->col_b + 159 - 255 : scene->col_b + 159;
 	scene->col_a = scene->col_a + 36 >= 255 ?
 		0 + scene->col_a + 36 - 255 : scene->col_a + 36;
-
 	map->col_r = map->col_r + 52 >= 255 ?
 		0 + map->col_r + 52 - 255 : map->col_r + 52;
 	map->col_g = map->col_g + 105 >= 255 ?

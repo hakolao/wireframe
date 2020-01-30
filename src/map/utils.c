@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 16:26:51 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 17:52:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				shift_map_vertices(t_map *map)
 	size_t		i;
 
 	if (!(shift =
-			  ft_vector4_new(-map->x_max / 2, -map->y_max / 2, -z_shift(map))))
+			ft_vector4_new(-map->x_max / 2, -map->y_max / 2, -z_shift(map))))
 		return (0);
 	i = 0;
 	while (i < map->vertex_count)

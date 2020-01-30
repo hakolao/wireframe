@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 16:54:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 17:52:02 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int			read_map_line(char *line, int y, t_map *map)
 		{
 			z = read_z_from_digit(&line);
 			if ((map->vertex_count >= map->size &&
-				 !(map->vertices = reallocate_map_vertices(map))) ||
+				!(map->vertices = reallocate_map_vertices(map))) ||
 				!(map->vertices[map->vertex_count] = ft_vector4_new(x, y, z)))
 				return (FALSE);
 			set_line_map_info(map, x, z);

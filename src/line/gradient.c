@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gradient.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 14:22:25 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 17:51:48 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,10 @@ static int		map_color(double mul, t_scene *scene)
 
 	map = scene->maps[scene->map_index];
 	return (COLOR(
-		(int)(0.5 * (1 + sin(mul)) * map->col_r +
-			  (mul > 1 ? map->col_r : 0)),
-		(int)(cos(mul) * map->col_g +
-			  (mul > 1 ? map->col_g : 0)),
+		(int)(0.5 * (1 + sin(mul)) * map->col_r + (mul > 1 ? map->col_r : 0)),
+		(int)(cos(mul) * map->col_g + (mul > 1 ? map->col_g : 0)),
 		(int)(sin(mul) * sin(mul) * map->col_b +
-			  (mul > 1 ? map->col_b : 0)),
-		map->col_a));
+			(mul > 1 ? map->col_b : 0)), map->col_a));
 }
 
 /*
