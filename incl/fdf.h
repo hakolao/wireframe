@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 17:17:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:54:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include "../libft/libft.h"
 # include "../libmatrix/libmatrix.h"
 
-# define ERRNO_INVALID_INPUT 5
+# define ERRNO_IN 5
 # define ERR_CENTER "Failed to center map & set vertices"
 # define ERR_READ "Lines must consist of spaces & (+/-)numbers"
 # define ERR_MAP "Empty x or y in map data"
-# define ERR_ROW_LEN "Length of row must be same on each row"
+# define ERR_ROWS "Length of row must be same on each row"
 
 /*
 ** Key codes for event listening
@@ -92,6 +92,7 @@ typedef struct		s_map
 {
 	t_vector		**vertices;
 	size_t			vertex_count;
+	size_t			size;
 	double			x_min;
 	double			y_min;
 	double			z_min;
@@ -107,6 +108,10 @@ typedef struct		s_map
 	t_matrix		*reset_scale;
 	t_vector		*center;
 	char			*name;
+	int				col_r;
+	int				col_g;
+	int				col_b;
+	int				col_a;
 }					t_map;
 
 /*
@@ -240,14 +245,15 @@ double				gradient_multiplier(double *in_minmax, double *out_minmax,
 int					rotate_map(t_map *map, int amount_x,
 					int amount_y, int amount_z);
 int					scale_map(t_map *map, double x, double y, double z);
-int					set_map_vertices(t_list *vtx_lst, t_map *map);
+int					shift_map_vertices(t_map *map);
 int					set_map_info(t_map *map);
 t_map				*serialize_map(char *filename);
 int					reset_map(t_map *map);
 int					switch_map(t_scene *scene);
-double				z_shift(t_list *vtx_lst);
-t_list				*add_to_list(t_list *vertices, int x, int y, int z);
+double				z_shift(t_map *map);
 int					read_z_from_digit(char **line);
+t_vector			**reallocate_map_vertices(t_map *map);
+int					init_vals_before_read(t_map *map);
 
 /*
 ** UI
@@ -280,7 +286,7 @@ int					handle_exit_event(void);
 /*
 ** Logging
 */
-int					log_error(char *str, char *strerror);
-int					log_perror(char *str);
+int					log_err(char *str, char *strerror);
+int					log_perr(char *str);
 
 #endif

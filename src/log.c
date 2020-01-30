@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 12:21:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:15:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:22:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Logs input reading errors
 */
 
-int				log_error(char *str, char *strerror)
+int				log_err(char *str, char *strerror)
 {
 	ft_putstr_fd(strerror, 2);
 	ft_putstr_fd(": ", 2);
@@ -28,7 +28,7 @@ int				log_error(char *str, char *strerror)
 ** Logs error using perror stdio function.
 */
 
-int				log_perror(char *str)
+int				log_perr(char *str)
 {
 	perror(str);
 	return (1);

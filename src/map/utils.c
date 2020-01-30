@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 14:42:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:26:51 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,22 @@ int				set_map_info(t_map *map)
 ** it shifts map's pivot to it's center in 0, 0, 0.
 */
 
-int				set_map_vertices(t_list *vtx_lst, t_map *map)
+int				shift_map_vertices(t_map *map)
 {
-	t_list		*tmp;
-	t_vector	**vs;
 	t_vector	*shift;
 	size_t		i;
 
-	if ((vs = (t_vector**)malloc(sizeof(*vs) * map->vertex_count)) == NULL ||
-		(shift = ft_vector4_new(-map->x_max / 2, -map->y_max / 2,
-			-z_shift(vtx_lst))) == NULL)
+	if (!(shift =
+			  ft_vector4_new(-map->x_max / 2, -map->y_max / 2, -z_shift(map))))
 		return (0);
 	i = 0;
-	while (vtx_lst)
+	while (i < map->vertex_count)
 	{
-		vs[i] = (t_vector*)(vtx_lst->content);
-		if (ft_vector_add(vs[i], shift, vs[i]) == FALSE)
+		if (!ft_vector_add(map->vertices[i], shift, map->vertices[i]))
 			return (0);
-		vs[i++]->v[3] = 1;
-		tmp = vtx_lst;
-		vtx_lst = vtx_lst->next;
-		free(tmp);
+		map->vertices[i++]->v[3] = 1;
 	}
 	ft_vector_free(shift);
-	free(vtx_lst);
-	map->vertices = vs;
 	set_map_info(map);
 	return (1);
 }

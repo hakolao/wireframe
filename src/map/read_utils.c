@@ -3,49 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 12:26:05 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 14:41:47 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:53:50 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /*
-** Adds x y z vertex (vector) posiion to a linked list of vertices.
+** Reallocate space for vertices
 */
 
-t_list		*add_to_list(t_list *vertices, int x, int y, int z)
+t_vector		**reallocate_map_vertices(t_map *map)
 {
-	t_list		*node;
-	t_vector	*vertex;
+	t_vector	**tmp;
+	size_t		i;
 
-	if ((vertex = ft_vector4_new(x, y, z)) == NULL)
+	if (!(tmp = malloc(sizeof(*(map->vertices)) * map->size * 2)))
 		return (NULL);
-	if (vertices == NULL)
+	i = 0;
+	while (i < map->size)
 	{
-		if ((vertices = ft_lstnew(NULL, 0)) == NULL)
-			return (NULL);
-		vertices->content = vertex;
-		vertices->content_size = sizeof(*vertex);
+		tmp[i] = map->vertices[i];
+		i++;
 	}
-	else
-	{
-		if ((node = ft_lstnew(NULL, 0)) == NULL)
-			return (NULL);
-		node->content = vertex;
-		node->content_size = sizeof(*vertex);
-		ft_lstappend(&vertices, node);
-	}
-	return (vertices);
+	free(map->vertices);
+	map->vertices = tmp;
+	map->size *= 2;
+	return (map->vertices);
 }
 
 /*
 ** Reads z from digit line using ft_atoi.
 */
 
-int			read_z_from_digit(char **line)
+int				read_z_from_digit(char **line)
 {
 	int	z;
 
@@ -57,4 +51,36 @@ int			read_z_from_digit(char **line)
 	while (**line && **line == ' ')
 		(*line)++;
 	return (z);
+}
+
+/*
+** Find z center of mass
+*/
+
+double			z_shift(t_map *map)
+{
+	double		sum;
+	size_t		i;
+
+	sum = 0;
+	i = 0;
+	while (i < map->vertex_count)
+		sum += map->vertices[i++]->v[2];
+	return (sum / (double)i);
+}
+
+/*
+**	Initialize necessary values on map before read
+*/
+
+int				init_vals_before_read(t_map *map)
+{
+	map->vertex_count = 0;
+	map->x_max = 0;
+	map->z_max = 0;
+	map->z_min = 0;
+	map->size = 1024;
+	if (!(map->vertices = malloc(sizeof(*(map->vertices)) * map->size)))
+		return (FALSE);
+	return (TRUE);
 }

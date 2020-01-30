@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
+#    By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/29 14:13:03 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/30 15:37:58 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,10 @@ DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
 FLAGS = -Wall -Wextra -Werror
-LIBMLXFLAGS = -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit
-				# -L /usr/local/lib -lmlx -I/usr/local/X11/include -L/usr/X11/lib \
+LIBMLXFLAGS = -L /usr/local/lib -lmlx -I/usr/local/X11R6/include -L/usr/X11R6/lib \
 				-lX11 -lXext -framework OpenGL -framework Appkit
+				# -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit
+			
 LIBMATRIXFLAGS = -L $(LIBMATRIX) -lmatrix
 LIBFTFLAGS = -L $(LIBFT) -lft
 SOURCES = main.c \
@@ -29,7 +30,6 @@ SOURCES = main.c \
 			map/read_utils.c \
 			map/reset.c \
 			map/utils.c \
-			map/shift.c \
 			camera/camera.c \
 			camera/utils.c \
 			line/draw.c \

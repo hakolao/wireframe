@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 16:32:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:50:57 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,21 @@ int					init_scene(t_scene *scene, int map_i)
 	t_vector	***xyz;
 	t_vector	*cam_pos;
 	t_vector	*cam_up;
+	t_map		*map;
 
 	scene->map_index = map_i;
-	if (reset_map(scene->maps[map_i]) == FALSE ||
-		rotate_map(scene->maps[map_i], 45, 0, 0) == FALSE ||
-		(cam_pos = ft_vector4_new(0, 0,
-			cam_distance(scene->maps[map_i]) + 5.15)) == NULL ||
-		(cam_up = ft_vector4_new(0, 1, 0)) == NULL ||
-		(camera = new_camera(cam_pos, cam_up, scene->maps[map_i])) == NULL ||
-		(xyz = axes(cam_distance(scene->maps[map_i]) * 6)) == NULL)
+	map = scene->maps[map_i];
+	if (!reset_map(map) || !rotate_map(map, 45, 0, 0) ||
+		(cam_pos = ft_vector4_new(0, 0, cam_distance(map) + 5.15)) == NULL ||
+		!scale_map(map, 1, 1, 0.15) || !(cam_up = ft_vector4_new(0, 1, 0)) ||
+		(camera = new_camera(cam_pos, cam_up, map)) == NULL ||
+		(xyz = axes(cam_distance(map) * 6)) == NULL)
 		return (0);
 	if (scene->camera != NULL)
 		camera_free(scene->camera);
 	if (scene->axes != NULL)
 		free_axes(scene->axes, scene->axis_len);
-	scene->axis_len = cam_distance(scene->maps[map_i]) * 6;
+	scene->axis_len = cam_distance(map) * 6;
 	ft_vector_free(cam_pos);
 	ft_vector_free(cam_up);
 	scene->camera = camera;
@@ -93,10 +93,10 @@ int					scene_render_params(t_scene *scene,
 			&scene->line_bytes, &scene->pixel_endian)) == NULL)
 		return (FALSE);
 	scene->redraw = FALSE;
-	scene->col_r = 255;
-	scene->col_g = 255;
-	scene->col_b = 255;
-	scene->col_a = 255;
+	scene->col_r = 0;
+	scene->col_g = 0;
+	scene->col_b = 0;
+	scene->col_a = 0;
 	return (TRUE);
 }
 

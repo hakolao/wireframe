@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axes.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 19:10:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 16:15:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 14:23:36 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ void				draw_axes_on_frame(t_scene *scene)
 	t_edge			*edge;
 	int				i;
 
-	color = COLOR(scene->col_r / 4, scene->col_g / 4,
-		scene->col_b / 4, scene->col_a / 2);
+	color = COLOR(scene->maps[scene->map_index]->col_r / 4,
+		scene->maps[scene->map_index]->col_g / 4,
+		scene->maps[scene->map_index]->col_b / 4,
+		scene->maps[scene->map_index]->col_a / 2);
 	if ((edge = (t_edge*)malloc(sizeof(t_edge))) == NULL)
 		return ;
 	edge->scene = scene;

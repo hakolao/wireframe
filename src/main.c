@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:59:45 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 17:43:23 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:35:09 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ int				init_fdf(t_map **maps, int map_count)
 	void		*mlx;
 	void		*mlx_wdw;
 
-	if ((mlx = mlx_init()) == NULL ||
+	if (((mlx = mlx_init()) == NULL ||
 		(mlx_wdw = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 		"Wireframe - ohakola")) == NULL ||
-		(scene = new_scene(mlx, mlx_wdw, maps)) == NULL)
-	{
-		log_error("Failed to create scene.", strerror(ERRNO_INVALID_INPUT));
+		(scene = new_scene(mlx, mlx_wdw, maps)) == NULL) &&
+			log_err("Failed to create scene.", strerror(ERRNO_IN)))
 		return (0);
-	}
 	scene->map_count = map_count;
 	mlx_hook(mlx_wdw, 2, 0, handle_key_events, scene);
 	mlx_hook(mlx_wdw, 4, 0, handle_mouse_button_press, scene);

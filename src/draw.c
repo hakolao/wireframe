@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 18:02:32 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:22:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void				connect_points(t_edge *edge)
 	s2 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
 	if ((!screen_pt(edge->point1, edge->scene, &s1) ||
 		!screen_pt(edge->point2, edge->scene, &s2)) &&
-		log_error("Something failed in point_to_screen.", ""))
+		log_err("Something failed in point_to_screen.", ""))
 		exit(1);
 	edge->point1 = &s1;
 	edge->point2 = &s2;
