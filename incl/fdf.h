@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 19:31:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 20:43:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define KEY_NUM_MINUS 78
 # define KEY_G 5
 # define KEY_C 8
+# define KEY_B 11
 # define KEY_TAB 48
 # define KEY_SHIFT 257
 

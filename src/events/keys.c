@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:50:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 20:50:31 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,30 @@ static int		check_rest_of_events(int key, t_scene *scene)
 ** Increment scene global colors
 */
 
-static int		increment_scene_colors(t_scene *scene)
+static int		change_scene_colors(t_scene *scene)
 {
 	t_map *map;
 
 	map = scene->maps[scene->map_index];
-	scene->col_r = scene->col_r + 52 >= 255 ?
-		0 + scene->col_r + 52 - 255 : scene->col_r + 52;
-	scene->col_g = scene->col_g + 105 >= 255 ?
-		0 + scene->col_g + 105 - 255 : scene->col_g + 105;
-	scene->col_b = scene->col_b + 159 >= 255 ?
-		0 + scene->col_b + 159 - 255 : scene->col_b + 159;
-	scene->col_a = scene->col_a + 36 >= 255 ?
-		0 + scene->col_a + 36 - 255 : scene->col_a + 36;
-	map->col_r = map->col_r + 52 >= 255 ?
-		0 + map->col_r + 52 - 255 : map->col_r + 52;
-	map->col_g = map->col_g + 105 >= 255 ?
-		0 + map->col_g + 105 - 255 : map->col_g + 105;
-	map->col_b = map->col_b + 159 >= 255 ?
-		0 + map->col_b + 159 - 255 : map->col_b + 159;
-	map->col_a = map->col_a + 36 >= 255 ?
-		0 + map->col_a + 36 - 255 : map->col_a + 36;
+	scene->col_r = rand() % 255;
+	scene->col_g = rand() % 255;
+	scene->col_b = rand() % 255;
+	scene->col_a = rand() % 255;
+	return (0);
+}
+
+/*
+** Increment map global colors
+*/
+
+static int		change_map_colors(t_scene *scene)
+{
+	t_map *map;
+
+	map = scene->maps[scene->map_index];
+	map->col_r = rand() % 255;
+	map->col_g = rand() % 255;
+	map->col_b = rand() % 255;
 	return (0);
 }
 
@@ -91,7 +94,8 @@ int				handle_key_press(int key, void *param)
 		scene->shift_pressed = TRUE;
 	if (key == KEY_G)
 		scene->show_guide = !(scene->show_guide);
-	if ((key == KEY_C && increment_scene_colors(scene)) ||
+	if ((key == KEY_B && change_scene_colors(scene)) ||
+		(key == KEY_C && change_map_colors(scene)) ||
 		((key == KEY_TAB && !scene->shift_pressed) &&
 			scene->map_count > 1 && switch_map(scene, 1)) ||
 		((key == KEY_TAB && scene->shift_pressed) &&

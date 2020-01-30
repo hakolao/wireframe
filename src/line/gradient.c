@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 20:38:10 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 20:51:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static int		map_color(double mul, t_scene *scene)
 
 	map = scene->maps[scene->map_index];
 	return (COLOR(
-		(int)(0.5 * (1 + sin(mul)) * map->col_r),
-		(int)(cos(mul) * map->col_g),
-		(int)(0.5 * (1 + sin(mul - M_PI / 2)) * map->col_b),
+		(int)(0.5 * (1 + sin(mul + 0.2)) * map->col_r),
+		(int)(cos(mul + 0.2) * map->col_g),
+		(int)(0.5 * (1 + sin(mul + 0.2 - M_PI / 2)) * map->col_b),
 		map->col_a));
 }
 
