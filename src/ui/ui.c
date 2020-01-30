@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 19:05:09 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 20:57:43 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,12 @@ static char			*key_guide(t_scene *scene)
 
 	if ((scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
 			"----------\nESC: Exit\nG: Toggle guide\n"
-			"Left: Rotate map around y-\n"\
-			"Right: Rotate map around y+\nUp: Rotate map around x+\n"
-			"Down: Rotate map around x-\nW: Move forward\n"
+			"Left: Rotate map y-\nRight: Rotate map y+\n"
+			"Up: Rotate map x+\nDown: Rotate map x-\nW: Move forward\n"
 			"S: Move backwards\nA: Strafe left\nD: Strafe right\n"
-			"Q: Rotate map around z-\nE: Rotate map around z+\nC: Loop colors\n"
-			"P: Loop perspective\nR: Reset\n1: zoom out\n2: zoom in\n"
-			"Num 4: Turn camera left\nNum 6: Turn camera right\n"
+			"Q: Rotate map z-\nE: Rotate map z+\nC: Loop map color\n"
+			"B: Loop bg color\nP: Loop perspective\nR: Reset\n1: zoom -\n"
+			"2: zoom +\nNum 4: Turn camera left\nNum 6: Turn camera right\n"
 			"Num 8: Turn camera up\nNum 2: Turn camera down\n"
 			"Num +: Scale map up\nNum -: Scale map down\n")) == NULL) ||
 		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
