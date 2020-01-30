@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/30 19:47:17 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/30 22:09:32 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SOURCES = main.c \
 			events/exit.c \
 			ui/ui.c \
 			ui/utils.c \
+			ui/guide.c \
 			log.c \
 			draw.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 19:35:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:20:56 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 22:10:08 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,34 @@ void					draw_paragraph(t_scene *scene, char *text, int xpos,
 		ft_strdel(&split_text[i++]);
 	}
 	free(split_text);
+}
+
+/*
+** Draws given int color into UI (R, G, B)
+*/
+
+void					draw_color_info(t_scene *scene, int color, int x, int y)
+{
+	char	*red;
+	char	*green;
+	char	*blue;
+	char	*col;
+
+	if ((red = ft_itoa(RED(color))) == NULL ||
+		(green = ft_itoa(GREEN(color))) == NULL ||
+		(blue = ft_itoa(BLUE(color))) == NULL ||
+		(col = ft_strnew(256)) == NULL ||
+		(col = ft_strcpy(col, "(")) == NULL ||
+		(col = ft_strcat(col, red)) == NULL ||
+		(col = ft_strcat(col, ", ")) == NULL ||
+		(col = ft_strcat(col, green)) == NULL ||
+		(col = ft_strcat(col, ", ")) == NULL ||
+		(col = ft_strcat(col, blue)) == NULL ||
+		(col = ft_strcat(col, ")")) == NULL)
+		return ;
+	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y, UI_COLOR, col);
+	ft_strdel(&col);
+	ft_strdel(&red);
+	ft_strdel(&green);
+	ft_strdel(&blue);
 }

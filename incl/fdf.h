@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 20:43:22 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 22:11:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int					grad_color(int start, int end, double gradient_mul);
 void				swap_points_in_edge(t_edge *edge);
 double				gradient_multiplier(double *in_minmax, double *out_minmax,
 					t_vector *point, t_map *map);
+int					map_color(double mul, t_scene *scene);
 
 /*
 ** Map (Input reading, serialization & map functionality)
@@ -268,6 +269,9 @@ void				draw_paragraph(t_scene *scene, char *text, int xpos,
 void				draw_vector(t_scene *scene, t_vector *v,
 					int xpos, int ypos);
 void				draw_ui(t_scene *scene);
+void				draw_color_info(t_scene *scene, int color, int x, int y);
+char				*key_guide(t_scene *scene);
+char				*mouse_guide(t_scene *scene);
 
 /*
 ** Draw

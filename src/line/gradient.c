@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 20:51:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 22:06:21 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ double			gradient_multiplier(double *in_minmax, double *out_minmax,
 ** function)
 */
 
-static int		map_color(double mul, t_scene *scene)
+int				map_color(double mul, t_scene *scene)
 {
 	t_map	*map;
 
 	map = scene->maps[scene->map_index];
 	return (COLOR(
-		(int)(0.5 * (1 + sin(mul + 0.2)) * map->col_r),
-		(int)(cos(mul + 0.2) * map->col_g),
-		(int)(0.5 * (1 + sin(mul + 0.2 - M_PI / 2)) * map->col_b),
+		(int)(sin((mul + M_PI / 2) / 2) * map->col_r),
+		(int)(cos(mul) * cos(mul) * map->col_g),
+		(int)(0.5 * (1 + cos((mul + M_PI / 2) * 1.2)) * map->col_b),
 		map->col_a));
 }
 

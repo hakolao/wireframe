@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 20:57:43 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 22:12:52 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,57 +44,6 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 }
 
 /*
-** Returns key usage guide
-*/
-
-static char			*key_guide(t_scene *scene)
-{
-	char	*final_guide;
-	char	*guide;
-	char	*map_loop;
-
-	if ((scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
-			"----------\nESC: Exit\nG: Toggle guide\n"
-			"Left: Rotate map y-\nRight: Rotate map y+\n"
-			"Up: Rotate map x+\nDown: Rotate map x-\nW: Move forward\n"
-			"S: Move backwards\nA: Strafe left\nD: Strafe right\n"
-			"Q: Rotate map z-\nE: Rotate map z+\nC: Loop map color\n"
-			"B: Loop bg color\nP: Loop perspective\nR: Reset\n1: zoom -\n"
-			"2: zoom +\nNum 4: Turn camera left\nNum 6: Turn camera right\n"
-			"Num 8: Turn camera up\nNum 2: Turn camera down\n"
-			"Num +: Scale map up\nNum -: Scale map down\n")) == NULL) ||
-		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
-			"----------\nESC: Exit\n"
-			"G: Toggle guide")) == NULL) ||
-		!(map_loop = (scene->map_count > 1 ?
-			ft_strdup("\nTab/(Shift+Tab): Switch map") : ft_strdup(""))) ||
-		(final_guide = ft_strjoin(guide, map_loop)) == NULL)
-		return (NULL);
-	ft_strdel(&guide);
-	ft_strdel(&map_loop);
-	return (final_guide);
-}
-
-/*
-** Returns mouse usage guide
-*/
-
-static char			*mouse_guide(t_scene *scene)
-{
-	char	*guide;
-
-	if ((scene->show_guide && (guide = ft_strdup("USAGE Mouse:\n"
-			"----------\n"
-			"Scroll up: Scale map z up\n"
-			"Scroll down: Scale map z down\n"
-			"Hold left mouse & move: Rotate camera\n"
-			"Hold right mouse & move: Rotate map")) == NULL) ||
-		(!scene->show_guide && (guide = ft_strdup("")) == NULL))
-		return (NULL);
-	return (guide);
-}
-
-/*
 ** Draw multiple map info
 */
 
@@ -113,6 +62,37 @@ static void			draw_multi_map_info(t_scene *scene, char *read_maps,
 		UI_COLOR, "Map:");
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 60, HEIGHT - 50,
 		UI_COLOR, scene->maps[scene->map_index]->name);
+}
+
+/*
+** Draw height color information (gradients in gradient.c)
+*/
+
+static void			draw_height_color_info(t_scene *scene, int x, int y)
+{
+	int			top_col;
+	int			mid_col;
+	int			bot_col;
+	t_map		*map;
+
+	map = scene->maps[scene->map_index];
+	top_col = map_color(gradient_multiplier((double[]){0, 0}, (double[]){0, 0},
+			&((t_vector){.v = (double[]){0, 0, map->z_max, 1}, .size = 4}),
+			scene->maps[scene->map_index]), scene);
+	mid_col = map_color(gradient_multiplier((double[]){0, 0}, (double[]){0, 0},
+			&((t_vector){.v = (double[]){0, 0, 0, 1}, .size = 4}),
+			scene->maps[scene->map_index]), scene);
+	bot_col = map_color(gradient_multiplier((double[]){0, 0}, (double[]){0, 0},
+			&((t_vector){.v = (double[]){0, 0, map->z_min, 1}, .size = 4}),
+			scene->maps[scene->map_index]), scene);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y, UI_COLOR, "Top RGB:");
+	draw_color_info(scene, top_col, x + 120, y);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y + 20,
+		UI_COLOR, "Mid RGB:");
+	draw_color_info(scene, mid_col, x + 120, y + 20);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y + 40,
+		UI_COLOR, "Bottom RGB:");
+	draw_color_info(scene, bot_col, x + 120, y + 40);
 }
 
 /*
@@ -137,6 +117,7 @@ void				draw_ui(t_scene *scene)
 	draw_paragraph(scene, key_g, 10, 60);
 	draw_paragraph(scene, mouse_g, 10, 600);
 	draw_multi_map_info(scene, read_maps, map_index);
+	draw_height_color_info(scene, WIDTH - 300, HEIGHT - 90);
 	ft_strdel(&mouse_g);
 	ft_strdel(&key_g);
 	ft_strdel(&read_maps);
