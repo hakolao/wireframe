@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 19:31:15 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 20:38:10 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int				grad_color(int start, int end, double gradient_mul)
 double			gradient_multiplier(double *in_minmax, double *out_minmax,
 				t_vector *point, t_map *map)
 {
-	in_minmax[0] = map->z_min - 0.2;
-	in_minmax[1] = map->z_max + 0.2;
+	in_minmax[0] = map->z_min - 0.1;
+	in_minmax[1] = map->z_max + 0.1;
 	out_minmax[0] = -M_PI / 2;
 	out_minmax[1] = M_PI / 2;
 	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
@@ -61,10 +61,10 @@ static int		map_color(double mul, t_scene *scene)
 
 	map = scene->maps[scene->map_index];
 	return (COLOR(
-		(int)(0.5 * (1 + sin(mul)) * map->col_r + (mul > 1 ? map->col_r : 0)),
-		(int)(cos(mul) * map->col_g + (mul > 1 ? map->col_g : 0)),
-		(int)(sin(mul) * sin(mul) * map->col_b +
-			(mul > 1 ? map->col_b : 0)), map->col_a));
+		(int)(0.5 * (1 + sin(mul)) * map->col_r),
+		(int)(cos(mul) * map->col_g),
+		(int)(0.5 * (1 + sin(mul - M_PI / 2)) * map->col_b),
+		map->col_a));
 }
 
 /*
