@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:59:56 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 19:31:26 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ double				init_zscale(t_map *map);
 ** Line drawing
 */
 void				connect_points(t_edge *edge);
-void				connect_map_pts_with_gradient(t_edge *edge);
+void				connect_map_edge_gradient(t_edge *edge);
 void				draw_line(t_edge *edge);
 int					grad_color(int start, int end, double gradient_mul);
 void				swap_points_in_edge(t_edge *edge);

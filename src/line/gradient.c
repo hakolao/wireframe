@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 17:51:48 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 19:31:15 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int		map_color(double mul, t_scene *scene)
 ** map's gradient.
 */
 
-void			connect_map_pts_with_gradient(t_edge *edge)
+void			connect_map_edge_gradient(t_edge *edge)
 {
 	t_vector	reset_p1;
 	t_vector	reset_p2;
