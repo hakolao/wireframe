@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/30 17:43:32 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/30 19:47:17 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBMATRIX = ./libmatrix
 DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -O2
 LIBMLXFLAGS = -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit
 				# -L /usr/local/lib -lmlx -I/usr/local/X11R6/include -L/usr/X11R6/lib \
 				-lX11 -lXext -framework OpenGL -framework Appkit

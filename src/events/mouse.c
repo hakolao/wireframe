@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:48 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:09:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 19:48:34 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ int				handle_mouse_move(int x, int y, void *param)
 	y_diff = y - scene->mouse_y;
 	diff_lim = 5;
 	if (scene->mouse_right_pressed == TRUE && ft_abs(x_diff) > diff_lim &&
-		rotate_map(scene->maps[scene->map_index], 0, x_diff > 0 ? 1 : -1, 0))
+		rotate_map(scene->maps[scene->map_index], 0, x_diff > 0 ? 2 : -2, 0))
 		scene->mouse_x = x;
 	else if (scene->mouse_right_pressed == TRUE && ft_abs(y_diff) > diff_lim &&
-		rotate_map(scene->maps[scene->map_index], y_diff > 0 ? -1 : 1, 0, 0))
+		rotate_map(scene->maps[scene->map_index], y_diff > 0 ? -2 : 2, 0, 0))
 		scene->mouse_y = y;
 	else if (scene->mouse_left_pressed == TRUE && ft_abs(x_diff) > diff_lim &&
-		turn_camera(scene->camera, 0, x_diff > 0 ? -1 : 1))
+		turn_camera(scene->camera, 0, x_diff > 0 ? -3 : 3))
 		scene->mouse_x = x;
 	else if (scene->mouse_left_pressed == TRUE && ft_abs(y_diff) > diff_lim &&
-		turn_camera(scene->camera, y_diff > 0 ? 1 : -1, 0))
+		turn_camera(scene->camera, y_diff > 0 ? 3 : -3, 0))
 		scene->mouse_y = y;
 	if (scene->mouse_left_pressed || scene->mouse_right_pressed)
 		scene->redraw = TRUE;
