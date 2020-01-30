@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:35:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:59:56 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define KEY_G 5
 # define KEY_C 8
 # define KEY_TAB 48
+# define KEY_SHIFT 257
 
 /*
 ** Color helpers
@@ -77,10 +78,9 @@
 ** Initial settings & enums.
 ** A world unit in map data is one pixel, let's scale them SCALE
 */
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
-# define UI_WIDTH 300
-# define ASPECT_RATIO WINDOW_WIDTH / WINDOW_HEIGHT
+# define WIDTH 1920
+# define HEIGHT 1080
+# define ASPECT_RATIO WIDTH / HEIGHT
 # define SCALE 200
 # define ORTHOGRAPHIC 2
 # define PERSPECTIVE 1
@@ -153,6 +153,7 @@ typedef struct		s_scene
 	int				pixel_endian;
 	int				mouse_right_pressed;
 	int				mouse_left_pressed;
+	int				shift_pressed;
 	int				mouse_x;
 	int				mouse_y;
 	int				show_guide;
@@ -250,7 +251,7 @@ int					shift_map_vertices(t_map *map);
 int					set_map_info(t_map *map);
 t_map				*serialize_map(char *filename);
 int					reset_map(t_map *map);
-int					switch_map(t_scene *scene);
+int					switch_map(t_scene *scene, int dir);
 double				z_shift(t_map *map);
 int					read_z_from_digit(char **line);
 t_vector			**reallocate_map_vertices(t_map *map);
@@ -275,7 +276,8 @@ int					draw(t_scene *scene);
 /*
 ** Events
 */
-int					handle_key_events(int key, void *param);
+int					handle_key_press(int key, void *param);
+int					handle_key_release(int key, void *param);
 int					handle_mouse_button_press(int key, int x, int y,
 					void *param);
 int					handle_mouse_button_release(int key, int x, int y,

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 17:51:07 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:50:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static int		increment_scene_colors(t_scene *scene)
 }
 
 /*
-** Key event handling
+** Key press handling
 */
 
-int				handle_key_events(int key, void *param)
+int				handle_key_press(int key, void *param)
 {
 	t_scene		*scene;
 
@@ -87,10 +87,15 @@ int				handle_key_events(int key, void *param)
 		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
 	}
+	if (key == KEY_SHIFT)
+		scene->shift_pressed = TRUE;
 	if (key == KEY_G)
 		scene->show_guide = !(scene->show_guide);
 	if ((key == KEY_C && increment_scene_colors(scene)) ||
-		(key == KEY_TAB && scene->map_count > 1 && switch_map(scene)) ||
+		((key == KEY_TAB && !scene->shift_pressed) &&
+			scene->map_count > 1 && switch_map(scene, 1)) ||
+		((key == KEY_TAB && scene->shift_pressed) &&
+			scene->map_count > 1 && switch_map(scene, -1)) ||
 		(key == KEY_P && loop_perspective(scene->camera)) ||
 		(key == KEY_R && init_scene(scene, scene->map_index)) ||
 		(key == KEY_1 && zoom(scene->camera, 1)) ||
@@ -98,4 +103,18 @@ int				handle_key_events(int key, void *param)
 		;
 	scene->redraw = TRUE;
 	return (check_rest_of_events(key, scene));
+}
+
+/*
+** Key release handling
+*/
+
+int				handle_key_release(int key, void *param)
+{
+	t_scene		*scene;
+
+	scene = (t_scene *)param;
+	if (key == KEY_SHIFT)
+		scene->shift_pressed = FALSE;
+	return (0);
 }

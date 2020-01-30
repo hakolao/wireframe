@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 14:23:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 19:05:09 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static char			*key_guide(t_scene *scene)
 		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
 			"----------\nESC: Exit\n"
 			"G: Toggle guide")) == NULL) ||
-		(map_loop = (scene->map_count > 1 ?
-			ft_strdup("\nTab: Switch map") : ft_strdup(""))) == NULL ||
+		!(map_loop = (scene->map_count > 1 ?
+			ft_strdup("\nTab/(Shift+Tab): Switch map") : ft_strdup(""))) ||
 		(final_guide = ft_strjoin(guide, map_loop)) == NULL)
 		return (NULL);
 	ft_strdel(&guide);
@@ -96,6 +96,27 @@ static char			*mouse_guide(t_scene *scene)
 }
 
 /*
+** Draw multiple map info
+*/
+
+static void			draw_multi_map_info(t_scene *scene, char *read_maps,
+					char *map_index)
+{
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, HEIGHT - 90,
+		UI_COLOR, "Total maps:");
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 130, HEIGHT - 90,
+		UI_COLOR, read_maps);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, HEIGHT - 70,
+		UI_COLOR, "Map index:");
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 130, HEIGHT - 70,
+		UI_COLOR, map_index);
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, HEIGHT - 50,
+		UI_COLOR, "Map:");
+	mlx_string_put(scene->mlx, scene->mlx_wdw, 60, HEIGHT - 50,
+		UI_COLOR, scene->maps[scene->map_index]->name);
+}
+
+/*
 ** Draw UI content to the window
 */
 
@@ -104,25 +125,21 @@ void				draw_ui(t_scene *scene)
 	char	*mouse_g;
 	char	*key_g;
 	char	*read_maps;
+	char	*map_index;
 
 	if ((mouse_g = mouse_guide(scene)) == NULL ||
 		(key_g = key_guide(scene)) == NULL ||
-		(read_maps = ft_itoa(scene->map_count)) == NULL)
+		(read_maps = ft_itoa(scene->map_count)) == NULL ||
+		(map_index = ft_itoa(scene->map_index)) == NULL)
 		return ;
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	draw_vector(scene, scene->camera->position, 130, 20);
-	draw_map_info(scene, WINDOW_WIDTH - 160, 20);
+	draw_map_info(scene, WIDTH - 160, 20);
 	draw_paragraph(scene, key_g, 10, 60);
 	draw_paragraph(scene, mouse_g, 10, 600);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, 10,
-		WINDOW_HEIGHT - 70, UI_COLOR, "Total maps:");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, 130,
-		WINDOW_HEIGHT - 70, UI_COLOR, read_maps);
-	mlx_string_put(scene->mlx, scene->mlx_wdw, 10,
-		WINDOW_HEIGHT - 50, UI_COLOR, "Map:");
-	mlx_string_put(scene->mlx, scene->mlx_wdw, 60,
-		WINDOW_HEIGHT - 50, UI_COLOR, scene->maps[scene->map_index]->name);
+	draw_multi_map_info(scene, read_maps, map_index);
 	ft_strdel(&mouse_g);
 	ft_strdel(&key_g);
 	ft_strdel(&read_maps);
+	ft_strdel(&map_index);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 16:22:59 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:59:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ void				connect_points(t_edge *edge)
 		exit(1);
 	edge->point1 = &s1;
 	edge->point2 = &s2;
-	s1.v[0] += WINDOW_WIDTH / 2;
-	s1.v[1] += WINDOW_HEIGHT / 2;
-	s2.v[0] += WINDOW_WIDTH / 2;
-	s2.v[1] += WINDOW_HEIGHT / 2;
-	if (s1.v[0] >= 0 && s1.v[0] <= WINDOW_WIDTH &&
-		s1.v[1] >= 0 && s1.v[1] <= WINDOW_HEIGHT &&
-		s2.v[0] >= 0 && s2.v[0] <= WINDOW_WIDTH &&
-		s2.v[1] >= 0 && s2.v[1] <= WINDOW_HEIGHT)
+	s1.v[0] += WIDTH / 2;
+	s1.v[1] += HEIGHT / 2;
+	s2.v[0] += WIDTH / 2;
+	s2.v[1] += HEIGHT / 2;
+	if (s1.v[0] >= 0 && s1.v[0] <= WIDTH &&
+		s1.v[1] >= 0 && s1.v[1] <= HEIGHT &&
+		s2.v[0] >= 0 && s2.v[0] <= WIDTH &&
+		s2.v[1] >= 0 && s2.v[1] <= HEIGHT)
 		draw_line(edge);
 }
 
@@ -98,10 +98,10 @@ static void			clear_frame(t_scene *scene)
 
 	color = COLOR(scene->col_r, scene->col_g, scene->col_b, scene->col_a);
 	y = 0;
-	while (y < WINDOW_HEIGHT)
+	while (y < HEIGHT)
 	{
 		x = 0;
-		while (x < WINDOW_WIDTH)
+		while (x < WIDTH)
 		{
 			pixel = y * scene->line_bytes + x * 4;
 			scene->frame_buf[pixel] = BLUE(color);

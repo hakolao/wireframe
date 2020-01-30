@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/28 18:34:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 19:02:01 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void			plot_pixel(int x, int y, t_edge *edge,
 	color = grad_color(edge->color_start,
 			edge->color_end, grad_mul);
 	pixel = (y * edge->scene->line_bytes) + (x * 4);
-	if (pixel > 0 && pixel < WINDOW_HEIGHT * WINDOW_WIDTH * 4)
+	if (pixel > 0 && pixel < HEIGHT * WIDTH * 4)
 	{
 		edge->scene->frame_buf[pixel + 0] = BLUE(color);
 		edge->scene->frame_buf[pixel + 1] = GREEN(color);
