@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axes.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 19:10:43 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 14:23:36 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:30:45 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_vector			***axes(int axis_len)
 ** Frees axes data from memory
 */
 
-void				free_axes(t_vector ***axes, int len)
+int					free_axes(t_vector ***axes, int len)
 {
 	int				i;
 	int				j;
@@ -57,6 +57,7 @@ void				free_axes(t_vector ***axes, int len)
 	}
 	free(axes);
 	axes = NULL;
+	return (0);
 }
 
 /*

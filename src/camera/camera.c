@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 11:54:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/27 12:14:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:30:30 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_canvas		*new_canvas(void)
 ** Frees camera struct so camera can be reset
 */
 
-void				camera_free(t_camera *camera)
+int					camera_free(t_camera *camera)
 {
 	ft_matrix_free(camera->projection);
 	ft_matrix_free(camera->view);
@@ -45,6 +45,7 @@ void				camera_free(t_camera *camera)
 	ft_vector_free(camera->up);
 	free(camera->canvas);
 	free(camera);
+	return (0);
 }
 
 /*

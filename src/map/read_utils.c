@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 12:26:05 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 16:53:50 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:33:52 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ double			z_shift(t_map *map)
 int				init_vals_before_read(t_map *map)
 {
 	map->vertex_count = 0;
+	map->x_min = 0;
 	map->x_max = 0;
+	map->y_min = 0;
+	map->y_max = 0;
 	map->z_max = 0;
 	map->z_min = 0;
 	map->size = 1024;

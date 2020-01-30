@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 16:54:07 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:35:20 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,18 +215,19 @@ int					move_camera_forward(t_camera *camera, double amount);
 int					strafe_camera(t_camera *camera, double amount);
 int					zoom(t_camera *camera, int dir);
 int					loop_perspective(t_camera *camera);
-void				camera_free(t_camera *camera);
+int					camera_free(t_camera *camera);
 
 /*
 ** Scene
 */
 t_vector			***axes(int axis_len);
-void				free_axes(t_vector ***axes, int axis_len);
+int					free_axes(t_vector ***axes, int axis_len);
 void				draw_axes_on_frame(t_scene *scene);
 void				draw_map_on_frame(t_scene *scene);
 int					init_scene(t_scene *scene, int map_i);
 t_scene				*new_scene(void *mlx, void *mlx_wdw,
 					t_map **maps);
+double				init_zscale(t_map *map);
 
 /*
 ** Line drawing

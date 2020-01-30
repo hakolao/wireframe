@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 12:04:00 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/29 17:17:21 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:35:07 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void			draw_map_on_frame(t_scene *scene)
 			connect_map_pts_with_gradient(&edge);
 		}
 	}
+}
+
+/*
+** Get initial z scale (most maps have z too large relative to x, y)
+*/
+
+double			init_zscale(t_map *map)
+{
+	return ((map->y_max - map->y_min) /
+			(8 * (map->z_max - map->z_min + 0.1)));
 }
