@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 15:53:20 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:28:40 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_vector			*ft_vector4_new(double x, double y, double z);
 int					ft_vector_to_matrix(const t_vector *vec, t_matrix *res);
 int					ft_matrix_mul_vector(const t_matrix *m1, const t_vector *v,
 					t_vector *res);
-t_matrix			*ft_scale_matrix(size_t cols, size_t rows, t_vector *scale);
+int					ft_scale_matrix(size_t cols, size_t rows, t_vector *scale,
+					t_matrix *res);
 int					ft_matrix_scale(t_matrix *mat, t_matrix *scale,
 					t_matrix *res);
 int					ft_vector_scale(t_vector *vec, t_vector *scale);
@@ -100,8 +101,9 @@ int					ft_vector_forward(t_vector *position, t_vector *target,
 					t_vector *res);
 int					ft_fps_cam(t_vector *position, double pitch, double yaw,
 					t_matrix *res);
-t_matrix			*ft_rotation_matrix(int angle_x, int angle_y, int angle_z);
-t_matrix			*ft_matrix_inverse_4x4(t_matrix *m1);
+int					ft_rotation_matrix(int angle_x, int angle_y, int angle_z,
+					t_matrix *res);
+int					ft_matrix_inverse_4x4(t_matrix *m1, t_matrix *res);
 t_matrix			*ft_scale_matrix_xyz(double x, double y, double z);
 int					ft_matrix_mul_vector_lst(t_matrix *m, t_vector **vecs,
 					size_t n);

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 17:52:02 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:35:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,13 @@ t_map				*serialize_map(char *filename)
 		((fd = open(filename, O_RDONLY)) == -1 && log_perr("")) ||
 		(map = file_to_map(fd, map)) == NULL ||
 		(map->center = ft_vector4_new(0, 0, 0)) == NULL ||
-		(map->rotation = ft_rotation_matrix(0, 0, 0)) == NULL ||
-		!(map->reset_rotation = ft_matrix_inverse_4x4(map->rotation)) ||
+		(map->rotation = ft_matrix_new(4, 4)) == NULL ||
+		!ft_rotation_matrix(0, 0, 0, map->rotation) ||
+		(map->reset_rotation = ft_matrix_new(4, 4)) == NULL ||
+		!ft_matrix_inverse_4x4(map->rotation, map->reset_rotation) ||
 		(map->scale = ft_matrix_id(4, 4)) == NULL ||
-		!(map->reset_scale = ft_matrix_inverse_4x4(map->scale))) &&
+		(map->reset_scale = ft_matrix_id(4, 4)) == NULL ||
+		!ft_matrix_inverse_4x4(map->scale, map->reset_scale)) &&
 		log_err(ft_strjoin("Error reading map: ", filename),
 			strerror(ERRNO_IN)))
 		return (NULL);

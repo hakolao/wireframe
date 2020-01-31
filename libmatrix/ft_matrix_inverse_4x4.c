@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 16:59:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 10:22:33 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:24:52 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,28 @@ static void	set_inverse(t_matrix *m1, double *m, double *inv)
 	set_inverse_half2(m, inv);
 }
 
-t_matrix	*ft_matrix_inverse_4x4(t_matrix *m1)
+int			ft_matrix_inverse_4x4(t_matrix *m1, t_matrix *res)
 {
-	t_matrix	*res;
 	double		inv[16];
 	double		m[16];
 	double		det;
 	int			i;
 
-	if (!m1 || m1->cols != 4 || m1->rows != 4 ||
-		(res = ft_matrix_new(4, 4)) == NULL)
+	if (!m1 || m1->cols != 4 || m1->rows != 4)
 	{
 		ft_puterror("Invalid input in ft_matrix_invert_4x4.\n");
-		return (NULL);
+		return (0);
 	}
 	set_inverse(m1, m, inv);
 	det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
 	if (det == FALSE)
 	{
 		ft_puterror("Det == FALSE in ft_matrix_invert_4x4.\n");
-		return (NULL);
+		return (0);
 	}
 	det = 1.0 / det;
 	i = -1;
 	while (++i < 16)
 		res->m[i] = inv[i] * det;
-	return (res);
+	return (1);
 }

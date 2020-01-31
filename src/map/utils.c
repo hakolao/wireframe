@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:17:35 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:40:13 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,19 @@ int				set_map_info(t_map *map)
 
 int				shift_map_vertices(t_map *map)
 {
-	t_vector	*shift;
+	t_vector	shift;
 	size_t		i;
 
-	if (!(shift =
-			ft_vector4_new(-map->x_max / 2, -map->y_max / 2, -z_shift(map))))
-		return (0);
+	shift = (t_vector){.v =
+		(double[]){-map->x_max / 2, -map->y_max / 2, -z_shift(map), 1},
+		.size = 4};
 	i = 0;
 	while (i < map->vertex_count)
 	{
-		if (!ft_vector_add(map->vertices[i], shift, map->vertices[i]))
+		if (!ft_vector_add(map->vertices[i], &shift, map->vertices[i]))
 			return (0);
 		map->vertices[i++]->v[3] = 1;
 	}
-	ft_vector_free(shift);
 	set_map_info(map);
 	return (1);
 }
@@ -79,22 +78,21 @@ int				shift_map_vertices(t_map *map)
 
 int				rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 {
-	t_matrix	*rotation;
-	t_matrix	*map_rotation;
-	t_matrix	*reset_rotation;
+	t_matrix	rotation;
+	t_matrix	map_rotation;
+	t_matrix	reset_rotation;
 
-	if ((map_rotation = ft_matrix_new(4, 4)) == NULL ||
-		(rotation = ft_rotation_matrix(amount_x, amount_y, amount_z)) == NULL ||
-		ft_matrix_mul(rotation, map->rotation, map_rotation) == FALSE ||
-		ft_matrix_mul_vector_lst(rotation, map->vertices,
-			map->vertex_count) == FALSE ||
-		(reset_rotation = ft_matrix_inverse_4x4(map_rotation)) == NULL)
+	map_rotation = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	rotation = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	reset_rotation = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	if (!ft_rotation_matrix(amount_x, amount_y, amount_z, &rotation) ||
+		!ft_matrix_mul(&rotation, map->rotation, &map_rotation) ||
+		!ft_matrix_mul_vector_lst(&rotation, map->vertices,
+			map->vertex_count) ||
+		!ft_matrix_inverse_4x4(&map_rotation, &reset_rotation))
 		return (0);
-	ft_matrix_free(rotation);
-	ft_matrix_free(map->rotation);
-	ft_matrix_free(map->reset_rotation);
-	map->rotation = map_rotation;
-	map->reset_rotation = reset_rotation;
+	ft_matrix_set_vals(map->rotation, map_rotation.m, 16);
+	ft_matrix_set_vals(map->reset_rotation, reset_rotation.m, 16);
 	return (1);
 }
 
@@ -104,29 +102,27 @@ int				rotate_map(t_map *map, int amount_x, int amount_y, int amount_z)
 
 int				scale_map(t_map *map, double x, double y, double z)
 {
-	t_vector	*scale;
-	t_matrix	*scale_m;
-	t_matrix	*map_scale;
-	t_matrix	*reset_scale;
+	t_vector	scale;
+	t_matrix	scale_m;
+	t_matrix	map_scale;
+	t_matrix	reset_scale;
 
-	if ((map_scale = ft_matrix_new(4, 4)) == NULL ||
-		(scale = ft_vector4_new(x, y, z)) == NULL ||
-		(scale_m = ft_scale_matrix(4, 4, scale)) == NULL ||
-		ft_matrix_mul(map->scale, scale_m, map_scale) == FALSE ||
-		(reset_scale = ft_matrix_inverse_4x4(map_scale)) == NULL ||
-		ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
-			map->vertex_count) == FALSE ||
-		ft_matrix_mul_vector_lst(scale_m, map->vertices,
-			map->vertex_count) == FALSE ||
+	scale = (t_vector){.v = (double[]){x, y, z, 1}, .size = 4};
+	scale_m = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	map_scale = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	reset_scale = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	if (!ft_scale_matrix(4, 4, &scale, &scale_m) ||
+		!ft_matrix_mul(map->scale, &scale_m, &map_scale) ||
+		!ft_matrix_inverse_4x4(&map_scale, &reset_scale) ||
+		!ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
+			map->vertex_count) ||
+		!ft_matrix_mul_vector_lst(&scale_m, map->vertices,
+			map->vertex_count) ||
 		set_map_info(map) ||
-		ft_matrix_mul_vector_lst(map->rotation, map->vertices,
-			map->vertex_count) == FALSE)
+		!ft_matrix_mul_vector_lst(map->rotation, map->vertices,
+			map->vertex_count))
 		return (0);
-	ft_matrix_free(map->scale);
-	ft_matrix_free(map->reset_scale);
-	ft_vector_free(scale);
-	ft_matrix_free(scale_m);
-	map->scale = map_scale;
-	map->reset_scale = reset_scale;
+	ft_matrix_set_vals(map->scale, map_scale.m, 16);
+	ft_matrix_set_vals(map->reset_scale, reset_scale.m, 16);
 	return (1);
 }

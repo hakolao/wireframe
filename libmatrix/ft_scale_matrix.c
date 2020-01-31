@@ -6,23 +6,22 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:28:17 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/20 18:49:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:28:44 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmatrix.h"
 
-t_matrix	*ft_scale_matrix(size_t cols, size_t rows, t_vector *scale)
+int			ft_scale_matrix(size_t cols, size_t rows, t_vector *scale,
+			t_matrix *res)
 {
-	t_matrix	*m;
 	size_t		r;
 	size_t		c;
 
-	if (cols != rows || scale->size != rows ||
-		(m = ft_matrix_new(cols, rows)) == NULL)
+	if (cols != rows || scale->size != rows)
 	{
 		ft_puterror("Invalid input in ft_matrix_scale.\n");
-		return (NULL);
+		return (0);
 	}
 	r = 0;
 	while (r < rows)
@@ -30,13 +29,13 @@ t_matrix	*ft_scale_matrix(size_t cols, size_t rows, t_vector *scale)
 		c = 0;
 		while (c < cols)
 		{
-			VALUE_AT(m, r, c) = scale->v[r];
+			VALUE_AT(res, r, c) = scale->v[r];
 			r++;
 			c++;
 		}
 		r++;
 	}
-	return (m);
+	return (1);
 }
 
 t_matrix	*ft_scale_matrix_xyz(double x, double y, double z)
