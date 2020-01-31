@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 11:54:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:30:30 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 15:37:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,34 +53,29 @@ int					camera_free(t_camera *camera)
 ** matrices have changed)
 */
 
-void				set_transform(t_camera *camera)
+int					set_transform(t_camera *camera)
 {
-	t_matrix	*transform;
+	t_matrix	transform;
 
-	if ((transform = cam_transform(camera)) == NULL)
-		return ;
-	ft_matrix_free(camera->transform);
-	camera->transform = transform;
+	transform = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	if (!cam_transform(camera, &transform))
+		return (0);
+	return (ft_matrix_set_vals(camera->transform, transform.m, 16));
 }
 
 /*
 ** Calculates camera's transform
 */
 
-t_matrix			*cam_transform(t_camera *camera)
+int					cam_transform(t_camera *camera, t_matrix *res)
 {
-	t_matrix *tmp;
-	t_matrix *transform;
+	t_matrix	tmp;
 
-	if ((tmp = ft_matrix_new(4, 4)) == NULL ||
-		(transform = ft_matrix_new(4, 4)) == NULL)
-		return (NULL);
-	if (ft_matrix_mul(camera->projection, camera->view, tmp) == FALSE ||
-		ft_matrix_mul(
-			camera->unit_scale, tmp, transform) == FALSE)
-		return (NULL);
-	ft_matrix_free(tmp);
-	return (transform);
+	tmp = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	if (ft_matrix_mul(camera->projection, camera->view, &tmp) == FALSE ||
+		ft_matrix_mul(camera->unit_scale, &tmp, res) == FALSE)
+		return (FALSE);
+	return (TRUE);
 }
 
 /*
@@ -98,11 +93,12 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 	if (position == NULL || map->center == NULL || up == NULL ||
 		(camera = (t_camera*)malloc(sizeof(*camera))) == NULL ||
 		(camera->canvas = new_canvas()) == NULL ||
-		(camera->view = ft_fps_cam(position, pitch, yaw)) == NULL ||
+		(camera->view = ft_matrix_new(4, 4)) == NULL ||
+		!ft_fps_cam(position, pitch, yaw, camera->view) ||
 		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
 		(camera->unit_scale =
 			ft_scale_matrix_xyz(SCALE, SCALE, SCALE)) == NULL ||
-		(camera->transform = cam_transform(camera)) == NULL ||
+		!(camera->transform = ft_matrix_new(4, 4)) || !set_transform(camera) ||
 		(camera->init_position = ft_vector4_new(position->v[0],
 			position->v[1], position->v[2])) == NULL ||
 		(camera->position = ft_vector4_new(position->v[0],

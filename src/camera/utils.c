@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:22:37 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 15:35:10 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int				turn_camera(t_camera *camera, double pitch, double yaw)
 {
-	t_matrix	*view;
+	t_matrix	view;
 	double		new_pitch;
 	double		new_yaw;
 
@@ -33,15 +33,13 @@ int				turn_camera(t_camera *camera, double pitch, double yaw)
 		new_pitch = 89;
 	if (new_pitch < -89)
 		new_pitch = -89;
-	if ((view =
-		ft_fps_cam(camera->position, new_pitch, new_yaw)) == NULL)
+	view = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	if (!ft_fps_cam(camera->position, new_pitch, new_yaw, &view))
 		return (0);
 	camera->pitch = new_pitch;
 	camera->yaw = new_yaw;
-	ft_matrix_free(camera->view);
-	camera->view = view;
-	set_transform(camera);
-	return (1);
+	return (ft_matrix_set_vals(camera->view, view.m, 16) &&
+			set_transform(camera));
 }
 
 /*
@@ -50,26 +48,22 @@ int				turn_camera(t_camera *camera, double pitch, double yaw)
 
 int				move_camera_forward(t_camera *camera, double amount)
 {
-	t_matrix	*view;
-	t_vector	*forward;
-	t_vector	*new_pos;
+	t_matrix	view;
+	t_vector	forward;
+	t_vector	new_pos;
 
-	if ((forward = ft_vector4_new(
-			VALUE_AT(camera->view, 2, 0),
-			VALUE_AT(camera->view, 2, 1),
-			VALUE_AT(camera->view, 2, 2))) == NULL ||
-		(new_pos = ft_vector_new(4)) == NULL ||
-		(amount > 0 ? ft_vector_add(camera->position, forward, new_pos) :
-			ft_vector_sub(camera->position, forward, new_pos)) == FALSE ||
-		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
+	view = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	forward = (t_vector){.v = (double[4]){VALUE_AT(camera->view, 2, 0),
+						VALUE_AT(camera->view, 2, 1),
+						VALUE_AT(camera->view, 2, 2), 1}, .size = 4};
+	new_pos = (t_vector){.v = (double[4]){0}, .size = 4};
+	if ((amount > 0 ? ft_vector_add(camera->position, &forward, &new_pos) :
+			ft_vector_sub(camera->position, &forward, &new_pos)) == FALSE ||
+		ft_fps_cam(&new_pos, camera->pitch, camera->yaw, &view) == FALSE)
 		return (0);
-	ft_vector_free(forward);
-	ft_vector_free(camera->position);
-	camera->position = new_pos;
-	ft_matrix_free(camera->view);
-	camera->view = view;
-	set_transform(camera);
-	return (1);
+	return (ft_vector_set_vals(camera->position, new_pos.v, 4) &&
+			ft_matrix_set_vals(camera->view, view.m, 16) &&
+			set_transform(camera));
 }
 
 /*
@@ -78,26 +72,22 @@ int				move_camera_forward(t_camera *camera, double amount)
 
 int				strafe_camera(t_camera *camera, double amount)
 {
-	t_matrix	*view;
-	t_vector	*sideways;
-	t_vector	*new_pos;
+	t_matrix	view;
+	t_vector	sideways;
+	t_vector	new_pos;
 
-	if ((sideways = ft_vector4_new(
-			VALUE_AT(camera->view, 0, 0),
-			VALUE_AT(camera->view, 0, 1),
-			VALUE_AT(camera->view, 0, 2))) == NULL ||
-		(new_pos = ft_vector_new(4)) == NULL ||
-		(amount > 0 ? ft_vector_add(camera->position, sideways, new_pos) :
-			ft_vector_sub(camera->position, sideways, new_pos)) == FALSE ||
-		(view = ft_fps_cam(new_pos, camera->pitch, camera->yaw)) == NULL)
+	view = (t_matrix){.m = (double[16]){0}, .cols = 4, .rows = 4};
+	sideways = (t_vector){.v = (double[4]){VALUE_AT(camera->view, 0, 0),
+						VALUE_AT(camera->view, 0, 1),
+						VALUE_AT(camera->view, 0, 2), 1}, .size = 4};
+	new_pos = (t_vector){.v = (double[4]){0}, .size = 4};
+	if ((amount > 0 ? ft_vector_add(camera->position, &sideways, &new_pos) :
+			ft_vector_sub(camera->position, &sideways, &new_pos)) == FALSE ||
+		ft_fps_cam(&new_pos, camera->pitch, camera->yaw, &view) == FALSE)
 		return (0);
-	ft_vector_free(sideways);
-	ft_vector_free(camera->position);
-	camera->position = new_pos;
-	ft_matrix_free(camera->view);
-	camera->view = view;
-	set_transform(camera);
-	return (1);
+	return (ft_vector_set_vals(camera->position, new_pos.v, 4) &&
+			ft_matrix_set_vals(camera->view, view.m, 16) &&
+			set_transform(camera));
 }
 
 /*
@@ -121,8 +111,7 @@ int				zoom(t_camera *camera, int dir)
 		return (0);
 	ft_matrix_free(camera->projection);
 	camera->projection = projection;
-	set_transform(camera);
-	return (1);
+	return (set_transform(camera));
 }
 
 /*
@@ -143,6 +132,5 @@ int				loop_perspective(t_camera *camera)
 		return (0);
 	ft_matrix_free(camera->projection);
 	camera->projection = projection;
-	set_transform(camera);
-	return (1);
+	return (set_transform(camera));
 }

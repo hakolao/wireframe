@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 22:11:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 15:23:11 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,8 @@ typedef struct		s_map_info
 ** Camera
 */
 t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map);
-t_matrix			*cam_transform(t_camera *camera);
-void				set_transform(t_camera *camera);
+int					cam_transform(t_camera *camera, t_matrix *res);
+int					set_transform(t_camera *camera);
 int					turn_camera(t_camera *camera, double pitch, double yaw);
 int					move_camera_forward(t_camera *camera, double amount);
 int					strafe_camera(t_camera *camera, double amount);
