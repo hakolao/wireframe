@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:44:31 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 15:35:10 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:00:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,15 @@ int				strafe_camera(t_camera *camera, double amount)
 
 int				zoom(t_camera *camera, int dir)
 {
-	t_matrix	*projection;
-
 	camera->canvas->angle += dir;
 	if (camera->canvas->angle < 1)
 		camera->canvas->angle = 1;
 	if (camera->canvas->angle > 179)
 		camera->canvas->angle = 179;
-	if ((projection =
-			camera->perspective == PERSPECTIVE ?
-			ft_perspective_matrix(camera->canvas) :
-			ft_orthographic_matrix(camera->canvas)) == NULL)
-		return (0);
-	ft_matrix_free(camera->projection);
-	camera->projection = projection;
-	return (set_transform(camera));
+	return ((camera->perspective == PERSPECTIVE ?
+			ft_perspective_matrix(camera->canvas, camera->projection) :
+			ft_orthographic_matrix(camera->canvas, camera->projection)) &&
+			set_transform(camera));
 }
 
 /*
@@ -120,17 +114,11 @@ int				zoom(t_camera *camera, int dir)
 
 int				loop_perspective(t_camera *camera)
 {
-	t_matrix	*projection;
-
 	camera->perspective++;
 	if (camera->perspective > 2)
 		camera->perspective = PERSPECTIVE;
-	if ((projection =
-			camera->perspective == PERSPECTIVE ?
-			ft_perspective_matrix(camera->canvas) :
-			ft_orthographic_matrix(camera->canvas)) == NULL)
-		return (0);
-	ft_matrix_free(camera->projection);
-	camera->projection = projection;
-	return (set_transform(camera));
+	return ((camera->perspective == PERSPECTIVE ?
+			ft_perspective_matrix(camera->canvas, camera->projection) :
+			ft_orthographic_matrix(camera->canvas, camera->projection)) &&
+			set_transform(camera));
 }

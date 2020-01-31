@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:11:01 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 15:11:06 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 15:53:20 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int					ft_vector_sub(t_vector *v1, t_vector *v2, t_vector *res);
 int					ft_vector_add(t_vector *v1, t_vector *v2, t_vector *res);
 double				ft_vector_dot(t_vector *v1, t_vector *v2);
 int					ft_vector_cross(t_vector *v1, t_vector *v2, t_vector *res);
-t_matrix			*ft_perspective_matrix(t_canvas *c);
-t_matrix			*ft_orthographic_matrix(t_canvas *c);
+int					ft_perspective_matrix(t_canvas *c, t_matrix *res);
+int					ft_orthographic_matrix(t_canvas *c, t_matrix *res);
 int					ft_vector_forward(t_vector *position, t_vector *target,
 					t_vector *res);
 int					ft_fps_cam(t_vector *position, double pitch, double yaw,

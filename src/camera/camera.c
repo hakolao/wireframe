@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 11:54:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 15:37:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:02:05 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ t_camera			*new_camera(t_vector *position, t_vector *up, t_map *map)
 		(camera->canvas = new_canvas()) == NULL ||
 		(camera->view = ft_matrix_new(4, 4)) == NULL ||
 		!ft_fps_cam(position, pitch, yaw, camera->view) ||
-		(camera->projection = ft_perspective_matrix(camera->canvas)) == NULL ||
-		(camera->unit_scale =
-			ft_scale_matrix_xyz(SCALE, SCALE, SCALE)) == NULL ||
+		(camera->projection = ft_matrix_new(4, 4)) == NULL ||
+		!ft_perspective_matrix(camera->canvas, camera->projection) ||
+		!(camera->unit_scale = ft_scale_matrix_xyz(SCALE, SCALE, SCALE)) ||
 		!(camera->transform = ft_matrix_new(4, 4)) || !set_transform(camera) ||
 		(camera->init_position = ft_vector4_new(position->v[0],
 			position->v[1], position->v[2])) == NULL ||
