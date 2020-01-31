@@ -6,7 +6,7 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/30 22:09:32 by ohakola          ###   ########.fr        #
+#    Updated: 2020/01/31 21:13:25 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,9 @@ SOURCES = main.c \
 			camera/utils.c \
 			line/draw.c \
 			line/gradient.c \
-			scene/axes.c \
-			scene/map.c \
-			scene/scene.c \
+			draw/axes.c \
+			draw/map.c \
+			scene.c \
 			events/keys.c \
 			events/mouse.c \
 			events/loop.c \
@@ -61,7 +61,7 @@ $(DIR_OBJ):
 	@mkdir -p temp/map
 	@mkdir -p temp/camera
 	@mkdir -p temp/line
-	@mkdir -p temp/scene
+	@mkdir -p temp/draw
 	@mkdir -p temp/ui
 	@mkdir -p temp/events
 

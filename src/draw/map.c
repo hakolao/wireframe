@@ -6,37 +6,38 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 12:04:00 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 16:50:49 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 21:14:22 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /*
-** Connect map edge. In front of camera check for map is here
-** to improve performance (prevents gradient calculations
-** that are not needed)
+** Connects triangle edges
 */
 
-static void		connect_edge(t_scene *scene, t_vector *point1,
-				t_vector *point2)
+static void		connect_triangle(t_scene *scene, t_vector *a,
+				t_vector *b, t_vector *c)
 {
-	t_edge			edge;
+	t_edge ab;
+	t_edge bc;
+	t_edge ca;
 
-	edge = (t_edge){.scene = scene,
-					.point1 = point1,
-					.point2 = point2,
-					.color_start = 0,
-					.color_end = 0};
-	if (!in_front_of_camera(edge.point1, edge.point2, edge.scene->camera))
-		return ;
-	connect_map_edge_gradient(&edge);
+	ab = (t_edge){.scene = scene, .point1 = a, .point2 = b,
+		.color_start = 0, .color_end = 0};
+	bc = (t_edge){.scene = scene, .point1 = b, .point2 = c,
+		.color_start = 0, .color_end = 0};
+	ca = (t_edge){.scene = scene, .point1 = c, .point2 = a,
+		.color_start = 0, .color_end = 0};
+	connect_edge_with_gradient(&ab);
+	connect_edge_with_gradient(&bc);
+	connect_edge_with_gradient(&ca);
 }
 
 /*
 ** Map vertex drawing algorithm to connect each vertex correctly
 ** to screen. Each position is connected as triangles
-** A->B, B->C, C->A, A->C, C->D, D->A
+** A->C, C->B, B->A, A->D, D->C, C->A
 ** vertices:
 ** A----B
 ** |    |
@@ -54,21 +55,17 @@ void			draw_map_on_frame(t_scene *scene)
 	{
 		if ((i + 1) % (scene->maps[scene->map_index]->x + 1) != 0)
 		{
-			connect_edge(scene, scene->maps[scene->map_index]->vertices[i],
-						scene->maps[scene->map_index]->vertices[i + 1]);
-			connect_edge(scene, scene->maps[scene->map_index]->vertices[i + 1],
-								scene->maps[scene->map_index]->vertices[
-								i + 2 + scene->maps[scene->map_index]->x]);
-			connect_edge(scene, scene->maps[scene->map_index]->vertices[
-								i + 2 + scene->maps[scene->map_index]->x],
-						scene->maps[scene->map_index]->vertices[i]);
-			connect_edge(scene, scene->maps[scene->map_index]->vertices[
-								i + 2 + scene->maps[scene->map_index]->x],
-								scene->maps[scene->map_index]->vertices[
-								i + 1 + scene->maps[scene->map_index]->x]);
-			connect_edge(scene, scene->maps[scene->map_index]->vertices[
-								i + 1 + scene->maps[scene->map_index]->x],
-								scene->maps[scene->map_index]->vertices[i]);
+			connect_triangle(scene,
+				scene->maps[scene->map_index]->vertices[
+					i + 2 + scene->maps[scene->map_index]->x],
+				scene->maps[scene->map_index]->vertices[i + 1],
+				scene->maps[scene->map_index]->vertices[i]);
+			connect_triangle(scene,
+				scene->maps[scene->map_index]->vertices[i],
+				scene->maps[scene->map_index]->vertices[
+					i + 1 + scene->maps[scene->map_index]->x],
+				scene->maps[scene->map_index]->vertices[
+					i + 2 + scene->maps[scene->map_index]->x]);
 		}
 	}
 }

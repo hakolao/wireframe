@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:59:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 20:11:10 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int					init_scene(t_scene *scene, int map_i)
 	map = scene->maps[map_i];
 	if (!reset_map(map) || !rotate_map(map, 45, 0, 0) ||
 		!scale_map(map, 1, 1, init_zscale(map)) ||
-		!(cam_pos = ft_vector4_new(0, 0, cam_distance(map) / 1.5 + 5.15)) ||
+		!(cam_pos = ft_vector4_new(0, 0, cam_distance(map) + 5.15)) ||
 		!(cam_up = ft_vector4_new(0, 1, 0)) ||
 		!(camera = new_camera(cam_pos, cam_up, map)) ||
 		!(xyz = axes(cam_distance(map) * 6)))
