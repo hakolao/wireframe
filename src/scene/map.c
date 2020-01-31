@@ -6,14 +6,16 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 12:04:00 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 19:37:27 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:50:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /*
-** Connect map edge
+** Connect map edge. In front of camera check for map is here
+** to improve performance (prevents gradient calculations
+** that are not needed)
 */
 
 static void		connect_edge(t_scene *scene, t_vector *point1,
@@ -26,6 +28,8 @@ static void		connect_edge(t_scene *scene, t_vector *point1,
 					.point2 = point2,
 					.color_start = 0,
 					.color_end = 0};
+	if (!in_front_of_camera(edge.point1, edge.point2, edge.scene->camera))
+		return ;
 	connect_map_edge_gradient(&edge);
 }
 

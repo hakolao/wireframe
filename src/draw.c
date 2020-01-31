@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:59:40 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:50:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int			screen_pt(t_vector *point, t_scene *scene,
 ** not be drawn.
 */
 
-static int			in_front_of_camera(t_vector *p1, t_vector *p2,
+int					in_front_of_camera(t_vector *p1, t_vector *p2,
 					t_camera *camera)
 {
 	t_vector	c1;

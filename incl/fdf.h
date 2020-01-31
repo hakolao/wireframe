@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 15:23:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:45:00 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,9 @@ char				*mouse_guide(t_scene *scene);
 ** Draw
 */
 int					draw(t_scene *scene);
-
+int					in_front_of_camera(t_vector *p1, t_vector *p2,
+					t_camera *camera);
+					
 /*
 ** Events
 */
