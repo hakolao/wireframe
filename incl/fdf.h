@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 16:45:00 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/01/31 20:22:06 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,17 @@ typedef struct		s_edge
 	int				color_end;
 	t_scene			*scene;
 }					t_edge;
+
+/*
+** Triangle struct
+*/
+typedef struct		s_triangle
+{
+	t_edge			*ab;
+	t_edge			*bc;
+	t_edge			*ca;
+}					t_triangle;
+
 
 /*
 ** A Helper struct for map information to be drawn on the UI
