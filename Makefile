@@ -6,15 +6,15 @@
 #    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/01 15:58:30 by ohakola           #+#    #+#              #
-#    Updated: 2020/02/03 14:22:33 by ohakola          ###   ########.fr        #
+#    Updated: 2020/02/03 14:44:24 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 NAME = fdf
-LIBFT = ./libft
-LIBMATRIX = ./libmatrix
-LIBMLX = ./libmlx
+LIBFT = ./lib/libft
+LIBMATRIX = ./lib/libmatrix
+LIBMLX = ./lib/libmlx
 DIR_SRC = src
 DIR_OBJ = temp
 HEADERS = incl

@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/03 14:10:39 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:45:03 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <mlx.h>
 # include <stdio.h>
 # include <math.h>
-# include "../libft/libft.h"
-# include "../libmatrix/libmatrix.h"
+# include "../lib/libft/libft.h"
+# include "../lib/libmatrix/libmatrix.h"
 
 # define ERRNO_IN 5
 # define ERR_CENTER "Failed to center map & set vertices"
