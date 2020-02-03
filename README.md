@@ -30,6 +30,10 @@ make
 - Change colors & background
 - Bresenham line drawing
 - View multiple maps
+- Pivoting map to 0, 0, 0
+- Showing real-time coordinates of map corners
+- Toggleable guide & Realtime info on map & camera
+- Real-time color info (Top, Mid, Bottom)
 
 ![Mars map](img/fdf_img3.png)
 
