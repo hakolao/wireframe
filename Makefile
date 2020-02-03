@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+         #
+#    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/01 15:58:30 by ohakola           #+#    #+#              #
-#    Updated: 2020/02/02 15:37:55 by ohakola          ###   ########.fr        #
+#    Updated: 2020/02/03 14:22:33 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,9 @@ fclean: clean
 	@make -C $(LIBMATRIX) fclean
 	@make -C $(LIBMLX) fclean
 
+norm:
+	norminette $(HEADERS) $(LIBFT) $(LIBMATRIX) $(DIR_SRC)
+
 re: fclean all
 
-.PHONY: all, $(DIR_OBJ), clean, fclean
+.PHONY: all, $(DIR_OBJ), clean, fclean, norm
