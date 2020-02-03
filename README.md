@@ -16,11 +16,16 @@ make
 
 # Features
 - Input handling with guiding errors
-	- Maps must not have empty rows
-	- Lines must consist of spaces & (+/-)numbers
-	- File must not be empty
-	- Length of rows must be equal for each row
 	- See example valid files in `test_maps`, invalid files in `test_maps_invalid`
+	- Errors (Could be more usable, but they'll have to do for now):
+	```
+	No such file or directory
+	Input/output error: Zero on a row length found
+	Input/output error: Empty x or y in map data
+	Input/output error: Length of row must be same on each row
+	Input/output error: Lines must consist of spaces & (+/-)numbers
+	Input/output error: Error reading map: test_maps_invalid/empty.fdf
+	```
 - FPS camera with WASD & mouse movement
 - Rotation of map
 - Perspective options (Orthographic & Perspective)
