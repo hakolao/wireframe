@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/03 14:16:28 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 16:35:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void			draw_corner_coords(t_scene *scene)
 		return ;
 	draw_vector_if_within_screen(scene, map->vertices[0],
 		&(t_vector){.v = (double[4]){0}, .size = 4});
-	draw_vector_if_within_screen(scene, map->vertices[map->x - 1],
+	draw_vector_if_within_screen(scene, map->vertices[map->x],
 		&(t_vector){.v = (double[4]){0}, .size = 4});
 	draw_vector_if_within_screen(scene,
 		map->vertices[map->vertex_count - map->x - 1],
