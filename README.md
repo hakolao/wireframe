@@ -3,7 +3,7 @@ A wireframe modeling of 3D landscapes. Hive's (School 42) introduction assignmen
 
 Due to norm limitations (only `exit`, `open`, `close`, `write`, `read`, `malloc`, `free`, and the functions of `minilibx (libmlx)` and `math.h`), Libmatrix was written for this project. Libft was an earlier school assingment (standard c functions + own extras).
 
-![Beauty](img/fdf_img1.png)
+![Beauty map](img/fdf_img1.png)
 
 # Run
 ```
@@ -12,7 +12,7 @@ make
 ./fdf test_maps/*
 ```
 
-![France](img/fdf_img2.png)
+![France map](img/fdf_img2.png)
 
 # Features
 - Input handling with guiding errors
@@ -31,7 +31,7 @@ make
 - Bresenham line drawing
 - View multiple maps
 
-![Mars](img/fdf_img3.png)
+![Mars map](img/fdf_img3.png)
 
 # Usage
 ```
