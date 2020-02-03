@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   guide.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 22:09:12 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 22:01:54 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:03:49 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Returns key usage guide
-*/
 
 char			*key_guide(t_scene *scene)
 {
@@ -44,10 +40,6 @@ char			*key_guide(t_scene *scene)
 	return (final_guide);
 }
 
-/*
-** Returns mouse usage guide
-*/
-
 char			*mouse_guide(t_scene *scene)
 {
 	char	*guide;
@@ -62,10 +54,6 @@ char			*mouse_guide(t_scene *scene)
 		return (NULL);
 	return (guide);
 }
-
-/*
-** Draws a paragraph into screen
-*/
 
 void			draw_paragraph(t_scene *scene, char *text, int xpos,
 				int ypos)

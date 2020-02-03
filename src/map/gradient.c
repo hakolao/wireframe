@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/03 12:43:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:12:33 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,21 @@ int				grad_color(int start, int end, double gradient_mul)
 			r_diff > 0 ? RED(start) - (int)(gradient_mul * ft_abs(r_diff)) :
 				RED(start) + (int)(gradient_mul * ft_abs(r_diff)),
 			g_diff > 0 ? GREEN(start) - (int)(gradient_mul * ft_abs(g_diff)) :
-				GREEN(start) + (int)(gradient_mul * ft_abs(g_diff)), 
+				GREEN(start) + (int)(gradient_mul * ft_abs(g_diff)),
 			b_diff > 0 ? BLUE(start) - (int)(gradient_mul * ft_abs(b_diff)) :
 				BLUE(start) + (int)(gradient_mul * ft_abs(b_diff)), 0));
 }
 
 /*
 ** Maps height value between out_minmax values linearly.
+** +/-M_PI / 2 was used for Sin & Cos formulas in map_color
 */
 
 double			height_multiplier(t_vector *point, t_map *map)
 {
 	double in_minmax[2];
 	double out_minmax[2];
-	
+
 	in_minmax[0] = map->z_min - 0.1;
 	in_minmax[1] = map->z_max + 0.1;
 	out_minmax[0] = -M_PI / 2;
@@ -53,7 +54,7 @@ double			height_multiplier(t_vector *point, t_map *map)
 
 /*
 ** Calculates map's gradient color based on multiplier.
-** Multiplier is a clamped value (a result from gradient_multiplier
+** Multiplier is a lerped value (a result from gradient_multiplier
 ** function)
 */
 

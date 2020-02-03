@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ui.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 22:07:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:16:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Generates map information struct and renders that information to UI
-*/
 
 static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 {
@@ -43,10 +39,6 @@ static void			draw_map_info(t_scene *scene, int xpos, int ypos)
 	ft_strdel(&info_text);
 }
 
-/*
-** Draw multiple map info
-*/
-
 static void			draw_multi_map_info(t_scene *scene, char *read_maps,
 					char *map_index)
 {
@@ -64,10 +56,6 @@ static void			draw_multi_map_info(t_scene *scene, char *read_maps,
 		UI_COLOR, scene->maps[scene->map_index]->name);
 }
 
-/*
-** Draw height color information (gradients in gradient.c)
-*/
-
 static void			draw_height_color_info(t_scene *scene, int x, int y)
 {
 	int			top_col;
@@ -77,7 +65,7 @@ static void			draw_height_color_info(t_scene *scene, int x, int y)
 
 	map = scene->maps[scene->map_index];
 	top_col = map_color(&(t_vector){.v =
-		(double[]){0, 0, map->z_max, 1}, .size = 4},scene);
+		(double[]){0, 0, map->z_max, 1}, .size = 4}, scene);
 	mid_col = map_color(&(t_vector){.v =
 		(double[]){0, 0, 0, 1}, .size = 4}, scene);
 	bot_col = map_color(&(t_vector){.v =
@@ -91,10 +79,6 @@ static void			draw_height_color_info(t_scene *scene, int x, int y)
 		UI_COLOR, "Bottom RGB:");
 	draw_color_info(scene, bot_col, x + 120, y + 40);
 }
-
-/*
-** Draw map corner coordinates
-*/
 
 static void			draw_corner_coords(t_scene *scene)
 {
@@ -114,10 +98,6 @@ static void			draw_corner_coords(t_scene *scene)
 		map->vertices[map->vertex_count - 1],
 		&(t_vector){.v = (double[4]){0}, .size = 4});
 }
-
-/*
-** Draw UI content to the window
-*/
 
 void				draw_ui(t_scene *scene)
 {

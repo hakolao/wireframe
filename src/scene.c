@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:13:53 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 21:57:46 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:14:11 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Switch map
-*/
 
 int					switch_map(t_scene *scene, int dir)
 {
@@ -30,10 +26,6 @@ int					switch_map(t_scene *scene, int dir)
 	return (0);
 }
 
-/*
-** Camera distance
-*/
-
 static double		cam_distance(t_map *map)
 {
 	double		arr[3];
@@ -43,10 +35,6 @@ static double		cam_distance(t_map *map)
 	arr[2] = map->z_max;
 	return (ft_max_double(arr, 3));
 }
-
-/*
-** Initializes the scene
-*/
 
 int					init_scene(t_scene *scene, int map_i)
 {
@@ -73,10 +61,6 @@ int					init_scene(t_scene *scene, int map_i)
 	return (1);
 }
 
-/*
-** Set render related params
-*/
-
 int					scene_render_params(t_scene *scene,
 					void *mlx, void *mlx_wdw)
 {
@@ -85,7 +69,7 @@ int					scene_render_params(t_scene *scene,
 	scene->pixel_bits = 32;
 	scene->line_bytes = WIDTH * 4;
 	scene->pixel_endian = TRUE;
-	if (!(scene->frame = mlx_new_image(mlx, WIDTH, HEIGHT))||
+	if (!(scene->frame = mlx_new_image(mlx, WIDTH, HEIGHT)) ||
 		!(scene->frame_buf =
 			mlx_get_data_addr(scene->frame, &scene->pixel_bits,
 			&scene->line_bytes, &scene->pixel_endian)))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:14:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 01:03:11 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:13:55 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ static int			read_map_line(char *line, int y, t_map *map)
 		else
 			line++;
 	}
-	if ((x == 0 && log_err(ERR_ZERO, strerror(ERRNO_IN))) ||
-		(map->vertex_count % x != 0 && log_err(ERR_ROWS, strerror(ERRNO_IN))))
-		return (FALSE);
-	return (TRUE);
+	return ((x == 0 && log_err(ERR_ZERO, strerror(ERRNO_IN))) ||
+		(map->vertex_count % x != 0 && log_err(ERR_ROWS, strerror(ERRNO_IN))));
 }
 
 /*

@@ -6,15 +6,11 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:48 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 19:48:34 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:06:56 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Mouse button presses
-*/
 
 int				handle_mouse_button_press(int button, int x, int y, void *param)
 {
@@ -42,10 +38,6 @@ int				handle_mouse_button_press(int button, int x, int y, void *param)
 	return (ret);
 }
 
-/*
-** Mouse button releases
-*/
-
 int				handle_mouse_button_release(int button, int x, int y,
 				void *param)
 {
@@ -61,10 +53,6 @@ int				handle_mouse_button_release(int button, int x, int y,
 	scene->redraw = TRUE;
 	return (1);
 }
-
-/*
-** Mouse movement
-*/
 
 int				handle_mouse_move(int x, int y, void *param)
 {

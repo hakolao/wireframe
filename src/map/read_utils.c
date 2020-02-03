@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 12:26:05 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 15:32:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:12:58 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Reallocate space for vertices
-*/
 
 t_vector		**reallocate_map_vertices(t_map *map)
 {
@@ -87,7 +83,6 @@ int				init_vals_before_read(t_map *map)
 		return (FALSE);
 	return (TRUE);
 }
-
 
 /*
 ** Shifts map's pivot to it's center in 0, 0, 0.

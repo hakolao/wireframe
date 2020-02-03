@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 18:56:56 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:01:59 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ static void			plot_pixel(int x, int y, t_edge *edge,
 		edge->scene->frame_buf[pixel + 3] = ALPHA(color);
 	}
 }
-
-/*
-** Plots line from p1 to p2
-*/
 
 static void			plot_line_low(t_edge *edge)
 {
@@ -67,10 +63,6 @@ static void			plot_line_low(t_edge *edge)
 		step++;
 	}
 }
-
-/*
-** Plots line from p1 to p2
-*/
 
 static void			plot_line_high(t_edge *edge)
 {

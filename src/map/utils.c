@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 15:31:53 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:14:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Set's vertex limits for map information
-*/
 
 static void		set_vertex_limits(t_map *map, t_vector *vertex)
 {
@@ -53,7 +49,7 @@ int				set_map_info(t_map *map)
 ** have some rounding diffrences.
 */
 
-int		reset_map(t_map *map)
+int				reset_map(t_map *map)
 {
 	if (!ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
 			map->vertex_count) ||

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 13:03:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 21:17:26 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:11:57 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int					screen_pt(t_vector *point, t_scene *scene,
 int					in_front_of_camera(t_vector *p, t_camera *camera)
 {
 	t_vector	c;
-	
+
 	c = (t_vector){.v = (double[4]){0}, .size = 4};
 	return (ft_matrix_mul_vector(camera->view, p, &c)
 			&& c.v[2] > 0 && c.v[2] > 0);
@@ -86,7 +86,7 @@ static void			clear_frame(t_scene *scene)
 }
 
 /*
-** Draw loop to draw fdf content
+** Draw pipeline to draw fdf
 */
 
 int					draw(t_scene *scene)

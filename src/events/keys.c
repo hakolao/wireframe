@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 22:06:32 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:08:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Function containing key event checks for producing
-** intended app behavior
-*/
 
 static int		check_rest_of_events(int key, t_scene *scene)
 {
@@ -46,7 +41,8 @@ static int		check_rest_of_events(int key, t_scene *scene)
 }
 
 /*
-** Increment scene global colors
+** Increment scene global colors (rand() is a forbidden function
+** according to assignment, but it's allowed in bonus features)
 */
 
 static int		change_scene_colors(t_scene *scene)
@@ -62,7 +58,8 @@ static int		change_scene_colors(t_scene *scene)
 }
 
 /*
-** Increment map global colors
+** Increment map global colors (rand() is a forbidden function
+** according to assignment, but it's allowed in bonus features)
 */
 
 static int		change_map_colors(t_scene *scene)
@@ -75,10 +72,6 @@ static int		change_map_colors(t_scene *scene)
 	map->col_b = rand() % 255;
 	return (0);
 }
-
-/*
-** Key press handling
-*/
 
 int				handle_key_press(int key, void *param)
 {
@@ -106,10 +99,6 @@ int				handle_key_press(int key, void *param)
 		(key == KEY_2 && zoom(scene->camera, -1)) ||
 		check_rest_of_events(key, scene));
 }
-
-/*
-** Key release handling
-*/
 
 int				handle_key_release(int key, void *param)
 {

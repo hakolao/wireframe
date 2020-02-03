@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 12:04:00 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 21:22:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:15:56 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ static void		set_and_connect_triangle(t_edge *ab, t_edge *bc, t_edge *ca)
 
 	scene = ab->scene;
 	if (!ft_matrix_mul_vector(scene->maps[scene->map_index]->reset_rotation,
-							  ab->point1, ab->original1) ||
+			ab->point1, ab->original1) ||
 		!ft_matrix_mul_vector(scene->maps[scene->map_index]->reset_rotation,
-							  ab->point2, ab->original2) ||
+			ab->point2, ab->original2) ||
 		!ft_matrix_mul_vector(scene->maps[scene->map_index]->reset_rotation,
-							  bc->point2, bc->original2))
+			bc->point2, bc->original2))
 		return ;
 	bc->original1 = ab->original2;
 	ca->original1 = bc->original2;
@@ -92,7 +92,9 @@ static void		set_and_connect_triangle(t_edge *ab, t_edge *bc, t_edge *ca)
 }
 
 /*
-** Creates edge structs, sets their values & connects edges
+** Creates edge structs, sets their values & connects edges.
+** Note: Point structs could be more usable, but that is for
+** future refactors...
 */
 
 static void		draw_triangle(t_scene *scene, t_vector *a,
@@ -115,7 +117,7 @@ static void		draw_triangle(t_scene *scene, t_vector *a,
 		.original1 = &(t_vector){.v = (double[4]){0}, .size = 4},
 		.original2 = &(t_vector){.v = (double[4]){0}, .size = 4},
 		.color_start = 0, .color_end = 0};
-	ca = (t_edge){.scene = scene,.point1 = c, .point2 = a,
+	ca = (t_edge){.scene = scene, .point1 = c, .point2 = a,
 		.screen1 = &(t_vector){.v = (double[4]){0}, .size = 4},
 		.screen2 = &(t_vector){.v = (double[4]){0}, .size = 4},
 		.original1 = &(t_vector){.v = (double[4]){0}, .size = 4},

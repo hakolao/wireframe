@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 17:08:46 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 22:06:38 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:08:31 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Handle exit event
-*/
 
 int				handle_exit_event(void)
 {

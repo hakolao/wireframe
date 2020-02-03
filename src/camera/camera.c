@@ -6,7 +6,7 @@
 /*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 11:54:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 16:02:05 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:09:47 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int					camera_free(t_camera *camera)
 }
 
 /*
-** Sets camera transform (usually when projection or view
-** matrices have changed)
+** Sets camera transform (This needs to be set whenever
+** camera variables are changed)
 */
 
 int					set_transform(t_camera *camera)

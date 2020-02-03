@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 22:03:19 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:10:39 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ typedef struct		s_edge
 	t_vector		*point1;
 	t_vector		*point2;
 	t_vector		*screen1;
-	t_vector 		*screen2;
+	t_vector		*screen2;
 	t_vector		*original1;
 	t_vector		*original2;
 	int				color_start;
@@ -290,7 +290,7 @@ void				draw_vector_if_within_screen(t_scene *scene,
 int					draw(t_scene *scene);
 int					in_front_of_camera(t_vector *p, t_camera *camera);
 int					screen_pt(t_vector *point, t_scene *scene,
-			  		t_vector *res);
+					t_vector *res);
 void				connect_edge(t_edge *edge);
 
 /*

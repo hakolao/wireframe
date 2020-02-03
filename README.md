@@ -29,6 +29,7 @@ make
 - Colors with gradient based on vertex height (z)
 - Change colors & background
 - Bresenham line drawing
+- View multiple maps
 
 ![Mars](img/fdf_img3.png)
 

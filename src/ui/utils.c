@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 19:35:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/02 21:53:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/03 14:03:05 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-** Free map information struct
-*/
 
 void					free_map_info(t_map_info *map)
 {
@@ -27,10 +23,6 @@ void					free_map_info(t_map_info *map)
 	ft_strdel(&map->z_max);
 	free(map);
 }
-
-/*
-** Set map information
-*/
 
 t_map_info				*map_info(t_scene *scene)
 {
