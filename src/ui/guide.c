@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   guide.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 22:09:12 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 22:10:42 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 22:01:54 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char			*key_guide(t_scene *scene)
 			"Up: Rotate map x+\nDown: Rotate map x-\nW: Move forward\n"
 			"S: Move backwards\nA: Strafe left\nD: Strafe right\n"
 			"Q: Rotate map z-\nE: Rotate map z+\nC: Loop map color\n"
-			"B: Loop bg color\nP: Loop perspective\nR: Reset\n1: zoom -\n"
-			"2: zoom +\nNum 4: Turn camera left\nNum 6: Turn camera right\n"
-			"Num 8: Turn camera up\nNum 2: Turn camera down\n"
+			"B: Loop bg color\nP: Loop perspective\nR: Reset\n"
+			"O: Show coords\n1: zoom -\n2: zoom +\nNum 4: Turn left\n"
+			"Num 6: Turn right\nNum 8: Turn up\nNum 2: Turn down\n"
 			"Num +: Scale map up\nNum -: Scale map down\n")) == NULL) ||
 		(!scene->show_guide && (guide = ft_strdup("USAGE Keys:\n"
 			"----------\nESC: Exit\n"
@@ -61,4 +61,26 @@ char			*mouse_guide(t_scene *scene)
 		(!scene->show_guide && (guide = ft_strdup("")) == NULL))
 		return (NULL);
 	return (guide);
+}
+
+/*
+** Draws a paragraph into screen
+*/
+
+void			draw_paragraph(t_scene *scene, char *text, int xpos,
+				int ypos)
+{
+	char	**split_text;
+	int		i;
+
+	if (!text || (split_text = ft_strsplit(text, '\n')) == NULL)
+		return ;
+	i = 0;
+	while (split_text[i])
+	{
+		mlx_string_put(scene->mlx, scene->mlx_wdw, xpos,
+			ypos + i * 20, UI_COLOR, split_text[i]);
+		ft_strdel(&split_text[i++]);
+	}
+	free(split_text);
 }

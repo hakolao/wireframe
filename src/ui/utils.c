@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 19:35:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 22:10:08 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 21:53:42 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,20 @@ void					draw_vector(t_scene *scene, t_vector *v,
 }
 
 /*
-** Draws a paragraph into screen
+** Draws vector (point) if it's screen position is witihn
+** screen;
 */
 
-void					draw_paragraph(t_scene *scene, char *text, int xpos,
-						int ypos)
+void					draw_vector_if_within_screen(t_scene *scene,
+						t_vector *p, t_vector *s)
 {
-	char	**split_text;
-	int		i;
-
-	if (!text || (split_text = ft_strsplit(text, '\n')) == NULL)
+	if (!screen_pt(p, scene, s))
 		return ;
-	i = 0;
-	while (split_text[i])
-	{
-		mlx_string_put(scene->mlx, scene->mlx_wdw, xpos,
-			ypos + i * 20, UI_COLOR, split_text[i]);
-		ft_strdel(&split_text[i++]);
-	}
-	free(split_text);
+	s->v[0] += WIDTH / 2 - 40;
+	s->v[1] += HEIGHT / 2;
+	if (s->v[0] >= 0 && s->v[0] <= WIDTH &&
+		s->v[1] >= 0 && s->v[1] <= HEIGHT)
+		draw_vector(scene, p, s->v[0], s->v[1]);
 }
 
 /*

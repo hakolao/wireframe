@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 21:08:55 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 22:03:19 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define ERR_READ "Lines must consist of spaces & (+/-)numbers"
 # define ERR_MAP "Empty x or y in map data"
 # define ERR_ROWS "Length of row must be same on each row"
+# define ERR_ZERO "Zero on a row length found"
 
 /*
 ** Key codes for event listening
@@ -58,6 +59,7 @@
 # define KEY_B 11
 # define KEY_TAB 48
 # define KEY_SHIFT 257
+# define KEY_O 31
 
 /*
 ** Color helpers
@@ -141,8 +143,6 @@ typedef struct		s_scene
 {
 	t_camera		*camera;
 	t_map			**maps;
-	t_vector		***axes;
-	int				axis_len;
 	int				map_index;
 	int				map_count;
 	void			*mlx;
@@ -158,6 +158,7 @@ typedef struct		s_scene
 	int				mouse_x;
 	int				mouse_y;
 	int				show_guide;
+	int				show_coords;
 	int				redraw;
 	int				col_r;
 	int				col_g;
@@ -187,6 +188,10 @@ typedef struct		s_edge
 {
 	t_vector		*point1;
 	t_vector		*point2;
+	t_vector		*screen1;
+	t_vector 		*screen2;
+	t_vector		*original1;
+	t_vector		*original2;
 	int				color_start;
 	int				color_end;
 	t_scene			*scene;
@@ -201,7 +206,6 @@ typedef struct		s_triangle
 	t_edge			*bc;
 	t_edge			*ca;
 }					t_triangle;
-
 
 /*
 ** A Helper struct for map information to be drawn on the UI
@@ -233,9 +237,6 @@ int					camera_free(t_camera *camera);
 /*
 ** Scene
 */
-t_vector			***axes(int axis_len);
-int					free_axes(t_vector ***axes, int axis_len);
-void				draw_axes_on_frame(t_scene *scene);
 void				draw_map_on_frame(t_scene *scene);
 int					init_scene(t_scene *scene, int map_i);
 t_scene				*new_scene(void *mlx, void *mlx_wdw,
@@ -245,14 +246,9 @@ double				init_zscale(t_map *map);
 /*
 ** Line drawing
 */
-void				connect_points(t_edge *edge);
-void				connect_edge_with_gradient(t_edge *edge);
 void				draw_line(t_edge *edge);
 int					grad_color(int start, int end, double gradient_mul);
 void				swap_points_in_edge(t_edge *edge);
-double				gradient_multiplier(double *in_minmax, double *out_minmax,
-					t_vector *point, t_map *map);
-int					map_color(double mul, t_scene *scene);
 
 /*
 ** Map (Input reading, serialization & map functionality)
@@ -269,6 +265,8 @@ double				z_shift(t_map *map);
 int					read_z_from_digit(char **line);
 t_vector			**reallocate_map_vertices(t_map *map);
 int					init_vals_before_read(t_map *map);
+double				height_multiplier(t_vector *point, t_map *map);
+int					map_color(t_vector *point, t_scene *scene);
 
 /*
 ** UI
@@ -283,14 +281,18 @@ void				draw_ui(t_scene *scene);
 void				draw_color_info(t_scene *scene, int color, int x, int y);
 char				*key_guide(t_scene *scene);
 char				*mouse_guide(t_scene *scene);
+void				draw_vector_if_within_screen(t_scene *scene,
+					t_vector *p, t_vector *s);
 
 /*
 ** Draw
 */
 int					draw(t_scene *scene);
-int					in_front_of_camera(t_vector *p1, t_vector *p2,
-					t_camera *camera);
-					
+int					in_front_of_camera(t_vector *p, t_camera *camera);
+int					screen_pt(t_vector *point, t_scene *scene,
+			  		t_vector *res);
+void				connect_edge(t_edge *edge);
+
 /*
 ** Events
 */

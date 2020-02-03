@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:36:22 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 16:40:13 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 15:31:53 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,23 @@ int				set_map_info(t_map *map)
 }
 
 /*
-** Tranforms map from read linked list into array of vertices, in addition
-** it shifts map's pivot to it's center in 0, 0, 0.
+** Resets map rotation & scale to original values. May
+** have some rounding diffrences.
 */
 
-int				shift_map_vertices(t_map *map)
+int		reset_map(t_map *map)
 {
-	t_vector	shift;
-	size_t		i;
-
-	shift = (t_vector){.v =
-		(double[]){-map->x_max / 2, -map->y_max / 2, -z_shift(map), 1},
-		.size = 4};
-	i = 0;
-	while (i < map->vertex_count)
-	{
-		if (!ft_vector_add(map->vertices[i], &shift, map->vertices[i]))
-			return (0);
-		map->vertices[i++]->v[3] = 1;
-	}
+	if (!ft_matrix_mul_vector_lst(map->reset_rotation, map->vertices,
+			map->vertex_count) ||
+		!ft_matrix_mul_vector_lst(map->reset_scale, map->vertices,
+			map->vertex_count))
+		return (0);
+	ft_matrix_free(map->scale);
+	if (!ft_rotation_matrix(0, 0, 0, map->rotation) ||
+		!ft_matrix_inverse_4x4(map->rotation, map->reset_rotation) ||
+		(map->scale = ft_matrix_id(4, 4)) == NULL ||
+		!ft_matrix_inverse_4x4(map->scale, map->reset_scale))
+		return (0);
 	set_map_info(map);
 	return (1);
 }

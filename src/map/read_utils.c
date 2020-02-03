@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 12:26:05 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 18:33:52 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 15:32:05 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,28 @@ int				init_vals_before_read(t_map *map)
 	if (!(map->vertices = malloc(sizeof(*(map->vertices)) * map->size)))
 		return (FALSE);
 	return (TRUE);
+}
+
+
+/*
+** Shifts map's pivot to it's center in 0, 0, 0.
+*/
+
+int				shift_map_vertices(t_map *map)
+{
+	t_vector	shift;
+	size_t		i;
+
+	shift = (t_vector){.v =
+		(double[]){-map->x_max / 2, -map->y_max / 2, -z_shift(map), 1},
+		.size = 4};
+	i = 0;
+	while (i < map->vertex_count)
+	{
+		if (!ft_vector_add(map->vertices[i], &shift, map->vertices[i]))
+			return (0);
+		map->vertices[i++]->v[3] = 1;
+	}
+	set_map_info(map);
+	return (1);
 }

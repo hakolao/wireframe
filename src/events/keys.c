@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 18:22:18 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 20:50:31 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 22:06:32 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,16 @@ int				handle_key_press(int key, void *param)
 	t_scene		*scene;
 
 	scene = (t_scene *)param;
+	scene->redraw = TRUE;
 	if (key == KEY_ESC)
-	{
-		mlx_destroy_window(scene->mlx, scene->mlx_wdw);
 		exit(0);
-	}
 	if (key == KEY_SHIFT)
 		scene->shift_pressed = TRUE;
 	if (key == KEY_G)
 		scene->show_guide = !(scene->show_guide);
-	if ((key == KEY_B && change_scene_colors(scene)) ||
+	if (key == KEY_O)
+		scene->show_coords = !(scene->show_coords);
+	return ((key == KEY_B && change_scene_colors(scene)) ||
 		(key == KEY_C && change_map_colors(scene)) ||
 		((key == KEY_TAB && !scene->shift_pressed) &&
 			scene->map_count > 1 && switch_map(scene, 1)) ||
@@ -103,10 +103,8 @@ int				handle_key_press(int key, void *param)
 		(key == KEY_P && loop_perspective(scene->camera)) ||
 		(key == KEY_R && init_scene(scene, scene->map_index)) ||
 		(key == KEY_1 && zoom(scene->camera, 1)) ||
-		(key == KEY_2 && zoom(scene->camera, -1)))
-		;
-	scene->redraw = TRUE;
-	return (check_rest_of_events(key, scene));
+		(key == KEY_2 && zoom(scene->camera, -1)) ||
+		check_rest_of_events(key, scene));
 }
 
 /*

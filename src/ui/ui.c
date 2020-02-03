@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ui.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 15:03:35 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 22:12:52 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 22:07:11 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,12 @@ static void			draw_height_color_info(t_scene *scene, int x, int y)
 	t_map		*map;
 
 	map = scene->maps[scene->map_index];
-	top_col = map_color(gradient_multiplier((double[]){0, 0}, (double[]){0, 0},
-			&((t_vector){.v = (double[]){0, 0, map->z_max, 1}, .size = 4}),
-			scene->maps[scene->map_index]), scene);
-	mid_col = map_color(gradient_multiplier((double[]){0, 0}, (double[]){0, 0},
-			&((t_vector){.v = (double[]){0, 0, 0, 1}, .size = 4}),
-			scene->maps[scene->map_index]), scene);
-	bot_col = map_color(gradient_multiplier((double[]){0, 0}, (double[]){0, 0},
-			&((t_vector){.v = (double[]){0, 0, map->z_min, 1}, .size = 4}),
-			scene->maps[scene->map_index]), scene);
+	top_col = map_color(&(t_vector){.v =
+		(double[]){0, 0, map->z_max, 1}, .size = 4},scene);
+	mid_col = map_color(&(t_vector){.v =
+		(double[]){0, 0, 0, 1}, .size = 4}, scene);
+	bot_col = map_color(&(t_vector){.v =
+		(double[]){0, 0, map->z_min, 1}, .size = 4}, scene);
 	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y, UI_COLOR, "Top RGB:");
 	draw_color_info(scene, top_col, x + 120, y);
 	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y + 20,
@@ -93,6 +90,29 @@ static void			draw_height_color_info(t_scene *scene, int x, int y)
 	mlx_string_put(scene->mlx, scene->mlx_wdw, x, y + 40,
 		UI_COLOR, "Bottom RGB:");
 	draw_color_info(scene, bot_col, x + 120, y + 40);
+}
+
+/*
+** Draw map corner coordinates
+*/
+
+static void			draw_corner_coords(t_scene *scene)
+{
+	t_map		*map;
+
+	map = scene->maps[scene->map_index];
+	if (!scene->show_coords)
+		return ;
+	draw_vector_if_within_screen(scene, map->vertices[0],
+		&(t_vector){.v = (double[4]){0}, .size = 4});
+	draw_vector_if_within_screen(scene, map->vertices[map->x - 1],
+		&(t_vector){.v = (double[4]){0}, .size = 4});
+	draw_vector_if_within_screen(scene,
+		map->vertices[map->vertex_count - map->x - 1],
+		&(t_vector){.v = (double[4]){0}, .size = 4});
+	draw_vector_if_within_screen(scene,
+		map->vertices[map->vertex_count - 1],
+		&(t_vector){.v = (double[4]){0}, .size = 4});
 }
 
 /*
@@ -113,11 +133,12 @@ void				draw_ui(t_scene *scene)
 		return ;
 	mlx_string_put(scene->mlx, scene->mlx_wdw, 10, 20, UI_COLOR, "Camera xyz:");
 	draw_vector(scene, scene->camera->position, 130, 20);
-	draw_map_info(scene, WIDTH - 160, 20);
+	draw_map_info(scene, WIDTH - 200, 20);
 	draw_paragraph(scene, key_g, 10, 60);
-	draw_paragraph(scene, mouse_g, 10, 600);
+	draw_paragraph(scene, mouse_g, 10, 650);
 	draw_multi_map_info(scene, read_maps, map_index);
 	draw_height_color_info(scene, WIDTH - 300, HEIGHT - 90);
+	draw_corner_coords(scene);
 	ft_strdel(&mouse_g);
 	ft_strdel(&key_g);
 	ft_strdel(&read_maps);

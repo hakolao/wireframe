@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+         #
+#    By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 14:43:04 by ohakola           #+#    #+#              #
-#    Updated: 2020/01/24 11:04:26 by ohakola          ###   ########.fr        #
+#    Updated: 2020/02/01 16:48:00 by ohakola          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ SOURCES = ft_atoi.c \
 		ft_lstlen.c \
 		ft_lmap_int.c \
 		ft_lmap_double.c \
-		ft_max_double.c \
+		ft_max.c \
 		ft_abs.c \
 		ft_bzero.c
 SRCS = $(addprefix $(DIR_SRC)/,$(SOURCES))

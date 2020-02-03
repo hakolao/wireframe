@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gradient.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 16:32:06 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/31 21:08:47 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:01:24 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ int				grad_color(int start, int end, double gradient_mul)
 ** Maps height value between out_minmax values linearly.
 */
 
-double			gradient_multiplier(double *in_minmax, double *out_minmax,
-				t_vector *point, t_map *map)
+double			height_multiplier(t_vector *point, t_map *map)
 {
+	double in_minmax[2];
+	double out_minmax[2];
+	
 	in_minmax[0] = map->z_min - 0.1;
 	in_minmax[1] = map->z_max + 0.1;
 	out_minmax[0] = -M_PI / 2;
@@ -55,45 +57,16 @@ double			gradient_multiplier(double *in_minmax, double *out_minmax,
 ** function)
 */
 
-int				map_color(double mul, t_scene *scene)
+int				map_color(t_vector *point, t_scene *scene)
 {
 	t_map	*map;
+	double	mul;
 
 	map = scene->maps[scene->map_index];
+	mul = height_multiplier(point, map);
 	return (COLOR(
-		(int)(sin((mul + M_PI / 2) / 2) * map->col_r),
+		(int)(0.5 * (1 + sin((2 * mul - M_PI / 4) / 2)) * map->col_r),
 		(int)(cos(mul) * cos(mul) * map->col_g),
 		(int)(0.5 * (1 + cos((mul + M_PI / 2) * 1.2)) * map->col_b),
 		map->col_a));
-}
-
-/*
-** Helper function which exposes line connecting for map including color for
-** map's gradient.
-*/
-
-void			connect_edge_with_gradient(t_edge *edge)
-{
-	t_vector	reset_p1;
-	t_vector	reset_p2;
-	double		in[2];
-	double		out[2];
-	int			map_i;
-
-	map_i = edge->scene->map_index;
-	reset_p1 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
-	reset_p2 = (t_vector){.v = (double[]){0, 0, 0, 0}, .size = 4};
-	if (!ft_matrix_mul_vector(edge->scene->maps[map_i]->reset_rotation,
-		edge->point1, &reset_p1))
-		return ;
-	edge->color_start = map_color(gradient_multiplier(in, out, &reset_p1,
-		edge->scene->maps[map_i]), edge->scene);
-	if (!ft_matrix_mul_vector(edge->scene->maps[map_i]->reset_rotation,
-		edge->point2, &reset_p2))
-		return ;
-	edge->color_end = map_color(gradient_multiplier(in, out, &reset_p2,
-		edge->scene->maps[map_i]), edge->scene);
-	if (reset_p1.v[2] < reset_p2.v[2])
-		swap_points_in_edge(edge);
-	connect_points(edge);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 13:18:55 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/30 19:02:01 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:56:56 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static void			plot_line_low(t_edge *edge)
 	double		steps;
 	double		step;
 
-	line.dx = edge->point2->v[0] - edge->point1->v[0];
-	line.dy = edge->point2->v[1] - edge->point1->v[1];
+	line.dx = edge->screen2->v[0] - edge->screen1->v[0];
+	line.dy = edge->screen2->v[1] - edge->screen1->v[1];
 	line.yi = line.dy < 0 ? -1 : 1;
 	line.dy = line.dy < 0 ? -line.dy : line.dy;
 	line.p = 2 * line.dy - line.dx;
-	line.y = edge->point1->v[1];
-	line.x = edge->point1->v[0];
-	steps = edge->point2->v[0] - line.x;
+	line.y = edge->screen1->v[1];
+	line.x = edge->screen1->v[0];
+	steps = edge->screen2->v[0] - line.x;
 	step = 0;
-	while (line.x < edge->point2->v[0])
+	while (line.x < edge->screen2->v[0])
 	{
 		plot_pixel(line.x, line.y, edge, step / steps);
 		if (line.p > 0)
@@ -78,16 +78,16 @@ static void			plot_line_high(t_edge *edge)
 	double		steps;
 	double		step;
 
-	line.dx = edge->point2->v[0] - edge->point1->v[0];
-	line.dy = edge->point2->v[1] - edge->point1->v[1];
+	line.dx = edge->screen2->v[0] - edge->screen1->v[0];
+	line.dy = edge->screen2->v[1] - edge->screen1->v[1];
 	line.xi = line.dx < 0 ? -1 : 1;
 	line.dx = line.dx < 0 ? -line.dx : line.dx;
 	line.p = 2 * line.dx - line.dy;
-	line.y = edge->point1->v[1];
-	line.x = edge->point1->v[0];
-	steps = edge->point2->v[1] - line.y;
+	line.y = edge->screen1->v[1];
+	line.x = edge->screen1->v[0];
+	steps = edge->screen2->v[1] - line.y;
 	step = 0;
-	while (line.y < edge->point2->v[1])
+	while (line.y < edge->screen2->v[1])
 	{
 		plot_pixel(line.x, line.y, edge, step / steps);
 		if (line.p > 0)
@@ -113,6 +113,12 @@ void				swap_points_in_edge(t_edge *edge)
 	tmp = edge->point2;
 	edge->point2 = edge->point1;
 	edge->point1 = tmp;
+	tmp = edge->screen2;
+	edge->screen2 = edge->screen1;
+	edge->screen1 = tmp;
+	tmp = edge->original2;
+	edge->original2 = edge->original1;
+	edge->original1 = tmp;
 	tmp_color = edge->color_start;
 	edge->color_start = edge->color_end;
 	edge->color_end = tmp_color;
@@ -130,10 +136,10 @@ void				draw_line(t_edge *edge)
 	int			y2;
 	int			y1;
 
-	x2 = edge->point2->v[0];
-	x1 = edge->point1->v[0];
-	y2 = edge->point2->v[1];
-	y1 = edge->point1->v[1];
+	x2 = edge->screen2->v[0];
+	x1 = edge->screen1->v[0];
+	y2 = edge->screen2->v[1];
+	y1 = edge->screen1->v[1];
 	if (ft_abs(y2 - y1) < ft_abs(x2 - x1))
 	{
 		if (x1 > x2)

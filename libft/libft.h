@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:42:13 by ohakola           #+#    #+#             */
-/*   Updated: 2020/01/24 11:05:09 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/02 17:02:20 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,8 @@ double			ft_lmap_double(double nb, double *in_minmax,
 				double *out_minmax);
 double			ft_abs(double nb);
 double			ft_max_double(double *arr, size_t size);
+int				ft_max_int(int *arr, size_t size);
+double			ft_min_double(double *arr, size_t size);
+int				ft_min_int(int *arr, size_t size);
 
 #endif
