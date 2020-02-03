@@ -37,6 +37,45 @@ make
 
 ![Mars map](img/fdf_img3.png)
 
+# Gradient
+Coloring is based on below functions
+
+- `map->col_r` is high closer to high z, low everywhere else
+- `map->col_g` is high cose to zero z, low everywhere else
+- `map->col_b` is high close to low z, low everywhere else
+
+This generates a typical heightmap looking coloring.
+
+```c
+double			height_multiplier(t_vector *point, t_map *map)
+{
+	double in_minmax[2];
+	double out_minmax[2];
+
+	in_minmax[0] = map->z_min - 0.1;
+	in_minmax[1] = map->z_max + 0.1;
+	out_minmax[0] = -M_PI / 2;
+	out_minmax[1] = M_PI / 2;
+	return (ft_lmap_double(point->v[2], in_minmax, out_minmax));
+}
+
+int				map_color(t_vector *point, t_scene *scene)
+{
+	t_map	*map;
+	double	mul;
+
+	map = scene->maps[scene->map_index];
+	mul = height_multiplier(point, map);
+	return (COLOR(
+		(int)(0.5 * (1 + sin((2 * mul - M_PI / 4) / 2)) * map->col_r),
+		(int)(cos(mul) * cos(mul) * map->col_g),
+		(int)(0.5 * (1 + cos((mul + M_PI / 2) * 1.2)) * map->col_b),
+		map->col_a));
+}
+```
+
+
+
 # Usage
 ```
 ESC: Exit
