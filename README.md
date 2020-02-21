@@ -1,4 +1,4 @@
-# FDF (Wireframe)
+# Wireframe (FdF)
 A wireframe modeling of 3D landscapes.
 
 ![Beauty map](img/fdf_img1.png)
