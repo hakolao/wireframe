@@ -1,7 +1,5 @@
 # FDF (Wireframe)
-A wireframe modeling of 3D landscapes. Hive's (School 42) introduction assignment to computer graphics. (See assignment_brief.en.pdf).
-
-Due to norm limitations (only `exit`, `open`, `close`, `write`, `read`, `malloc`, `free`, and the functions of `minilibx (libmlx)` and `math.h`), Libmatrix was written for this project. Libft was an earlier school assingment (standard c functions + own extras).
+A wireframe modeling of 3D landscapes.
 
 ![Beauty map](img/fdf_img1.png)
 
@@ -116,7 +114,7 @@ Hold right mouse & move: Rotate map
 ```
 
 # Notes
-- Code follow's 42's strict norms:
+Code follows 42's strict norms:
 - Functions must not exceed 25 lines
 - Max 5 functions in a .c file
 - Cannot stick variable declaration and initialization on the same line
@@ -124,3 +122,4 @@ Hold right mouse & move: Rotate map
 - Max 4 parameters per function
 - Forbidden keywords: `for`,  `do ... while`, `switch`, `case`, `goto`
 
+Due to norm limitations (only `exit`, `open`, `close`, `write`, `read`, `malloc`, `free`, and the functions of `minilibx (libmlx)` and `math.h`), I wrote libmatrix for this project. For extra features like color randomizing, other functions like `rand()` was allowed.
