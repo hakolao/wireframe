@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohakola <ohakola@student.helsinki.fi>      +#+  +:+       +#+        */
+/*   By: ohakola <ohakola@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:07:11 by ohakola           #+#    #+#             */
-/*   Updated: 2020/02/03 14:45:03 by ohakola          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:28:28 by ohakola          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include <mlx.h>
+# include "../lib/libmlx/mlx.h"
 # include <stdio.h>
 # include <math.h>
 # include "../lib/libft/libft.h"
